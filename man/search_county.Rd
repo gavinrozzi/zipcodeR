@@ -18,6 +18,6 @@ dataframe of all ZIP codes found for given county
 Search ZIP codes for a county
 }
 \examples{
-'middlesex <- search_county('Middlesex','NJ')'
-'alameda <- search_county('alameda','CA')'
+middlesex <- search_county('Middlesex','NJ')
+alameda <- search_county('alameda','CA')
 }

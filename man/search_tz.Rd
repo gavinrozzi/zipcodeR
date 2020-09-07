@@ -16,5 +16,6 @@ dataframe of all ZIP codes found for given timezone
 Search ZIP codes for a timezone
 }
 \examples{
-'eastern <- search_county('Eastern')'
+eastern <- search_tz('Eastern')
+pacific <- search_tz('Mountain')
 }

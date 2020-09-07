@@ -16,6 +16,7 @@ dataframe of all ZIP codes for state defined in state_abb
 Search ZIP codes for a given state
 }
 \examples{
-'NJ <- zipcodeR::search_state('NJ')'
-'CA <- zipcodeR::search_state('CA')'
+search_state('NJ')
+search_state('CA')
+
 }

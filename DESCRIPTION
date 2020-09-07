@@ -1,5 +1,5 @@
 Package: zipcodeR
-Title: What the Package Does (One Line, Title Case)
+Title: An R Package for Working With U.S. ZIP Codes
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Gavin",
