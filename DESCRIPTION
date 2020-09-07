@@ -1,0 +1,20 @@
+Package: zipcodeR
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Gavin",
+           family = "Rozzi",
+           role = c("aut", "cre"),
+           email = "gr@gavinrozzi.com",
+           comment = c(ORCID = "0000-0002-9969-8175"))
+Description: Makes working with ZIP codes in R easier.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+Depends: 
+    R (>= 2.10),
+    dplyr,
+    stringr
