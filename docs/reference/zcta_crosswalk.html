@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • zipcodeR</title>
+<title>ZCTA to Census Tract (2010) Crosswalk — zcta_crosswalk • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="ZCTA to Census Tract (2010) Crosswalk — zcta_crosswalk" />
+<meta property="og:description" content="A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -66,7 +67,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -108,78 +109,56 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>ZCTA to Census Tract (2010) Crosswalk</h1>
+    
+    <div class="hidden name"><code>zcta_crosswalk.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='kw'>zcta_crosswalk</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="get_tracts.html">get_tracts()</a></code> </p>
-        </td>
-        <td><p>Get all Census tracts within a given ZIP code</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="search_county.html">search_county()</a></code> </p>
-        </td>
-        <td><p>Search ZIP codes for a county</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="search_state.html">search_state()</a></code> </p>
-        </td>
-        <td><p>Search ZIP codes for a given state</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="search_tz.html">search_tz()</a></code> </p>
-        </td>
-        <td><p>Search ZIP codes for a timezone</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="zcta_crosswalk.html">zcta_crosswalk</a></code> </p>
-        </td>
-        <td><p>ZCTA to Census Tract (2010) Crosswalk</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="zip_code_db.html">zip_code_db</a></code> </p>
-        </td>
-        <td><p>ZIP Code Database</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="zip_to_cd.html">zip_to_cd</a></code> </p>
-        </td>
-        <td><p>ZIP Code to Congressional District Relationship File</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 148897 rows and 25 variables:</p><dl>
+<dt>ZCTA5</dt><dd><p>2010 ZIP Code Tabulation Area</p></dd>
+<dt>STATE</dt><dd><p>2010 State FIPS Code</p></dd>
+<dt>COUNTY</dt><dd><p>2010 County FIPS Code</p></dd>
+<dt>TRACT</dt><dd><p>2010 Census Tract Code</p></dd>
+<dt>GEOID</dt><dd><p>Concatenation of 2010 State, County, and Tract</p></dd>
+<dt>POPPT</dt><dd><p>Calculated 2010 Population for the relationship record</p></dd>
+<dt>HUPT</dt><dd><p>Calculated 2010 Housing Unit Count for the relationship record</p></dd>
+<dt>AREAPT</dt><dd><p>Total Area for the record</p></dd>
+<dt>AREALANDPT</dt><dd><p>Land Area for the record</p></dd>
+<dt>ZPOP</dt><dd><p>2010 Population of the 2010 ZCTA</p></dd>
+<dt>ZHU</dt><dd><p>2010 Housing Unit Count of the 2010 ZCTA</p></dd>
+<dt>ZAREA</dt><dd><p>Total Area of the 2010 ZCTA</p></dd>
+<dt>ZAREALAND</dt><dd><p>Total Land Area of the 2010 ZCTA</p></dd>
+<dt>TRPOP</dt><dd><p>2010 Population of the 2010 Census Tract</p></dd>
+<dt>TRHU</dt><dd><p>2010 Housing Unit Count of the 2010 Census Tract</p></dd>
+<dt>TRAREA</dt><dd><p>Total Area of the 2010 Census Tract</p></dd>
+<dt>TRAREALAND</dt><dd><p>Total Land Area of the 2010 Census Tract</p></dd>
+<dt>ZPOPPCT</dt><dd><p>The Percentage of Total Population of the 2010 ZCTA represented by the record</p></dd>
+<dt>ZHUPCT</dt><dd><p>The Percentage of Total Housing Unit Count of the 2010 ZCTA represented by the record</p></dd>
+<dt>ZAREAPCT</dt><dd><p>The Percentage of Total Area of the 2010 ZCTA represented by the record</p></dd>
+<dt>ZAREALANDPCT</dt><dd><p>The Percentage of Total Land Area of the 2010 ZCTA represented by the record</p></dd>
+<dt>TRPOPPCT</dt><dd><p>The Percentage of Total Population of the 2010 Census Tract represented by the record</p></dd>
+<dt>TRHUPCT</dt><dd><p>The Percentage of Total Housing Unit Count of the 2010 Census Tract represented by the record</p></dd>
+<dt>TRAREAPCT</dt><dd><p>The Percentage of Total Area of the 2010 Census Tract represented by the record</p></dd>
+<dt>TRAREALANDPCT</dt><dd><p>The Percentage of Total Land Area of the 2010 Census Tract represented by the record</p></dd>
+
+</dl>
+
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html'>https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html</a></p>
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
