@@ -1,38 +1,15 @@
 #' ZCTA to Census Tract (2010) Crosswalk
 #'
-#' A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts
+#' A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.
 #'
-#' @format A data frame with 148897 rows and 25 variables:
+#' @format A data frame with 148897 rows and 4 variables:
 #' \describe{
 #'   \item{ZCTA5}{2010 ZIP Code Tabulation Area}
-#'   \item{STATE}{2010 State FIPS Code}
-#'   \item{COUNTY}{2010 County FIPS Code}
 #'   \item{TRACT}{2010 Census Tract Code}
 #'   \item{GEOID}{Concatenation of 2010 State, County, and Tract}
-#'   \item{POPPT}{Calculated 2010 Population for the relationship record}
-#'   \item{HUPT}{Calculated 2010 Housing Unit Count for the relationship record}
-#'   \item{AREAPT}{Total Area for the record}
-#'   \item{AREALANDPT}{Land Area for the record}
-#'   \item{ZPOP}{2010 Population of the 2010 ZCTA}
-#'   \item{ZHU}{2010 Housing Unit Count of the 2010 ZCTA}
-#'   \item{ZAREA}{Total Area of the 2010 ZCTA}
-#'   \item{ZAREALAND}{Total Land Area of the 2010 ZCTA}
-#'   \item{TRPOP}{2010 Population of the 2010 Census Tract}
-#'   \item{TRHU}{2010 Housing Unit Count of the 2010 Census Tract}
-#'   \item{TRAREA}{Total Area of the 2010 Census Tract}
-#'   \item{TRAREALAND}{Total Land Area of the 2010 Census Tract}
-#'   \item{ZPOPPCT}{The Percentage of Total Population of the 2010 ZCTA represented by the record}
-#'   \item{ZHUPCT}{The Percentage of Total Housing Unit Count of the 2010 ZCTA represented by the record}
-#'   \item{ZAREAPCT}{The Percentage of Total Area of the 2010 ZCTA represented by the record}
-#'   \item{ZAREALANDPCT}{The Percentage of Total Land Area of the 2010 ZCTA represented by the record}
-#'   \item{TRPOPPCT}{The Percentage of Total Population of the 2010 Census Tract represented by the record}
-#'   \item{TRHUPCT}{The Percentage of Total Housing Unit Count of the 2010 Census Tract represented by the record}
-#'   \item{TRAREAPCT}{The Percentage of Total Area of the 2010 Census Tract represented by the record}
-#'   \item{TRAREALANDPCT}{The Percentage of Total Land Area of the 2010 Census Tract represented by the record}
 #' }
 #' @source \url{https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html}
 "zcta_crosswalk"
-
 #' ZIP Code Database
 #'
 #' A dataset containing detailed information for U.S. ZIP codes
@@ -66,7 +43,6 @@
 #' }
 #' @source \url{https://github.com/MacHu-GWU/uszipcode-project/files/5183256/simple_db.log}
 "zip_code_db"
-
 #' ZIP Code to Congressional District Relationship File
 #'
 #' A dataset containing mappings between ZIP codes and congressional districts
