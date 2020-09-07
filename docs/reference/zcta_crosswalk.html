@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="ZCTA to Census Tract (2010) Crosswalk — zcta_crosswalk" />
-<meta property="og:description" content="A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts" />
+<meta property="og:description" content="A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
       </span>
     </div>
 
@@ -117,7 +117,7 @@
     </div>
 
     <div class="ref-description">
-    <p>A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts</p>
+    <p>A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.</p>
     </div>
 
     <pre class="usage"><span class='kw'>zcta_crosswalk</span></pre>
@@ -125,32 +125,10 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data frame with 148897 rows and 25 variables:</p><dl>
+    <p>A data frame with 148897 rows and 4 variables:</p><dl>
 <dt>ZCTA5</dt><dd><p>2010 ZIP Code Tabulation Area</p></dd>
-<dt>STATE</dt><dd><p>2010 State FIPS Code</p></dd>
-<dt>COUNTY</dt><dd><p>2010 County FIPS Code</p></dd>
 <dt>TRACT</dt><dd><p>2010 Census Tract Code</p></dd>
 <dt>GEOID</dt><dd><p>Concatenation of 2010 State, County, and Tract</p></dd>
-<dt>POPPT</dt><dd><p>Calculated 2010 Population for the relationship record</p></dd>
-<dt>HUPT</dt><dd><p>Calculated 2010 Housing Unit Count for the relationship record</p></dd>
-<dt>AREAPT</dt><dd><p>Total Area for the record</p></dd>
-<dt>AREALANDPT</dt><dd><p>Land Area for the record</p></dd>
-<dt>ZPOP</dt><dd><p>2010 Population of the 2010 ZCTA</p></dd>
-<dt>ZHU</dt><dd><p>2010 Housing Unit Count of the 2010 ZCTA</p></dd>
-<dt>ZAREA</dt><dd><p>Total Area of the 2010 ZCTA</p></dd>
-<dt>ZAREALAND</dt><dd><p>Total Land Area of the 2010 ZCTA</p></dd>
-<dt>TRPOP</dt><dd><p>2010 Population of the 2010 Census Tract</p></dd>
-<dt>TRHU</dt><dd><p>2010 Housing Unit Count of the 2010 Census Tract</p></dd>
-<dt>TRAREA</dt><dd><p>Total Area of the 2010 Census Tract</p></dd>
-<dt>TRAREALAND</dt><dd><p>Total Land Area of the 2010 Census Tract</p></dd>
-<dt>ZPOPPCT</dt><dd><p>The Percentage of Total Population of the 2010 ZCTA represented by the record</p></dd>
-<dt>ZHUPCT</dt><dd><p>The Percentage of Total Housing Unit Count of the 2010 ZCTA represented by the record</p></dd>
-<dt>ZAREAPCT</dt><dd><p>The Percentage of Total Area of the 2010 ZCTA represented by the record</p></dd>
-<dt>ZAREALANDPCT</dt><dd><p>The Percentage of Total Land Area of the 2010 ZCTA represented by the record</p></dd>
-<dt>TRPOPPCT</dt><dd><p>The Percentage of Total Population of the 2010 Census Tract represented by the record</p></dd>
-<dt>TRHUPCT</dt><dd><p>The Percentage of Total Housing Unit Count of the 2010 Census Tract represented by the record</p></dd>
-<dt>TRAREAPCT</dt><dd><p>The Percentage of Total Area of the 2010 Census Tract represented by the record</p></dd>
-<dt>TRAREALANDPCT</dt><dd><p>The Percentage of Total Land Area of the 2010 Census Tract represented by the record</p></dd>
 
 </dl>
 

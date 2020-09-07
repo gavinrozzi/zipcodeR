@@ -1,13 +1,13 @@
 Package: zipcodeR
 Title: An R Package for Working With U.S. ZIP Codes
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person(given = "Gavin",
            family = "Rozzi",
            role = c("aut", "cre"),
            email = "gr@gavinrozzi.com",
            comment = c(ORCID = "0000-0002-9969-8175"))
-Description: Makes working with ZIP codes in R easier.
+Description: Makes working with ZIP codes in R painless.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

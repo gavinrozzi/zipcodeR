@@ -1,4 +1,4 @@
-#' Download data files needed for library functionality
+#' Download update data files needed for library functionality. To be implemented in the future.
 #'
 #' @param force Two-digit code for a U.S. state
 #' @return Data files needed for package functionality, stored in data directory of package install

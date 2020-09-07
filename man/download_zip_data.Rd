@@ -2,7 +2,7 @@
 % Please edit documentation in R/download_data.r
 \name{download_zip_data}
 \alias{download_zip_data}
-\title{Download data files needed for library functionality}
+\title{Download update data files needed for library functionality. To be implemented in the future.}
 \usage{
 download_zip_data(force = FALSE)
 }
@@ -13,7 +13,7 @@ download_zip_data(force = FALSE)
 Data files needed for package functionality, stored in data directory of package install
 }
 \description{
-Download data files needed for library functionality
+Download update data files needed for library functionality. To be implemented in the future.
 }
 \examples{
 

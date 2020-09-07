@@ -10,7 +10,7 @@
 #' @export
 search_state <- function(state_abb){
   # Test if state abbreviation input is capitalized, capitalize if lowercase
-  if (str_detect(state_abb, "^[:upper:]+$") == FALSE) {
+  if (stringr::str_detect(state_abb, "^[:upper:]+$") == FALSE) {
     state_abb <- toupper(state_abb)
   }
   # Get matching ZIP codes for state
@@ -36,11 +36,11 @@ search_state <- function(state_abb){
 #' @export
 search_county <- function(county_name, state_abb) {
   # Test if state abbreviation input is capitalized, capitalize if lowercase
-  if (str_detect(state_abb, "^[:upper:]+$") == FALSE) {
+  if (stringr::str_detect(state_abb, "^[:upper:]+$") == FALSE) {
     state_abb <- toupper(state_abb)
   }
   # Test if first letter of county  input is capitalized, capitalize if input is lowercase
-  if (str_detect(county_name, "^[:upper:]") == FALSE) {
+  if (stringr::str_detect(county_name, "^[:upper:]") == FALSE) {
     first_char <- toupper(substring(county_name,0,1))
     remainder <- substring(county_name,2,nchar(county_name))
     county_name <- paste0(first_char,remainder)
