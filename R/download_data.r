@@ -27,10 +27,10 @@ download_zip_data <- function(force=FALSE) {
     print("Crosswalk file found, skipping")
   } else if (file.exists(system.file("data", "zcta_crosswalk.rda", package = "zipcodeR")) == FALSE) {
     print("Downloading ZCTA crosswalk file")
-    download.file(url_crosswalk,paste0(system.file("data", package = "zipcodeR"),'/zcta_crosswalk.rda'))
+    utils::download.file(url_crosswalk,paste0(system.file("data", package = "zipcodeR"),'/zcta_crosswalk.rda'))
   } else if (force == TRUE) {
     print("Forcing Download of ZCTA crosswalk file")
-    download.file(url_crosswalk,paste0(system.file("data", package = "zipcodeR"),'/zcta_crosswalk.rda'))
+    utils::download.file(url_crosswalk,paste0(system.file("data", package = "zipcodeR"),'/zcta_crosswalk.rda'))
   }
 
   # Test if ZIP code db file exists, download if not present
@@ -38,10 +38,10 @@ download_zip_data <- function(force=FALSE) {
     print("ZIP code database file found, skipping")
   } else if (file.exists(system.file("data", "zip_code_db.rda", package = "zipcodeR")) == FALSE) {
     print("Downloading ZIP code database file")
-    download.file(url_zip_db,paste0(system.file("data", package = "zipcodeR"),'/zip_code_db.rda'))
+    utils::download.file(url_zip_db,paste0(system.file("data", package = "zipcodeR"),'/zip_code_db.rda'))
   } else if (force == TRUE) {
     print("Forcing download of ZIP code database file")
-    download.file(url_zip_db,paste0(system.file("data", package = "zipcodeR"),'/zip_code_db.rda'))
+    utils::download.file(url_zip_db,paste0(system.file("data", package = "zipcodeR"),'/zip_code_db.rda'))
   }
 
   # Test if congressional district relationship file exists, download if not present
@@ -49,10 +49,10 @@ download_zip_data <- function(force=FALSE) {
     print("Congressional district file found, skipping")
   } else if (file.exists(system.file("data", "zip_to_cd.rda", package = "zipcodeR")) == FALSE) {
     print("Downloading congressional district data file")
-    download.file(url_cd,paste0(system.file("data", package = "zipcodeR"),'/zip_to_cd.rda'))
+    utils::download.file(url_cd,paste0(system.file("data", package = "zipcodeR"),'/zip_to_cd.rda'))
   } else if (force == TRUE) {
     print("Forcing download of congressional district data file")
-    download.file(url_cd,paste0(system.file("data", package = "zipcodeR"),'/zip_to_cd.rda'))
+    utils::download.file(url_cd,paste0(system.file("data", package = "zipcodeR"),'/zip_to_cd.rda'))
   }
 }
 

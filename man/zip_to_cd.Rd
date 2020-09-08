@@ -7,7 +7,7 @@
 \format{
 A data frame with 45914 rows and 2 variables:
 \describe{
-\item{zipcode}{5 digit U.S. ZIP code}
+\item{ZIP}{5 digit U.S. ZIP code}
 \item{CD}{Four digit congressional district code (State FIPS code + district number)}
 }
 }

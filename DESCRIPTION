@@ -1,5 +1,5 @@
 Package: zipcodeR
-Title: An R Package for Working With U.S. ZIP Codes
+Title: Data & Functions for Working with US ZIP Codes
 Version: 0.0.1
 Authors@R: 
     person(given = "Gavin",
@@ -7,13 +7,15 @@ Authors@R:
            role = c("aut", "cre"),
            email = "gr@gavinrozzi.com",
            comment = c(ORCID = "0000-0002-9969-8175"))
-Description: Makes working with ZIP codes in R painless.
-License: GPL-3
+Description: Make working with ZIP codes in R painless by providing a comprehensive dataset of U.S. ZIP codes and a set of functions for working with them.
+License: GPL-3 + file LICENSE
+URL: https://github.com/gavinrozzi/zipcodeR
+BugReports: https://github.com/gavinrozzi/zipcodeR
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Imports:
+Imports: rlang
 Depends: 
     R (>= 2.10),
     dplyr,

@@ -14,7 +14,7 @@ search_state <- function(state_abb){
     state_abb <- toupper(state_abb)
   }
   # Get matching ZIP codes for state
-  state_zips <- zip_code_db %>% dplyr::filter(state == state_abb)
+  state_zips <- zip_code_db %>% dplyr::filter(.data$state == state_abb)
   # Throw an error if nothing found
   if (nrow(state_zips) == 0) {
     stop(paste('No ZIP codes found for state:',state_abb))
@@ -33,6 +33,7 @@ search_state <- function(state_abb){
 #' @examples
 #' middlesex <- search_county('Middlesex','NJ')
 #' alameda <- search_county('alameda','CA')
+#' @importFrom stringr str_detect
 #' @export
 search_county <- function(county_name, state_abb) {
   # Test if state abbreviation input is capitalized, capitalize if lowercase
@@ -48,10 +49,10 @@ search_county <- function(county_name, state_abb) {
   # Create full name of county from name input
   county_name_proper <- paste(county_name,'County')
   # Get matching ZIP codes for county
-  county_zips <- zip_code_db %>% dplyr::filter(state == state_abb & county == county_name_proper)
+  county_zips <- zip_code_db %>% dplyr::filter(.data$state == state_abb & .data$county == county_name_proper)
   # Throw an error if nothing found
   if (nrow(county_zips) == 0) {
-    stop(paste('No ZIP codes found for county:',county_name,',',state))
+    stop(paste('No ZIP codes found for county:',county_name,',',.data$state))
   }
   # Print number of ZIP codes found to console
   print(paste(nrow(county_zips), 'ZIP codes found for', county_name_proper,',',state_abb))
@@ -68,7 +69,7 @@ search_county <- function(county_name, state_abb) {
 #' @export
 search_tz <- function(tz) {
   # Get matching ZIP codes for timezone
-  tz_zips <- zip_code_db %>% dplyr::filter(timezone == tz)
+  tz_zips <- zip_code_db %>% dplyr::filter(.data$timezone == tz)
   # Throw an error if nothing found
   if (nrow(tz_zips) == 0) {
     stop(paste('No ZIP codes found for timezone:',tz))
@@ -85,6 +86,8 @@ search_tz <- function(tz) {
 #' @examples
 #' get_tracts('08731')
 #' get_tracts('90210')
+#' @importFrom dplyr %>%
+#' @importFrom rlang .data
 #' @export
 get_tracts <- function(zip_code) {
   # Validate input, raise error if input is not a 5-digit ZIP code
@@ -92,7 +95,7 @@ get_tracts <- function(zip_code) {
     stop("Invalid input detected. Please enter a 5-digit U.S. ZIP code.")
   }
   # Get tract data given ZCTA
-  tracts <- zcta_crosswalk %>% dplyr::filter(ZCTA5 == zip_code)
+  tracts <- zcta_crosswalk %>% dplyr::filter(.data$ZCTA5 == zip_code)
   if (nrow(tracts) == 0) {
     stop(paste("No Census tracts found for ZIP code", zip_code))
   }
@@ -100,4 +103,3 @@ get_tracts <- function(zip_code) {
   print(paste(nrow(tracts), 'Census tracts found for ZIP code', zip_code))
   return(tracts)
 }
-
