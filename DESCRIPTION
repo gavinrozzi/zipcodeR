@@ -10,7 +10,7 @@ Authors@R:
 Description: Make working with ZIP codes in R painless by providing a comprehensive dataset of U.S. ZIP codes and a set of functions for working with them.
 License: GPL-3 + file LICENSE
 URL: https://github.com/gavinrozzi/zipcodeR
-BugReports: https://github.com/gavinrozzi/zipcodeR
+BugReports: https://github.com/gavinrozzi/zipcodeR/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
