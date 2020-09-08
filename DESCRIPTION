@@ -1,15 +1,17 @@
 Package: zipcodeR
 Title: Data & Functions for Working with US ZIP Codes
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person(given = "Gavin",
            family = "Rozzi",
            role = c("aut", "cre"),
            email = "gr@gavinrozzi.com",
            comment = c(ORCID = "0000-0002-9969-8175"))
-Description: Make working with ZIP codes in R painless by providing a comprehensive dataset of U.S. ZIP codes and a set of functions for working with them.
+Description: Make working with ZIP codes in R painless with an integrated dataset of U.S. ZIP codes and functions for working with them. 
+             Search ZIP codes by multiple geographies, including state, county, city & across timezones. Also included are functions for relating
+             ZIP codes to Census data.
 License: GPL-3 + file LICENSE
-URL: https://github.com/gavinrozzi/zipcodeR
+URL: https://github.com/gavinrozzi/zipcodeR, https://www.gavinrozzi.com/project/zipcoder/
 BugReports: https://github.com/gavinrozzi/zipcodeR/issues
 Encoding: UTF-8
 LazyData: true

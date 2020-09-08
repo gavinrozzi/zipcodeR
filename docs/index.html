@@ -18,7 +18,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Data &amp; Functions for Working with US ZIP Codes">
-<meta property="og:description" content="Make working with ZIP codes in R painless by providing a comprehensive dataset of U.S. ZIP codes and a set of functions for working with them.">
+<meta property="og:description" content="Make working with ZIP codes in R painless with an integrated dataset of U.S. ZIP codes and functions for working with them. 
+             Search ZIP codes by multiple geographies, including state, county, city &amp; across timezones. Also included are functions for relating
+             ZIP codes to Census data.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -107,6 +109,9 @@
 
 <span class="co"># Find all ZIP codes for a county</span>
 <span class="fu"><a href="reference/search_county.html">search_county</a></span>(<span class="st">'Ocean'</span>,<span class="st">'NJ'</span>)
+
+<span class="co"># Find ZIP codes for a city</span>
+<span class="fu"><a href="reference/search_city.html">search_city</a></span>(<span class="st">'Chappaqua'</span>,<span class="st">'NY'</span>)
 
 <span class="co"># Find all ZIP codes for a timezone</span>
 <span class="fu"><a href="reference/search_tz.html">search_tz</a></span>(<span class="st">'Eastern'</span>)
