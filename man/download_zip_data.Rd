@@ -2,18 +2,18 @@
 % Please edit documentation in R/download_data.r
 \name{download_zip_data}
 \alias{download_zip_data}
-\title{Download update data files needed for library functionality. To be implemented in the future.}
+\title{Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.}
 \usage{
 download_zip_data(force = FALSE)
 }
 \arguments{
-\item{force}{Two-digit code for a U.S. state}
+\item{force}{Boolean, if set to TRUE will force overwrite existing data files with new version}
 }
 \value{
 Data files needed for package functionality, stored in data directory of package install
 }
 \description{
-Download update data files needed for library functionality. To be implemented in the future.
+Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.
 }
 \examples{
 

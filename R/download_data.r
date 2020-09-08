@@ -1,6 +1,6 @@
-#' Download update data files needed for library functionality. To be implemented in the future.
+#' Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.
 #'
-#' @param force Two-digit code for a U.S. state
+#' @param force Boolean, if set to TRUE will force overwrite existing data files with new version
 #' @return Data files needed for package functionality, stored in data directory of package install
 #' @examples
 #'
