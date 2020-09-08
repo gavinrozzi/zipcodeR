@@ -21,6 +21,9 @@ search_state('NJ')
 # Find all ZIP codes for a county
 search_county('Ocean','NJ')
 
+# Find ZIP codes for a city
+search_city('Chappaqua','NY')
+
 # Find all ZIP codes for a timezone
 search_tz('Eastern')
 

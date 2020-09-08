@@ -58,6 +58,39 @@ search_county <- function(county_name, state_abb) {
   print(paste(nrow(county_zips), 'ZIP codes found for', county_name_proper,',',state_abb))
   return(county_zips)
 }
+#' Search ZIP codes for a city within a state
+#'
+#'
+#' @param state_abb Two-digit code for a U.S. state
+#' @param city_name Name of major city to search
+#' @return dataframe of all ZIP code data found for given city
+#'
+#' @examples
+#' search_city('Spring Lake','NJ')
+#' search_city('Chappaqua','NY')
+#' @importFrom stringr str_detect
+#' @export
+search_city <- function(city_name, state_abb) {
+  # Test if state name input is capitalized, capitalize if lowercase
+  if (stringr::str_detect(state_abb, "^[:upper:]+$") == FALSE) {
+    state_abb <- toupper(state_abb)
+  }
+  # Test if first letter of city name  input is capitalized, capitalize if input is lowercase
+  if (stringr::str_detect(city_name, "^[:upper:]") == FALSE) {
+    first_char <- toupper(substring(city_name,0,1))
+    remainder <- substring(city_name,2,nchar(city_name))
+    city_name <- paste0(first_char,remainder)
+  }
+  # Get matching ZIP codes for city
+  city_zips <- zip_code_db %>% dplyr::filter(.data$state == state_abb & .data$major_city == city_name)
+  # Throw an error if nothing found
+  if (nrow(city_zips) == 0) {
+    stop(paste('No ZIP codes found for city:',city_name,',', state_abb))
+  }
+  # Print number of ZIP codes found to console
+  print(paste(nrow(city_zips), 'ZIP codes found for', city_name,',', state_abb))
+  return(city_zips)
+}
 #' Search ZIP codes for a timezone
 #'
 #' @param tz Timezone
@@ -103,3 +136,5 @@ get_tracts <- function(zip_code) {
   print(paste(nrow(tracts), 'Census tracts found for ZIP code', zip_code))
   return(tracts)
 }
+
+

@@ -2,6 +2,7 @@
 
 export(download_zip_data)
 export(get_tracts)
+export(search_city)
 export(search_county)
 export(search_state)
 export(search_tz)
