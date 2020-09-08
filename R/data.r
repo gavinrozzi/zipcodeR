@@ -1,6 +1,6 @@
 #' ZCTA to Census Tract (2010) Crosswalk
 #'
-#' A dataset containing the relationships between ZIP code tabluation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.
+#' A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.
 #'
 #' @format A data frame with 148897 rows and 4 variables:
 #' \describe{

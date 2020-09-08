@@ -8,10 +8,10 @@ Authors@R:
            email = "gr@gavinrozzi.com",
            comment = c(ORCID = "0000-0002-9969-8175"))
 Description: Make working with ZIP codes in R painless with an integrated dataset of U.S. ZIP codes and functions for working with them. 
-             Search ZIP codes by multiple geographies, including state, county, city & across timezones. Also included are functions for relating
+             Search ZIP codes by multiple geographies, including state, county, city & across time zones. Also included are functions for relating
              ZIP codes to Census data.
 License: GPL-3 + file LICENSE
-URL: https://github.com/gavinrozzi/zipcodeR, https://www.gavinrozzi.com/project/zipcoder/
+URL: https://github.com/gavinrozzi/zipcodeR/, https://www.gavinrozzi.com/project/zipcoder/
 BugReports: https://github.com/gavinrozzi/zipcodeR/issues
 Encoding: UTF-8
 LazyData: true
