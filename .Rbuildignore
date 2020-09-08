@@ -5,3 +5,4 @@
 ^pkgdown$
 ^LICENSE\.md$
 ^\.travis\.yml$
+^zipcodeR\cran-comments.md$
