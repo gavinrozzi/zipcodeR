@@ -1,4 +1,4 @@
-# zipcodeR <a href='https://gavinrozzi.github.io/zipcodeR'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# zipcodeR <a href='https://gavinrozzi.github.io/zipcodeR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 [![Build Status](https://travis-ci.com/gavinrozzi/zipcodeR.svg?branch=master)](https://travis-ci.com/gavinrozzi/zipcodeR)
 ### Makes dealing with U.S. ZIP codes painless.
 
