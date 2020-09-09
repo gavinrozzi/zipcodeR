@@ -1,3 +1,10 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Deleted the LICENSE file from the package
+* Update URLs in the DESCRIPTION file to include trailing slashes to address comments and eliminate error
+
+
 ## Initial submission notes
 This is a new package that facilitates working with ZIP code data in R through an integrated set of data and functions.
 
