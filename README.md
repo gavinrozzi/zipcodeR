@@ -1,10 +1,18 @@
 # zipcodeR <a href='https://gavinrozzi.github.io/zipcodeR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 [![Build Status](https://travis-ci.com/gavinrozzi/zipcodeR.svg?branch=master)](https://travis-ci.com/gavinrozzi/zipcodeR)
+[![CRAN Status](https://www.r-pkg.org/badges/version-last-release/zipcodeR)](https://www.r-pkg.org/badges/version-last-release/zipcodeR)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/zipcodeR)](https://cranlogs.r-pkg.org/badges/grand-total/zipcodeR)
+
 ### Makes dealing with U.S. ZIP codes painless.
 
 **zipcodeR** is an R library that makes working with ZIP codes in R easier. It provides data on all U.S. ZIP codes using multiple open data sources, making it easier for social science researchers and data scientists to work with ZIP code-level data in projects. 
 
 ## Installation
+Install the current release from CRAN:
+```r
+install.packages('zipcodeR')
+```
+
 The latest development version can be installed like so using devtools:
 ``` r
 library(devtools)
