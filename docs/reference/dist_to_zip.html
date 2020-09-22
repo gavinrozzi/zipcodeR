@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates. — download_zip_data • zipcodeR</title>
+<title>Get all ZIP codes that fall within a given congressional district — dist_to_zip • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates. — download_zip_data" />
-<meta property="og:description" content="Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates." />
+<meta property="og:title" content="Get all ZIP codes that fall within a given congressional district — dist_to_zip" />
+<meta property="og:description" content="Get all ZIP codes that fall within a given congressional district" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -119,39 +119,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/download_data.r'><code>R/download_data.r</code></a></small>
-    <div class="hidden name"><code>download_zip_data.Rd</code></div>
+    <h1>Get all ZIP codes that fall within a given congressional district</h1>
+    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_lookups.r'><code>R/zip_lookups.r</code></a></small>
+    <div class="hidden name"><code>dist_to_zip.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.</p>
+    <p>Get all ZIP codes that fall within a given congressional district</p>
     </div>
 
-    <pre class="usage"><span class='fu'>download_zip_data</span>(force = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>dist_to_zip</span>(<span class='kw'>state_fips_code</span>, <span class='kw'>congressional_district</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>force</th>
-      <td><p>Boolean, if set to TRUE will force overwrite existing data files with new version</p></td>
+      <th>state_fips_code</th>
+      <td><p>A two-digit U.S. FIPS code for a state</p></td>
+    </tr>
+    <tr>
+      <th>congressional_district</th>
+      <td><p>A two digit number specifying a congressional district in a given</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Data files needed for package functionality, stored in data directory of package install</p>
+    <p>dataframe of all congressional districts found for given ZIP code, including state code</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>download_zip_data</span>()
-</div><div class='output co'>#&gt; [1] "Data directory exists - moving to download phase"
-#&gt; [1] "Crosswalk file found, skipping"
-#&gt; [1] "ZIP code database file found, skipping"
-#&gt; [1] "Congressional district file found, skipping"</div><div class='input'>
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>dist_to_zip</span>(<span class='st'>'NJ'</span>,<span class='st'>'03'</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in dist_to_zip("NJ", "03"): could not find function "dist_to_zip"</span></div><div class='input'><span class='fu'>dist_to_zip</span>(<span class='st'>'FL'</span>,<span class='st'>'05'</span>)
+</div><div class='output co'>#&gt; <span class='error'>Error in dist_to_zip("FL", "05"): could not find function "dist_to_zip"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
