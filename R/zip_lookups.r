@@ -147,7 +147,7 @@ get_tracts <- function(zip_code) {
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
 #' @export
-get_cd <- function(zip_code) {
+get_con_dist <- function(zip_code) {
   # Get state FIPS codes data from tidycensus library
   state_fips <- tidycensus::fips_codes
   # Match ZIP codes with congressional districts located within this ZIP
@@ -160,6 +160,32 @@ get_cd <- function(zip_code) {
   # Join the lookup result with tidycensus FIPS code data for more info
   joined <- result %>% dplyr::left_join(state_fips, by=c('state'='state_code'))
   output <- data.frame(joined$state.y[1],district) %>% dplyr::rename('state_fips' = 'joined.state.y.1.')
+  return(output)
+}
+#' Get all ZIP codes that fall within a given congressional district
+#'
+#' @param state_fips_code A two-digit U.S. FIPS code for a state
+#' @param congressional_district A two digit number specifying a congressional district in a given
+#' @return dataframe of all congressional districts found for given ZIP code, including state code
+#'
+#' @examples
+#' dist_to_zip('NJ','03')
+#' dist_to_zip('FL','05')
+#' @importFrom dplyr %>%
+#' @importFrom rlang .data
+#' @export
+dist_to_zip <- function(state_fips_code,congressional_district) {
+  # Create code from state and congressional district to match lookup table
+  cd_code <- base::paste0(state_fips_code,congressional_district)
+  matched_zips <- zip_to_cd %>% dplyr::filter(.data$CD == cd_code)
+  if (nrow(matched_zips) == 0) {
+    stop(paste('No ZIP codes found for congressional district:', congressional_district))
+  }
+  # Print number of ZIP codes found to console
+  base::print(base::paste(nrow(matched_zips), 'ZIP codes found for', 'congressional district', congressional_district))
+  output <- matched_zips %>% dplyr::select(-CD)
+  output$state_fips <- state_fips_code
+  output$congressional_district <- congressional_district
   return(output)
 }
 
