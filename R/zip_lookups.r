@@ -142,8 +142,8 @@ get_tracts <- function(zip_code) {
 #' @return dataframe of all congressional districts found for given ZIP code, including state code
 #'
 #' @examples
-#' get_cd('08731')
-#' get_cd('90210')
+#' get_con_dist('08731')
+#' get_con_dist('90210')
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
 #' @export
@@ -169,8 +169,8 @@ get_con_dist <- function(zip_code) {
 #' @return dataframe of all congressional districts found for given ZIP code, including state code
 #'
 #' @examples
-#' dist_to_zip('NJ','03')
-#' dist_to_zip('FL','05')
+#' dist_to_zip('34','03')
+#' dist_to_zip('36','05')
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
 #' @export
@@ -183,7 +183,7 @@ dist_to_zip <- function(state_fips_code,congressional_district) {
   }
   # Print number of ZIP codes found to console
   base::print(base::paste(nrow(matched_zips), 'ZIP codes found for', 'congressional district', congressional_district))
-  output <- matched_zips %>% dplyr::select(-CD)
+  output <- matched_zips %>% dplyr::select(-.data$CD)
   output$state_fips <- state_fips_code
   output$congressional_district <- congressional_district
   return(output)

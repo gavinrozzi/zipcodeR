@@ -16,6 +16,6 @@ dataframe of all congressional districts found for given ZIP code, including sta
 Get all congressional districts for a given ZIP code
 }
 \examples{
-get_cd('08731')
-get_cd('90210')
+get_con_dist('08731')
+get_con_dist('90210')
 }

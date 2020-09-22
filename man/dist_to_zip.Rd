@@ -18,6 +18,6 @@ dataframe of all congressional districts found for given ZIP code, including sta
 Get all ZIP codes that fall within a given congressional district
 }
 \examples{
-dist_to_zip('NJ','03')
-dist_to_zip('FL','05')
+dist_to_zip('34','03')
+dist_to_zip('36','05')
 }
