@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get all congressional districts for a given ZIP code — get_cd • zipcodeR</title>
+<title>Returns the county name for a given ZIP code — zip_to_county • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Get all congressional districts for a given ZIP code — get_cd" />
-<meta property="og:description" content="Get all congressional districts for a given ZIP code" />
+<meta property="og:title" content="Returns the county name for a given ZIP code — zip_to_county" />
+<meta property="og:description" content="Returns the county name for a given ZIP code" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -119,44 +119,46 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get all congressional districts for a given ZIP code</h1>
+    <h1>Returns the county name for a given ZIP code</h1>
     <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_lookups.r'><code>R/zip_lookups.r</code></a></small>
-    <div class="hidden name"><code>get_cd.Rd</code></div>
+    <div class="hidden name"><code>zip_to_county.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get all congressional districts for a given ZIP code</p>
+    <p>Returns the county name for a given ZIP code</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_cd</span>(<span class='kw'>zip_code</span>)</pre>
+    <pre class="usage"><span class='fu'>zip_to_county</span>(<span class='kw'>zip_code</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>zip_code</th>
-      <td><p>A U.S. ZIP code</p></td>
+      <td><p>A 5-digit U.S. ZIP code</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a named list of two-digit state code and two digit district code</p>
+    <p>A named list consisting of the county name and state for the ZIP code</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_cd</span>(<span class='st'>'08731'</span>)
-</div><div class='output co'>#&gt; $state_fips
-#&gt; [1] "NJ"
+    <pre class="examples"><div class='input'><span class='fu'>zip_to_county</span>(<span class='st'>'90210'</span>)
+</div><div class='output co'>#&gt; $county
+#&gt; [1] "Los Angeles County"
 #&gt; 
-#&gt; $district
-#&gt; [1] "03"
-#&gt; </div><div class='input'><span class='fu'>get_cd</span>(<span class='st'>'90210'</span>)
-</div><div class='output co'>#&gt; $state_fips
+#&gt; $state
 #&gt; [1] "CA"
+#&gt; </div><div class='input'><span class='fu'>zip_to_county</span>(<span class='st'>'08731'</span>)
+</div><div class='output co'>#&gt; $county
+#&gt; [1] "Ocean County"
 #&gt; 
-#&gt; $district
-#&gt; [1] "28" "30" "33"
-#&gt; </div></pre>
+#&gt; $state
+#&gt; [1] "NJ"
+#&gt; </div><div class='input'><span class='fu'>zip_to_county</span>(<span class='st'>'07762'</span>)<span class='op'>$</span><span class='kw'>county</span>
+</div><div class='output co'>#&gt; [1] "Monmouth County"</div><div class='input'><span class='co'>#' zip_to_county('07762')$state</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

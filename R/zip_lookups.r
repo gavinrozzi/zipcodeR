@@ -58,6 +58,31 @@ search_county <- function(county_name, state_abb) {
   print(paste(nrow(county_zips), 'ZIP codes found for', county_name_proper,',',state_abb))
   return(county_zips)
 }
+#' Returns the county name + state for a given ZIP code
+#'
+#'
+#' @param zip_code A 5-digit U.S. ZIP code
+#' @return A named list consisting of the county name and state for the ZIP code
+#'
+#' @examples
+#' zip_to_county('90210')
+#' zip_to_county('08731')
+#' zip_to_county('07762')$county
+#' #' zip_to_county('07762')$state
+#' @export
+zip_to_county <- function(zip_code) {
+  # Convert to character so leading zeroes are preserved
+  zip_code <- as.character(zip_code)
+  # Get matching ZIP code record for
+  zip_code_data <- zip_code_db %>% dplyr::filter(.data$zipcode == zip_code)
+  # Throw an error if nothing found
+  if (nrow(zip_code_data) == 0) {
+    stop(paste('No county name found for',.data$zip_code,',',.data$state))
+  }
+  county <- zip_code_data$county
+  state <- zip_code_data$state
+  return(list(county = county, state = state))
+}
 #' Search ZIP codes for a city within a state
 #'
 #'
@@ -139,15 +164,15 @@ get_tracts <- function(zip_code) {
 #' Get all congressional districts for a given ZIP code
 #'
 #' @param zip_code A U.S. ZIP code
-#' @return dataframe of all congressional districts found for given ZIP code, including state code
+#' @return a named list of two-digit state code and two digit district code
 #'
 #' @examples
-#' get_con_dist('08731')
-#' get_con_dist('90210')
+#' get_cd('08731')
+#' get_cd('90210')
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
 #' @export
-get_con_dist <- function(zip_code) {
+get_cd <- function(zip_code) {
   # Get state FIPS codes data from tidycensus library
   state_fips <- tidycensus::fips_codes
   # Match ZIP codes with congressional districts located within this ZIP
@@ -160,7 +185,8 @@ get_con_dist <- function(zip_code) {
   # Join the lookup result with tidycensus FIPS code data for more info
   joined <- result %>% dplyr::left_join(state_fips, by=c('state'='state_code'))
   output <- data.frame(joined$state.y[1],district) %>% dplyr::rename('state_fips' = 'joined.state.y.1.')
-  return(output)
+
+  return(list(state_fips = joined$state.y[1], district = district))
 }
 #' Get all ZIP codes that fall within a given congressional district
 #'
@@ -169,12 +195,12 @@ get_con_dist <- function(zip_code) {
 #' @return dataframe of all congressional districts found for given ZIP code, including state code
 #'
 #' @examples
-#' dist_to_zip('34','03')
-#' dist_to_zip('36','05')
+#' cd_to_zip('34','03')
+#' cd_to_zip('36','05')
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
 #' @export
-dist_to_zip <- function(state_fips_code,congressional_district) {
+cd_to_zip <- function(state_fips_code,congressional_district) {
   # Create code from state and congressional district to match lookup table
   cd_code <- base::paste0(state_fips_code,congressional_district)
   matched_zips <- zip_to_cd %>% dplyr::filter(.data$CD == cd_code)
