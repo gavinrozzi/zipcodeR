@@ -136,6 +136,44 @@ search_tz <- function(tz) {
   base::cat(paste(nrow(tz_zips), 'ZIP codes found for', tz,'timezone','\n'))
   return(tz_zips)
 }
+#' Returns all ZIP codes found within a given FIPS code
+#'
+#' @param state_fips A U.S. FIPS code
+#' @param county_fips A 1-3 digit county FIPS code (optional)
+#' @return dataframe of Census tracts and data from Census crosswalk file found for given ZIP code
+#'
+#' @examples
+#' search_fips('34')
+#' search_fips('34','03')
+#' search_fips('34','3')
+#' search_fips('36','003')
+#' @importFrom rlang .data
+#' @export
+search_fips <- function(state_fips,county_fips) {
+  # Get FIPS code data from tidycensus
+  fips_data <- tidycensus::fips_codes
+  # Separate routine if only state_fips code provided
+  if (missing(county_fips)) {
+    # Get matching FIPS data for provided state FIPS code
+    fips_result <- fips_data %>% dplyr::filter(.data$state_code == state_fips)
+    # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
+    result <- zip_code_db %>% filter(state == fips_result$state[1])
+    base::cat(nrow(result),'ZIP codes found for FIPS code',fips_result$state_code[1], paste0('(',fips_result$state[1],')'))
+    return(result)
+  } else {
+    # Clean up county FIPS code input by adding leading zeroes to match FIPS code data if not present
+    if (nchar(county_fips < 3)) {
+      difference <- base::abs(nchar(county_fips) - 3)
+      county_fips <- base::paste0(strrep('0', difference), county_fips)
+    }
+    # Get matching FIPS data for provided state & county FIPS code
+    fips_result <- fips_data %>% dplyr::filter(.data$state_code == state_fips & .data$county_code == county_fips)
+    # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
+    result <- zip_code_db %>% dplyr::filter(.data$state == fips_result$state[1] & .data$county == fips_result$county[1])
+    base::cat(nrow(result),'ZIP codes found for FIPS code',fips_result$state_code[1], paste0('(',fips_result$state[1],')'),fips_result$county_code[1], paste0('(',fips_result$county[1],')'))
+    return(result)
+  }
+}
 
 #' Get all Census tracts within a given ZIP code
 #'
