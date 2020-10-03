@@ -20,7 +20,7 @@ search_state <- function(state_abb){
     stop(paste('No ZIP codes found for state:',state_abb))
   }
   # Print number of ZIP codes found to console
-  print(paste(nrow(state_zips), 'ZIP codes found for', state_abb))
+  base::cat(paste(nrow(state_zips), 'ZIP codes found for state:', state_abb))
   return(state_zips)
 }
 #' Search ZIP codes for a county
@@ -55,7 +55,7 @@ search_county <- function(county_name, state_abb) {
     stop(paste('No ZIP codes found for county:',county_name,',',.data$state))
   }
   # Print number of ZIP codes found to console
-  print(paste(nrow(county_zips), 'ZIP codes found for', county_name_proper,',',state_abb))
+  base::cat(paste(nrow(county_zips), 'ZIP codes found for', county_name_proper,',',state_abb,'\n'))
   return(county_zips)
 }
 #' Returns the county name + state for a given ZIP code
@@ -113,7 +113,7 @@ search_city <- function(city_name, state_abb) {
     stop(paste('No ZIP codes found for city:',city_name,',', state_abb))
   }
   # Print number of ZIP codes found to console
-  print(paste(nrow(city_zips), 'ZIP codes found for', city_name,',', state_abb))
+  base::cat(paste(nrow(city_zips), 'ZIP codes found for', city_name,',', state_abb,'\n'))
   return(city_zips)
 }
 #' Search ZIP codes for a timezone
@@ -133,9 +133,10 @@ search_tz <- function(tz) {
     stop(paste('No ZIP codes found for timezone:',tz))
   }
   # Print number of ZIP codes found to console
-  print(paste(nrow(tz_zips), 'ZIP codes found for', tz,'timezone'))
+  base::cat(paste(nrow(tz_zips), 'ZIP codes found for', tz,'timezone','\n'))
   return(tz_zips)
 }
+
 #' Get all Census tracts within a given ZIP code
 #'
 #' @param zip_code A U.S. ZIP code
@@ -158,7 +159,7 @@ get_tracts <- function(zip_code) {
     stop(paste("No Census tracts found for ZIP code", zip_code))
   }
   # Print number of tracts found to console
-  print(paste(nrow(tracts), 'Census tracts found for ZIP code', zip_code))
+  base::cat(paste(nrow(tracts), 'Census tracts found for ZIP code', zip_code,'\n'))
   return(tracts)
 }
 #' Get all congressional districts for a given ZIP code
@@ -208,10 +209,12 @@ cd_to_zip <- function(state_fips_code,congressional_district) {
     stop(paste('No ZIP codes found for congressional district:', congressional_district))
   }
   # Print number of ZIP codes found to console
-  base::print(base::paste(nrow(matched_zips), 'ZIP codes found for', 'congressional district', congressional_district))
+  base::cat(base::paste(nrow(matched_zips), 'ZIP codes found for', 'congressional district', congressional_district,'\n'))
   output <- matched_zips %>% dplyr::select(-.data$CD)
   output$state_fips <- state_fips_code
   output$congressional_district <- congressional_district
   return(output)
 }
+
+
 
