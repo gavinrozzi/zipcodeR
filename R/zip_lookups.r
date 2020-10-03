@@ -215,6 +215,27 @@ cd_to_zip <- function(state_fips_code,congressional_district) {
   output$congressional_district <- congressional_district
   return(output)
 }
-
+#' Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)
+#'
+#'
+#' @param zip_code A 5-digit U.S. ZIP code
+#' @return Boolean TRUE or FALSE based upon whether provided ZIP code is a ZCTA by testing whether it exists in the U.S. Census crosswalk data
+#'
+#' @examples
+#' is_zcta('90210')
+#' is_zcta('99999')
+#' is_zcta('07762')
+#' @export
+is_zcta <- function(zip_code) {
+  # Convert to character so leading zeroes are preserved
+  zip_code <- as.character(zip_code)
+  # Validate input
+  if (nchar(zip_code) != 5) {
+    stop("Invalid input detected. Please enter a 5-digit U.S. ZIP code")
+  }
+  # Test if provided ZIP code exists within Census ZCTA crosswalk
+  result <- zip_code %in% zcta_crosswalk$ZCTA5
+  return(result)
+}
 
 

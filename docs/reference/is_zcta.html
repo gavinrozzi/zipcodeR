@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search ZIP codes for a city within a state — search_city • zipcodeR</title>
+<title>Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA) — is_zcta • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Search ZIP codes for a city within a state — search_city" />
-<meta property="og:description" content="Search ZIP codes for a city within a state" />
+<meta property="og:title" content="Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA) — is_zcta" />
+<meta property="og:description" content="Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -119,64 +119,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search ZIP codes for a city within a state</h1>
+    <h1>Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)</h1>
     <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_lookups.r'><code>R/zip_lookups.r</code></a></small>
-    <div class="hidden name"><code>search_city.Rd</code></div>
+    <div class="hidden name"><code>is_zcta.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search ZIP codes for a city within a state</p>
+    <p>Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>search_city</span>(<span class='kw'>city_name</span>, <span class='kw'>state_abb</span>)</pre>
+    <pre class="usage"><span class='fu'>is_zcta</span>(<span class='kw'>zip_code</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>city_name</th>
-      <td><p>Name of major city to search</p></td>
-    </tr>
-    <tr>
-      <th>state_abb</th>
-      <td><p>Two-digit code for a U.S. state</p></td>
+      <th>zip_code</th>
+      <td><p>A 5-digit U.S. ZIP code</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe of all ZIP code data found for given city</p>
+    <p>Boolean TRUE or FALSE based upon whether provided ZIP code is a ZCTA by testing whether it exists in the U.S. Census crosswalk data</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>search_city</span>(<span class='st'>'Spring Lake'</span>,<span class='st'>'NJ'</span>)
-</div><div class='output co'>#&gt; 1 ZIP codes found for Spring Lake , NJ </div><div class='output co'>#&gt;   zipcode zipcode_type  major_city post_office_city
-#&gt; 1   07762     Standard Spring Lake  Spring Lake, NJ
-#&gt;                                                                             common_city_list
-#&gt; 1 78, 9c, 8b, 56, 0a, 2e, 28, ca, cc, 4b, 57, f0, 49, cc, 4e, 55, 8a, 05, 00, 28, d6, 05, 0d
-#&gt;            county state   lat    lng timezone radius_in_miles
-#&gt; 1 Monmouth County    NJ 40.15 -74.04  Eastern               1
-#&gt;                                                                           area_code_list
-#&gt; 1 78, 9c, 8b, 56, 32, 37, 36, 52, d2, 51, 50, b2, 30, b1, 50, 8a, 05, 00, 14, ea, 02, cd
-#&gt;   population population_density land_area_in_sqmi water_area_in_sqmi
-#&gt; 1       8403               2997               2.8               0.42
-#&gt;   housing_units occupied_housing_units median_home_value
-#&gt; 1          5480                   3975            649400
-#&gt;   median_household_income bounds_west bounds_east bounds_north bounds_south
-#&gt; 1                   73986   -74.05861   -74.01508     40.16901     40.13751</div><div class='input'><span class='fu'>search_city</span>(<span class='st'>'Chappaqua'</span>,<span class='st'>'NY'</span>)
-</div><div class='output co'>#&gt; 1 ZIP codes found for Chappaqua , NY </div><div class='output co'>#&gt;   zipcode zipcode_type major_city post_office_city
-#&gt; 1   10514     Standard  Chappaqua    Chappaqua, NY
-#&gt;                                                                     common_city_list
-#&gt; 1 78, 9c, 8b, 56, 72, ce, 48, 2c, 28, 48, 2c, 2c, 4d, 54, 8a, 05, 00, 1f, 41, 04, 91
-#&gt;               county state   lat    lng timezone radius_in_miles
-#&gt; 1 Westchester County    NY 41.18 -73.77  Eastern               4
-#&gt;                                               area_code_list population
-#&gt; 1 78, 9c, 8b, 56, b2, 34, 34, 51, 8a, 05, 00, 06, 6e, 01, 9b      11946
-#&gt;   population_density land_area_in_sqmi water_area_in_sqmi housing_units
-#&gt; 1                932             12.82               0.13          4033
-#&gt;   occupied_housing_units median_home_value median_household_income bounds_west
-#&gt; 1                   3893            912700                  202414   -73.81274
-#&gt;   bounds_east bounds_north bounds_south
-#&gt; 1   -73.72405     41.21839     41.12929</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>is_zcta</span>(<span class='st'>'90210'</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_zcta</span>(<span class='st'>'99999'</span>)
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_zcta</span>(<span class='st'>'07762'</span>)
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
