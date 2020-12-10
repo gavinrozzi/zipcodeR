@@ -28,34 +28,55 @@ search_state <- function(state_abb){
 #'
 #' @param state_abb Two-digit code for a U.S. state
 #' @param county_name Name of a county within a U.S. state
-#' @return dataframe of all ZIP codes found for given county
+#' @param similar perform the county lookup using package base function agrep. Default is FALSE.
+#' @param max.distance if the parameter similar = TRUE, then send the parameter max.distance to the base function agrep. Default is 0.1.
 #'
 #' @examples
 #' middlesex <- search_county('Middlesex','NJ')
 #' alameda <- search_county('alameda','CA')
+#' search_county("ST BERNARD","LA", similar = TRUE)$zipcode
 #' @importFrom stringr str_detect
+#' @importFrom rlang list2
 #' @export
-search_county <- function(county_name, state_abb) {
-  # Test if state abbreviation input is capitalized, capitalize if lowercase
+search_county <- function (county_name, state_abb, ...)
+{
+  dots <- rlang::list2(...)
+
   if (stringr::str_detect(state_abb, "^[:upper:]+$") == FALSE) {
     state_abb <- toupper(state_abb)
   }
-  # Test if first letter of county  input is capitalized, capitalize if input is lowercase
-  if (stringr::str_detect(county_name, "^[:upper:]") == FALSE) {
-    first_char <- toupper(substring(county_name,0,1))
-    remainder <- substring(county_name,2,nchar(county_name))
-    county_name <- paste0(first_char,remainder)
+
+  if("similar" %in% names(dots) && dots$similar == TRUE) {
+
+    if("max.distance" %in% names(dots)) {
+      max.distance <- dots$max.distance
+    } else {
+      max.distance <- 0.1
+    }
+    state_counties <- zip_code_db %>% dplyr::filter(.data$state == state_abb)
+    county_name_proper <- agrep(county_name, state_counties$county,
+                                ignore.case = TRUE, value = TRUE, max.distance = max.distance)
+
+    county_zips <- zip_code_db %>% dplyr::filter(.data$state ==
+                                                   state_abb & .data$county %in% county_name_proper)
+
+  } else {
+    if (stringr::str_detect(county_name, "^[:upper:]") == FALSE) {
+      first_char <- toupper(substring(county_name, 0, 1))
+      remainder <- substring(county_name, 2, nchar(county_name))
+      county_name <- paste0(first_char, remainder)
+    }
+    county_name_proper <- paste(county_name, "County")
+    county_zips <- zip_code_db %>% dplyr::filter(.data$state ==
+                                                   state_abb & .data$county == county_name_proper)
   }
-  # Create full name of county from name input
-  county_name_proper <- paste(county_name,'County')
-  # Get matching ZIP codes for county
-  county_zips <- zip_code_db %>% dplyr::filter(.data$state == state_abb & .data$county == county_name_proper)
-  # Throw an error if nothing found
+
   if (nrow(county_zips) == 0) {
-    stop(paste('No ZIP codes found for county:',county_name,',',.data$state))
+    stop(paste("No ZIP codes found for county:", county_name,
+               ",", state_abb))
   }
-  # Print number of ZIP codes found to console
-  base::cat(paste(nrow(county_zips), 'ZIP codes found for', county_name_proper,',',state_abb,'\n'))
+  print(paste(nrow(county_zips), "ZIP codes found for",
+              paste0(sapply(unique(county_name_proper), function(x) { paste(x, ",", state_abb) }), collapse = ' or ')))
   return(county_zips)
 }
 #' Returns the county name + state for a given ZIP code
@@ -157,7 +178,7 @@ search_fips <- function(state_fips,county_fips) {
     # Get matching FIPS data for provided state FIPS code
     fips_result <- fips_data %>% dplyr::filter(.data$state_code == state_fips)
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
-    result <- zip_code_db %>% filter(state == fips_result$state[1])
+    result <- zip_code_db %>% dplyr::filter(.data$state == fips_result$state[1])
     base::cat(nrow(result),'ZIP codes found for FIPS code',fips_result$state_code[1], paste0('(',fips_result$state[1],')'))
     return(result)
   } else {
@@ -275,5 +296,8 @@ is_zcta <- function(zip_code) {
   result <- zip_code %in% zcta_crosswalk$ZCTA5
   return(result)
 }
+
+
+
 
 
