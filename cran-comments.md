@@ -3,6 +3,8 @@
 ## Resubmission
 This is a resubmission. In this version I have added several new features. See the NEWS.md file for details on changes.
 
+In this resubmission I have addressed the issue that led to my submission to fail due to undefined global variables by updating the file R/globals.R
+
 ## Test environments
 * local macOS Big Sur install, R 3.6.1
 * win-builder (oldrelease, devel, release)

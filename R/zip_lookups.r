@@ -255,7 +255,7 @@ get_cd <- function(zip_code) {
   result <- data.frame(cbind(district,state))
   # Join the lookup result with tidycensus FIPS code data for more info
   joined <- result %>% dplyr::left_join(state_fips, by=c('state'='state_code'))
-  output <- data.frame(joined$state.y[1],district) %>% dplyr::rename('state_fips' = 'joined.state.y.1.')
+  output <- data.frame(joined$state.y[1],district) %>% dplyr::rename('state' = 'joined.state.y.1.')
 
   return(list(state_fips = joined$state.y[1], district = district))
 }

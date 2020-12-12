@@ -9,6 +9,7 @@
 - Added `search_cd()` function for searching ZIP codes contained within a given congressional district.
 - Added `is_zcta()` function for testing whether a given ZIP code is a ZIP code tabulation area (ZCTA).
 - Added `search_fips()` function for searching ZIP codes by state and county FIPS codes.
+- Added `get_cd()` and `search_cd()` functions for relating ZIP codes to congressional districts
 - Added the first vignette, "Introduction to zipcodeR"
 
 # zipcodeR 0.1.0
