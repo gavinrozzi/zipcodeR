@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -144,15 +144,33 @@
       <tr>
         
         <td>
+          <p><code><a href="cd_to_zip.html">cd_to_zip()</a></code> </p>
+        </td>
+        <td><p>Get all ZIP codes that fall within a given congressional district</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="download_zip_data.html">download_zip_data()</a></code> </p>
         </td>
         <td><p>Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="get_cd.html">get_cd()</a></code> </p>
+        </td>
+        <td><p>Get all congressional districts for a given ZIP code</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="get_tracts.html">get_tracts()</a></code> </p>
         </td>
         <td><p>Get all Census tracts within a given ZIP code</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="is_zcta.html">is_zcta()</a></code> </p>
+        </td>
+        <td><p>Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)</p></td>
       </tr><tr>
         
         <td>
@@ -165,6 +183,12 @@
           <p><code><a href="search_county.html">search_county()</a></code> </p>
         </td>
         <td><p>Search ZIP codes for a county</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="search_fips.html">search_fips()</a></code> </p>
+        </td>
+        <td><p>Returns all ZIP codes found within a given FIPS code</p></td>
       </tr><tr>
         
         <td>
@@ -195,6 +219,12 @@
           <p><code><a href="zip_to_cd.html">zip_to_cd</a></code> </p>
         </td>
         <td><p>ZIP Code to Congressional District Relationship File</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="zip_to_county.html">zip_to_county()</a></code> </p>
+        </td>
+        <td><p>Returns the county name + state for a given ZIP code</p></td>
       </tr>
     </tbody>
     </table>
@@ -210,7 +240,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Gavin Rozzi.</p>
+  <p>Developed by <a href='https://www.gavinrozzi.com'>Gavin Rozzi</a>.</p>
 </div>
 
 <div class="pkgdown">

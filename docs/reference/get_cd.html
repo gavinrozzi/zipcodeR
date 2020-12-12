@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZIP Code Database — zip_code_db • zipcodeR</title>
+<title>Get all congressional districts for a given ZIP code — get_cd • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="ZIP Code Database — zip_code_db" />
-<meta property="og:description" content="A dataset containing detailed information for U.S. ZIP codes" />
+<meta property="og:title" content="Get all congressional districts for a given ZIP code — get_cd" />
+<meta property="og:description" content="Get all congressional districts for a given ZIP code" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -119,52 +119,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ZIP Code Database</h1>
-    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/data.r'><code>R/data.r</code></a></small>
-    <div class="hidden name"><code>zip_code_db.Rd</code></div>
+    <h1>Get all congressional districts for a given ZIP code</h1>
+    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_lookups.r'><code>R/zip_lookups.r</code></a></small>
+    <div class="hidden name"><code>get_cd.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A dataset containing detailed information for U.S. ZIP codes</p>
+    <p>Get all congressional districts for a given ZIP code</p>
     </div>
 
-    <pre class="usage"><span class='kw'>zip_code_db</span></pre>
+    <pre class="usage"><span class='fu'>get_cd</span>(<span class='kw'>zip_code</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>zip_code</th>
+      <td><p>A U.S. ZIP code</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 41877 rows and 24 variables:</p><dl>
-<dt>zipcode</dt><dd><p>5 digit U.S. ZIP code</p></dd>
-<dt>zipcode_type</dt><dd><p>2010 State FIPS Code</p></dd>
-<dt>major_city</dt><dd><p>Major city serving the ZIP code</p></dd>
-<dt>post_office_city</dt><dd><p>City of post office serving the ZIP code</p></dd>
-<dt>common_city_list</dt><dd><p>List of common cities represented by the ZIP code</p></dd>
-<dt>county</dt><dd><p>Name of county containing the ZIP code</p></dd>
-<dt>state</dt><dd><p>Two-digit state code for ZIP code location</p></dd>
-<dt>lat</dt><dd><p>Latitude of the centroid for the ZIP code</p></dd>
-<dt>lng</dt><dd><p>Longitude of the centroid for the ZIP code</p></dd>
-<dt>timezone</dt><dd><p>Timezone of the ZIP code</p></dd>
-<dt>radius_in_miles</dt><dd><p>Radius of the ZIP code in miles</p></dd>
-<dt>area_code_list</dt><dd><p>List of area codes for telephone numbers within this ZIP code</p></dd>
-<dt>population</dt><dd><p>Total population of the ZIP code</p></dd>
-<dt>population_density</dt><dd><p>Population density of the ZIP code (persons per square mile)</p></dd>
-<dt>land_area_in_sqmi</dt><dd><p>Area of the land contained within the ZIP code in square miles</p></dd>
-<dt>water_area_in_sqmi</dt><dd><p>Area of the waters contained within the ZIP code in square miles</p></dd>
-<dt>housing_units</dt><dd><p>Number of housing units within the ZIP code</p></dd>
-<dt>occupied_housing_units</dt><dd><p>Number of housing units within the ZIP code</p></dd>
-<dt>median_home_value</dt><dd><p>Median home price within the ZIP code</p></dd>
-<dt>median_household_income</dt><dd><p>Median household income within the ZIP code</p></dd>
-<dt>bounds_west</dt><dd><p>Bounding box coordinates</p></dd>
-<dt>bounds_east</dt><dd><p>Bounding box coordinates</p></dd>
-<dt>bounds_north</dt><dd><p>Bounding box coordinates</p></dd>
-<dt>bounds_south</dt><dd><p>Bounding box coordinates</p></dd>
+    <p>a named list of two-digit state code and two digit district code</p>
 
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://github.com/MacHu-GWU/uszipcode-project/files/5183256/simple_db.log'>https://github.com/MacHu-GWU/uszipcode-project/files/5183256/simple_db.log</a></p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>get_cd</span>(<span class='st'>'08731'</span>)
+</div><div class='output co'>#&gt; $state_fips
+#&gt; [1] "NJ"
+#&gt; 
+#&gt; $district
+#&gt; [1] "03"
+#&gt; </div><div class='input'><span class='fu'>get_cd</span>(<span class='st'>'90210'</span>)
+</div><div class='output co'>#&gt; $state_fips
+#&gt; [1] "CA"
+#&gt; 
+#&gt; $district
+#&gt; [1] "28" "30" "33"
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
