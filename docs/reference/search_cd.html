@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZCTA to Census Tract (2010) Crosswalk — zcta_crosswalk • zipcodeR</title>
+<title>Get all ZIP codes that fall within a given congressional district — search_cd • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="ZCTA to Census Tract (2010) Crosswalk — zcta_crosswalk" />
-<meta property="og:description" content="A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file." />
+<meta property="og:title" content="Get all ZIP codes that fall within a given congressional district — search_cd" />
+<meta property="og:description" content="Get all ZIP codes that fall within a given congressional district" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -122,31 +122,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ZCTA to Census Tract (2010) Crosswalk</h1>
-    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/data.r'><code>R/data.r</code></a></small>
-    <div class="hidden name"><code>zcta_crosswalk.Rd</code></div>
+    <h1>Get all ZIP codes that fall within a given congressional district</h1>
+    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_lookups.r'><code>R/zip_lookups.r</code></a></small>
+    <div class="hidden name"><code>search_cd.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.</p>
+    <p>Get all ZIP codes that fall within a given congressional district</p>
     </div>
 
-    <pre class="usage"><span class='va'>zcta_crosswalk</span></pre>
+    <pre class="usage"><span class='fu'>search_cd</span><span class='op'>(</span><span class='va'>state_fips_code</span>, <span class='va'>congressional_district</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>state_fips_code</th>
+      <td><p>A two-digit U.S. FIPS code for a state</p></td>
+    </tr>
+    <tr>
+      <th>congressional_district</th>
+      <td><p>A two digit number specifying a congressional district in a given</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 148897 rows and 4 variables:</p><dl>
-<dt>ZCTA5</dt><dd><p>2010 ZIP Code Tabulation Area</p></dd>
-<dt>TRACT</dt><dd><p>2010 Census Tract Code</p></dd>
-<dt>GEOID</dt><dd><p>Concatenation of 2010 State, County, and Tract</p></dd>
+    <p>tibble of all congressional districts found for given ZIP code, including state code</p>
 
-</dl>
-
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
-
-    <p><a href='https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html'>https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html</a></p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>search_cd</span><span class='op'>(</span><span class='st'>'34'</span>,<span class='st'>'03'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 63 ZIP codes found for congressional district 03 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 63 x 3</span><span>
+#&gt;    ZIP   state_fips congressional_district
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 
+#&gt; </span><span style='color: #555555;'> 1</span><span> 07731 34         03                    
+#&gt; </span><span style='color: #555555;'> 2</span><span> 08004 34         03                    
+#&gt; </span><span style='color: #555555;'> 3</span><span> 08005 34         03                    
+#&gt; </span><span style='color: #555555;'> 4</span><span> 08010 34         03                    
+#&gt; </span><span style='color: #555555;'> 5</span><span> 08011 34         03                    
+#&gt; </span><span style='color: #555555;'> 6</span><span> 08015 34         03                    
+#&gt; </span><span style='color: #555555;'> 7</span><span> 08016 34         03                    
+#&gt; </span><span style='color: #555555;'> 8</span><span> 08019 34         03                    
+#&gt; </span><span style='color: #555555;'> 9</span><span> 08022 34         03                    
+#&gt; </span><span style='color: #555555;'>10</span><span> 08036 34         03                    
+#&gt; </span><span style='color: #555555;'># ... with 53 more rows</span><span></div><div class='input'><span class='fu'>search_cd</span><span class='op'>(</span><span class='st'>'36'</span>,<span class='st'>'05'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 39 ZIP codes found for congressional district 05 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 39 x 3</span><span>
+#&gt;    ZIP   state_fips congressional_district
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 
+#&gt; </span><span style='color: #555555;'> 1</span><span> 11001 36         05                    
+#&gt; </span><span style='color: #555555;'> 2</span><span> 11003 36         05                    
+#&gt; </span><span style='color: #555555;'> 3</span><span> 11010 36         05                    
+#&gt; </span><span style='color: #555555;'> 4</span><span> 11022 36         05                    
+#&gt; </span><span style='color: #555555;'> 5</span><span> 11096 36         05                    
+#&gt; </span><span style='color: #555555;'> 6</span><span> 11352 36         05                    
+#&gt; </span><span style='color: #555555;'> 7</span><span> 11366 36         05                    
+#&gt; </span><span style='color: #555555;'> 8</span><span> 11405 36         05                    
+#&gt; </span><span style='color: #555555;'> 9</span><span> 11411 36         05                    
+#&gt; </span><span style='color: #555555;'>10</span><span> 11412 36         05                    
+#&gt; </span><span style='color: #555555;'># ... with 29 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

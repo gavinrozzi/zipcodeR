@@ -1,0 +1,135 @@
+---
+title: "Introduction to zipcodeR"
+author: "Gavin Rozzi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+description: >
+  This is a short intro to using zipcodeR
+vignette: >
+  %\VignetteIndexEntry{Introduction to zipcodeR}
+  %\VignetteEngine{knitr::knitr}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+library(zipcodeR)
+real_estate_data <- readr::read_csv('https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv', col_types = readr::cols(postal_code = readr::col_character())) %>% dplyr::filter(nchar(postal_code) == 5)
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(1000)
+```
+
+`zipcodeR` is an all-in-one toolkit of functions and data for working with ZIP codes in R.
+
+This document will introduce the tools provided by zipcodeR for improving your workflow when working with ZIP code-level data. The goal of these examples is to help you quickly get up and running with zipcodeR using real-world examples.
+
+## Basic search functions
+First thing's first: `zipcodeR`'s data & basic search functions are a core component of the package. We'll cover these before showing you how you can implement this package with a real-world example.
+
+## Data
+The package ships with an offline database containing 24 columns of data for each ZIP code. You can either keep all 24 variables or filter to just one of these depending on what data you need.
+
+The columns of data provided are:
+**`r colnames(zip_code_db)`**
+
+## Searching for ZIP codes by state
+Let's begin by using zipcodeR to find all ZIP codes within a given state.
+
+Getting all ZIP codes for a single state is simple, you only need to pass a two-digit abbreviation of a state's name to get a tibble of all ZIP codes in that state. Let's start by finding all of the ZIP codes in New York:
+
+```{r}
+search_state('NY')
+```
+
+What if you only wanted the actual ZIP codes and no other variables? You can use R's dollar sign operator to select one column at a time from the output of `zipcodeR`'s search functions:
+```{r}
+nyzip <- search_state('NY')$zipcode
+```
+
+### Searching multiple states at once
+
+You can also search for ZIP codes in multiple states at once by passing a vector of state abbreviations to the search_states function like so:
+
+```{r}
+states <- c('NY','NJ','CT')
+
+search_state(states)
+```
+
+This results in a tibble containing all ZIP codes for the states passed to the `search_states()` function.
+
+## Searching by county
+It is also possible to search for ZIP codes located in a particular county within a state.
+
+Let's find all of the ZIP codes located within Ocean County, New Jersey:
+```{r}
+search_county('Ocean','NJ')
+```
+
+### Approximate matching of county names
+Sometimes working with county names can be messy and there might not be a 100% match between our database and the name. The `search_county()` function can be configured to use base R's `agrep` function for these cases via an optional parameter.
+
+One example where this feature is useful comes from the state of Louisiana. Since Louisiana has parishes, their county names don't line up exactly with how other states name their counties.
+
+This example uses approxmiate matching to retrieve all ZIP codes for St. Bernard Parish in Louisiana:
+
+```{r}
+search_county("ST BERNARD","LA", similar = TRUE)$zipcode
+```
+
+Try running the above code with the similar parameter set to FALSE or not present and you'll receive an error.
+
+## Finding out more about your ZIP codes
+What if you already have a dataset containing ZIP codes and want to find out more about that particular area?
+
+Using the reverse_zipcode() function, we can get up to 24 more columns of data when given a ZIP code.
+
+## Data: U.S. Real Estate Market
+
+To explore how zipcodeR can enhance your data & workflow, we will use a public dataset from the [National Association of Realtors](https://www.realtor.com/research/data/) containing data about housing market trends in the United States.
+
+This dataset, which is updated monthly, contains `r nrow(real_estate_data)` observations with current housing market data from the National Association of Realtors [hosted on Amazon S3](https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv)
+
+This is what the data we will be working with looks like:
+```{r}
+head(real_estate_data)
+```
+Note: The data used in this vignette was filtered to only include valid 5-digit ZIP codes as zipcodeR does not yet have a function for normalizing ZIP codes. The full Realtor dataset will have a different number of rows.
+
+We'll focus on the first row for now, which represents the town of
+`r stringr::str_to_title(real_estate_data[1,]$zip_name)`.
+
+```{r}
+real_estate_data[1,]
+```
+
+The Realtor dataset contains a column named **postal_code** containing the ZIP code that identifies the town. We'll use this to find out more about `r gsub("(.*),.*", "\\1", stringr::str_to_title(real_estate_data[1,]$zip_name))` than what is provided in the housing market data.
+
+## Reverse ZIP code search
+So far we've covered the functions provided by `zipcodeR` for searching ZIP codes across multiple geographies. The package also provides a function for going in reverse, when given a 5-digit ZIP code. Introducing `reverse_zipcode()`:
+
+```{r}
+# Get the ZIP code of the first row of data
+zip_code <- real_estate_data[1,]$postal_code
+
+# Pass the ZIP code to the reverse_zipcode() function
+
+reverse_zipcode(zip_code)
+```
+
+## Relating ZIP codes to Census data
+You may also be interested in relating data at the ZIP code level to Census data. `zipcodeR` currently provides a function for getting all Census tracts when provided with a 5-digit ZIP code.
+
+Let's find out how many Census tracts are in the ZIP code from the previous example.
+```{r} 
+get_tracts(zip_code)
+```
+Now that you have all of the tracts for this ZIP code, it would be very easy to join this with other Census data, such as that which is available from the American Community Survey and other sources.
+
+But ZIP codes alone are not terribly useful for social science research since they are only meant to represent USPS service areas. The Census Bureau has established [ZIP code tabulation areas (ZCTAs)](https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html) that provide a representation of ZIP codes and can be used for joining with Census data. But not every ZIP code is also a ZCTA.
+
+## Testing if a ZIP code is a ZCTA
+`zipcodeR` provides a function for testing if a given ZIP code is also a ZIP code tabulation area. When provided with a vector of 5-digit ZIP codes the function will return TRUE or FALSE based upon whether the ZIP code is also a ZCTA.
+
+```{r}
+is_zcta(zip_code)
+```

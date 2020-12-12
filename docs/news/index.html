@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -90,6 +90,9 @@
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="../articles/zipcodeR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -122,11 +125,31 @@
       <small>Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="zipcoder-010-2020-09-08" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.0">
-<a href="#zipcoder-010-2020-09-08" class="anchor"></a>zipcodeR 0.1.0 (2020-09-08)<small> 2020-09-17 </small>
+    <div id="zipcoder-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#zipcoder-020" class="anchor"></a>zipcodeR 0.2.0<small> Unreleased </small>
 </h1>
-<p>Initial public release, to be submitted to CRAN.</p>
+<ul>
+<li>
+<code><a href="../reference/search_county.html">search_county()</a></code> function now allows for approximate matching of county names using agrep (Andre Mikulec)</li>
+<li>
+<code><a href="../reference/search_state.html">search_state()</a></code> is now vectorized and will accept a vector of state abbreviations</li>
+<li>
+<code><a href="../reference/search_tz.html">search_tz()</a></code> is now vectorized and will accept a vector of timezones</li>
+<li>
+<code>zip_code_db</code> has been updated to use latest upstream data</li>
+<li>Added <code><a href="../reference/reverse_zipcode.html">reverse_zipcode()</a></code> function for obtaining metadata about a given ZIP code.</li>
+<li>Added <code><a href="../reference/search_cd.html">search_cd()</a></code> function for searching ZIP codes contained within a given congressional district.</li>
+<li>Added <code><a href="../reference/is_zcta.html">is_zcta()</a></code> function for testing whether a given ZIP code is a ZIP code tabulation area (ZCTA).</li>
+<li>Added <code><a href="../reference/search_fips.html">search_fips()</a></code> function for searching ZIP codes by state and county FIPS codes.</li>
+<li>Added the first vignette, “Introduction to zipcodeR”</li>
+</ul>
+</div>
+    <div id="zipcoder-010" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.0">
+<a href="#zipcoder-010" class="anchor"></a>zipcodeR 0.1.0<small> 2020-09-17 </small>
+</h1>
+<p>Initial public release, first version accepted by CRAN.</p>
 </div>
   </div>
 
@@ -141,7 +164,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Gavin Rozzi.</p>
+  <p>Developed by <a href='https://www.gavinrozzi.com'>Gavin Rozzi</a>.</p>
 </div>
 
 <div class="pkgdown">

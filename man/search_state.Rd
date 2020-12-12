@@ -2,21 +2,21 @@
 % Please edit documentation in R/zip_lookups.r
 \name{search_state}
 \alias{search_state}
-\title{Search ZIP codes for a given state}
+\title{Search for ZIP codes located within a given state}
 \usage{
 search_state(state_abb)
 }
 \arguments{
-\item{state_abb}{Two-digit code for a U.S. state}
+\item{state_abb}{Two-digit code representing a U.S. state}
 }
 \value{
-dataframe of all ZIP codes for state defined in state_abb
+tibble of all ZIP codes for each state code defined in state_abb
 }
 \description{
-Search ZIP codes for a given state
+Search for ZIP codes located within a given state
 }
 \examples{
 search_state('NJ')
-search_state('CA')
+search_state(c('NJ','NY','CT'))
 
 }

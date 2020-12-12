@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search ZIP codes for a timezone — search_tz • zipcodeR</title>
+<title>Search all ZIP codes located within a given timezone — search_tz • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Search ZIP codes for a timezone — search_tz" />
-<meta property="og:description" content="Search ZIP codes for a timezone" />
+<meta property="og:title" content="Search all ZIP codes located within a given timezone — search_tz" />
+<meta property="og:description" content="Search all ZIP codes located within a given timezone" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -91,6 +91,9 @@
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="../articles/zipcodeR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -119,16 +122,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search ZIP codes for a timezone</h1>
+    <h1>Search all ZIP codes located within a given timezone</h1>
     <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_lookups.r'><code>R/zip_lookups.r</code></a></small>
     <div class="hidden name"><code>search_tz.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search ZIP codes for a timezone</p>
+    <p>Search all ZIP codes located within a given timezone</p>
     </div>
 
-    <pre class="usage"><span class='fu'>search_tz</span>(<span class='kw'>tz</span>)</pre>
+    <pre class="usage"><span class='fu'>search_tz</span><span class='op'>(</span><span class='va'>tz</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,12 +144,12 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe of all ZIP codes found for given timezone</p>
+    <p>tibble of all ZIP codes found for given timezone</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>eastern</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span>(<span class='st'>'Eastern'</span>)
-</div><div class='output co'>#&gt; [1] "14025 ZIP codes found for Eastern timezone"</div><div class='input'><span class='kw'>pacific</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span>(<span class='st'>'Mountain'</span>)
-</div><div class='output co'>#&gt; [1] "1982 ZIP codes found for Mountain timezone"</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>eastern</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span><span class='op'>(</span><span class='st'>'Eastern'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 14025 ZIP codes found for Eastern timezone </div><div class='input'><span class='va'>pacific</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span><span class='op'>(</span><span class='st'>'Mountain'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 1982 ZIP codes found for Mountain timezone </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -158,7 +161,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Gavin Rozzi.</p>
+  <p>Developed by <a href='https://www.gavinrozzi.com'>Gavin Rozzi</a>.</p>
 </div>
 
 <div class="pkgdown">

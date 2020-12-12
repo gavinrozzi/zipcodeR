@@ -2,7 +2,7 @@
 % Please edit documentation in R/zip_lookups.r
 \name{search_tz}
 \alias{search_tz}
-\title{Search ZIP codes for a timezone}
+\title{Search all ZIP codes located within a given timezone}
 \usage{
 search_tz(tz)
 }
@@ -10,10 +10,10 @@ search_tz(tz)
 \item{tz}{Timezone}
 }
 \value{
-dataframe of all ZIP codes found for given timezone
+tibble of all ZIP codes found for given timezone
 }
 \description{
-Search ZIP codes for a timezone
+Search all ZIP codes located within a given timezone
 }
 \examples{
 eastern <- search_tz('Eastern')

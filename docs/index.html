@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -51,6 +51,9 @@
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="articles/zipcodeR.html">Get started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -92,42 +95,39 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the current release from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">'zipcodeR'</span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'zipcodeR'</span><span class="op">)</span></code></pre></div>
 <p>The latest development version can be installed like so using devtools:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://devtools.r-lib.org">devtools</a></span>)
-<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"gavinrozzi/zipcodeR"</span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">'gavinrozzi/zipcodeR'</span>, ref <span class="op">=</span> <span class="st">"develop"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="co"># Load the zipcodeR library into R</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/gavinrozzi/zipcodeR">zipcodeR</a></span>)
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Load the zipcodeR library into R</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gavinrozzi/zipcodeR/">zipcodeR</a></span><span class="op">)</span>
 
 <span class="co"># Find all ZIP codes for a state</span>
-<span class="fu"><a href="reference/search_state.html">search_state</a></span>(<span class="st">'NJ'</span>)
+<span class="fu"><a href="reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NJ'</span><span class="op">)</span>
 
 <span class="co"># Find all ZIP codes for a county</span>
-<span class="fu"><a href="reference/search_county.html">search_county</a></span>(<span class="st">'Ocean'</span>,<span class="st">'NJ'</span>)
+<span class="fu"><a href="reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span>
 
 <span class="co"># Find ZIP codes for a city</span>
-<span class="fu"><a href="reference/search_city.html">search_city</a></span>(<span class="st">'Chappaqua'</span>,<span class="st">'NY'</span>)
+<span class="fu"><a href="reference/search_city.html">search_city</a></span><span class="op">(</span><span class="st">'Chappaqua'</span>,<span class="st">'NY'</span><span class="op">)</span>
 
 <span class="co"># Find all ZIP codes for a timezone</span>
-<span class="fu"><a href="reference/search_tz.html">search_tz</a></span>(<span class="st">'Eastern'</span>)
+<span class="fu"><a href="reference/search_tz.html">search_tz</a></span><span class="op">(</span><span class="st">'Eastern'</span><span class="op">)</span>
 
 <span class="co"># Get all Census tracts for a given ZIP code</span>
-<span class="fu"><a href="reference/get_tracts.html">get_tracts</a></span>(<span class="st">'08731'</span>)
-</pre></div>
+<span class="fu"><a href="reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="st">'08731'</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>Documentation for the project <a href="https://gavinrozzi.github.io/zipcodeR/">is available here.</a> See the <a href="https://gavinrozzi.github.io/zipcodeR/reference/">reference section</a> for full details on how to use each of the functions provided by zipcodeR.</p>
+<p>Documentation for the current release <a href="https://gavinrozzi.github.io/zipcodeR/">is available here.</a> See the <a href="https://gavinrozzi.github.io/zipcodeR/reference/">reference section</a> for full details on how to use each of the functions provided by zipcodeR.</p>
+<p>Documentation for the current development version <a href="https://zipcoder-documentation-dev.netlify.app">can be viewed here.</a> This version contains new features and functions that may have not been fully tested, but may be used in a future release.</p>
 </div>
 <div id="data-sources" class="section level2">
 <h2 class="hasAnchor">
@@ -159,7 +159,8 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Gavin Rozzi <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9969-8175" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://www.gavinrozzi.com">Gavin Rozzi</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9969-8175" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -176,7 +177,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Gavin Rozzi.</p>
+  <p>Developed by <a href="https://www.gavinrozzi.com">Gavin Rozzi</a>.</p>
 </div>
 
 <div class="pkgdown">

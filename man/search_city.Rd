@@ -2,7 +2,7 @@
 % Please edit documentation in R/zip_lookups.r
 \name{search_city}
 \alias{search_city}
-\title{Search ZIP codes for a city within a state}
+\title{Search ZIP codes for a given city within a state}
 \usage{
 search_city(city_name, state_abb)
 }
@@ -12,10 +12,10 @@ search_city(city_name, state_abb)
 \item{state_abb}{Two-digit code for a U.S. state}
 }
 \value{
-dataframe of all ZIP code data found for given city
+tibble of all ZIP code data found for given city
 }
 \description{
-Search ZIP codes for a city within a state
+Search ZIP codes for a given city within a state
 }
 \examples{
 search_city('Spring Lake','NJ')

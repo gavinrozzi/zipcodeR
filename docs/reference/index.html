@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -90,6 +90,9 @@
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="../articles/zipcodeR.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -150,15 +153,39 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="get_cd.html">get_cd()</a></code> </p>
+        </td>
+        <td><p>Get all congressional districts for a given ZIP code</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="get_tracts.html">get_tracts()</a></code> </p>
         </td>
         <td><p>Get all Census tracts within a given ZIP code</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="is_zcta.html">is_zcta()</a></code> </p>
+        </td>
+        <td><p>Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="reverse_zipcode.html">reverse_zipcode()</a></code> </p>
+        </td>
+        <td><p>Given a ZIP code, returns columns of metadata about that ZIP code</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="search_cd.html">search_cd()</a></code> </p>
+        </td>
+        <td><p>Get all ZIP codes that fall within a given congressional district</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="search_city.html">search_city()</a></code> </p>
         </td>
-        <td><p>Search ZIP codes for a city within a state</p></td>
+        <td><p>Search ZIP codes for a given city within a state</p></td>
       </tr><tr>
         
         <td>
@@ -168,15 +195,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="search_fips.html">search_fips()</a></code> </p>
+        </td>
+        <td><p>Returns all ZIP codes found within a given FIPS code</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="search_state.html">search_state()</a></code> </p>
         </td>
-        <td><p>Search ZIP codes for a given state</p></td>
+        <td><p>Search for ZIP codes located within a given state</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="search_tz.html">search_tz()</a></code> </p>
         </td>
-        <td><p>Search ZIP codes for a timezone</p></td>
+        <td><p>Search all ZIP codes located within a given timezone</p></td>
       </tr><tr>
         
         <td>
@@ -210,7 +243,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Gavin Rozzi.</p>
+  <p>Developed by <a href='https://www.gavinrozzi.com'>Gavin Rozzi</a>.</p>
 </div>
 
 <div class="pkgdown">

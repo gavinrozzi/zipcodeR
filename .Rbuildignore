@@ -7,3 +7,8 @@
 ^\.travis\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+.github
+paper.md$
+paper.bib$
+paper.pdf$
+^revdep$
