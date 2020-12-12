@@ -1,0 +1,53 @@
+---
+title: "Introduction to zipcodeR"
+author: "Gavin Rozzi"
+output: rmarkdown::html_vignette
+description: >
+  This is a short intro to using zipcodeR
+vignette: >
+  %\VignetteIndexEntry{Introduction to zipcodeR}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+library(zipcodeR)
+real_estate_data <- read.csv('https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv')
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(1000)
+```
+
+zipcodeR is an all-in-one toolkit for working with ZIP codes in R.
+
+This document will introduce the tools provided by zipcodeR for improving your workflow when working with ZIP code-level data. The goal of these examples is to help you quickly get up and running with zipcodeR.
+
+## Data: U.S. Real Estate Market
+
+To explore how zipcodeR can enhance your data & workflow, we will use a public dataset from the National Association of Realtors containing data about housing price trends in the United States.
+
+This dataset contains `r nrow(real_estate_data)` observations with current housing market data from the National Association of Realtors [hosted on Amazon S3](https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv)
+
+This is what the data we will be working with looks like:
+```{r}
+head(real_estate_data)
+```
+
+## Searching for ZIP codes by state
+Let's begin by using zipcodeR to find all ZIP codes within a given state.
+
+## Searching by county
+It is also possible to search for ZIP codes given the county name
+
+### Approximate matching
+
+## Getting extra data for a ZIP code
+
+## Finding Census tracts in ZIP codes
+
+You may need to allocate data at the ZIP code level to Census tracts. This is easy using the get_tracts() function.
+
+Let's find out how many Census tracts are in the ZIP code
+```{r} 
+get_tracts("10001")
+```
+Now that you have all of the tracts for this ZIP code, it would be trivial to join this with other Census data, such as that which is available from the tidycensus package.
