@@ -1,35 +1,39 @@
-#' Search ZIP codes for a given state
+#' Search for ZIP codes located within a given state
 #'
 #'
-#' @param state_abb Two-digit code for a U.S. state
-#' @return dataframe of all ZIP codes for state defined in state_abb
+#' @param state_abb Two-digit code representing a U.S. state
+#' @return tibble of all ZIP codes for each state code defined in state_abb
 #' @examples
 #' search_state('NJ')
-#' search_state('CA')
+#' search_state(c('NJ','NY','CT'))
 #'
 #' @export
 search_state <- function(state_abb){
-  # Test if state abbreviation input is capitalized, capitalize if lowercase
-  if (stringr::str_detect(state_abb, "^[:upper:]+$") == FALSE) {
-    state_abb <- toupper(state_abb)
-  }
+  # Ensure state abbreviation is capitalized for consistency
+  state_abb <- toupper(state_abb)
   # Get matching ZIP codes for state
-  state_zips <- zip_code_db %>% dplyr::filter(.data$state == state_abb)
+  state_zips <- zip_code_db %>%
+    dplyr::filter(.data$state %in% state_abb)
   # Throw an error if nothing found
   if (nrow(state_zips) == 0) {
     stop(paste('No ZIP codes found for state:',state_abb))
   }
-  # Print number of ZIP codes found to console
-  base::cat(paste(nrow(state_zips), 'ZIP codes found for state:', state_abb))
-  return(state_zips)
+  # Print results to console
+  if (length(state_abb) > 1) {
+    base::cat(nrow(state_zips), 'ZIP codes found for states: ')
+  } else if (length(state_abb) == 1) {
+    base::cat(nrow(state_zips), 'ZIP codes found for state: ')
+  }
+  base::cat(paste0(shQuote(state_abb), collapse=", "),'\n')
+  return(dplyr::as_tibble(state_zips))
 }
 #' Search ZIP codes for a county
 #'
 #'
 #' @param state_abb Two-digit code for a U.S. state
 #' @param county_name Name of a county within a U.S. state
-#' @param similar perform the county lookup using package base function agrep. Default is FALSE.
-#' @param max.distance if the parameter similar = TRUE, then send the parameter max.distance to the base function agrep. Default is 0.1.
+#' @param ... if the parameter similar = TRUE, then send the parameter max.distance to the base function agrep. Default is 0.1.
+#' @return tibble of all ZIP codes for given county name
 #'
 #' @examples
 #' middlesex <- search_county('Middlesex','NJ')
@@ -77,39 +81,46 @@ search_county <- function (county_name, state_abb, ...)
   }
   print(paste(nrow(county_zips), "ZIP codes found for",
               paste0(sapply(unique(county_name_proper), function(x) { paste(x, ",", state_abb) }), collapse = ' or ')))
-  return(county_zips)
+  return(dplyr::as_tibble(county_zips))
 }
-#' Returns the county name + state for a given ZIP code
+#' Given a ZIP code, returns columns of metadata about that ZIP code
 #'
 #'
-#' @param zip_code A 5-digit U.S. ZIP code
-#' @return A named list consisting of the county name and state for the ZIP code
+#' @param zip_code A 5-digit U.S. ZIP code or chracter vector with multiple ZIP codes
+#' @return A tibble containing data for the ZIP code(s)
 #'
 #' @examples
-#' zip_to_county('90210')
-#' zip_to_county('08731')
-#' zip_to_county('07762')$county
-#' #' zip_to_county('07762')$state
+#' reverse_zipcode('90210')
+#' reverse_zipcode('08731')
+#' reverse_zipcode(c('08734','08731'))
+#' reverse_zipcode('07762')$county
+#' reverse_zipcode('07762')$state
 #' @export
-zip_to_county <- function(zip_code) {
+reverse_zipcode <- function(zip_code) {
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
   # Get matching ZIP code record for
-  zip_code_data <- zip_code_db %>% dplyr::filter(.data$zipcode == zip_code)
+  zip_code_data <- zip_code_db %>%
+    dplyr::filter(.data$zipcode %in% zip_code)
   # Throw an error if nothing found
   if (nrow(zip_code_data) == 0) {
-    stop(paste('No county name found for',.data$zip_code,',',.data$state))
+    stop(paste('No data found for provided ZIP code',.data$zip_code,',',.data$state))
   }
-  county <- zip_code_data$county
-  state <- zip_code_data$state
-  return(list(county = county, state = state))
+  # Print results to console
+  if (length(zip_code) > 1) {
+    base::cat(nrow(zip_code_data), 'rows of data found for ZIP codes: ')
+  } else if (length(zip_code) == 1) {
+    base::cat(nrow(zip_code_data), 'row of data found for ZIP code: ')
+  }
+  base::cat(paste0(shQuote(zip_code), collapse=", "),'\n')
+  return(dplyr::as_tibble(zip_code_data))
 }
-#' Search ZIP codes for a city within a state
+#' Search ZIP codes for a given city within a state
 #'
 #'
 #' @param state_abb Two-digit code for a U.S. state
 #' @param city_name Name of major city to search
-#' @return dataframe of all ZIP code data found for given city
+#' @return tibble of all ZIP code data found for given city
 #'
 #' @examples
 #' search_city('Spring Lake','NJ')
@@ -137,10 +148,10 @@ search_city <- function(city_name, state_abb) {
   base::cat(paste(nrow(city_zips), 'ZIP codes found for', city_name,',', state_abb,'\n'))
   return(city_zips)
 }
-#' Search ZIP codes for a timezone
+#' Search all ZIP codes located within a given timezone
 #'
 #' @param tz Timezone
-#' @return dataframe of all ZIP codes found for given timezone
+#' @return tibble of all ZIP codes found for given timezone
 #'
 #' @examples
 #' eastern <- search_tz('Eastern')
@@ -148,20 +159,20 @@ search_city <- function(city_name, state_abb) {
 #' @export
 search_tz <- function(tz) {
   # Get matching ZIP codes for timezone
-  tz_zips <- zip_code_db %>% dplyr::filter(.data$timezone == tz)
+  tz_zips <- zip_code_db %>% dplyr::filter(.data$timezone %in% tz)
   # Throw an error if nothing found
   if (nrow(tz_zips) == 0) {
     stop(paste('No ZIP codes found for timezone:',tz))
   }
   # Print number of ZIP codes found to console
   base::cat(paste(nrow(tz_zips), 'ZIP codes found for', tz,'timezone','\n'))
-  return(tz_zips)
+  return(dplyr::as_tibble(tz_zips))
 }
 #' Returns all ZIP codes found within a given FIPS code
 #'
 #' @param state_fips A U.S. FIPS code
 #' @param county_fips A 1-3 digit county FIPS code (optional)
-#' @return dataframe of Census tracts and data from Census crosswalk file found for given ZIP code
+#' @return tibble of Census tracts and data from Census crosswalk file found for given ZIP code
 #'
 #' @examples
 #' search_fips('34')
@@ -192,14 +203,14 @@ search_fips <- function(state_fips,county_fips) {
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
     result <- zip_code_db %>% dplyr::filter(.data$state == fips_result$state[1] & .data$county == fips_result$county[1])
     base::cat(nrow(result),'ZIP codes found for FIPS code',fips_result$state_code[1], paste0('(',fips_result$state[1],')'),fips_result$county_code[1], paste0('(',fips_result$county[1],')'))
-    return(result)
+    return(dplyr::as_tibble(result))
   }
 }
 
 #' Get all Census tracts within a given ZIP code
 #'
 #' @param zip_code A U.S. ZIP code
-#' @return dataframe of Census tracts and data from Census crosswalk file found for given ZIP code
+#' @return tibble of Census tracts and data from Census crosswalk file found for given ZIP code
 #'
 #' @examples
 #' get_tracts('08731')
@@ -252,15 +263,15 @@ get_cd <- function(zip_code) {
 #'
 #' @param state_fips_code A two-digit U.S. FIPS code for a state
 #' @param congressional_district A two digit number specifying a congressional district in a given
-#' @return dataframe of all congressional districts found for given ZIP code, including state code
+#' @return tibble of all congressional districts found for given ZIP code, including state code
 #'
 #' @examples
-#' cd_to_zip('34','03')
-#' cd_to_zip('36','05')
+#' search_cd('34','03')
+#' search_cd('36','05')
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
 #' @export
-cd_to_zip <- function(state_fips_code,congressional_district) {
+search_cd <- function(state_fips_code,congressional_district) {
   # Create code from state and congressional district to match lookup table
   cd_code <- base::paste0(state_fips_code,congressional_district)
   matched_zips <- zip_to_cd %>% dplyr::filter(.data$CD == cd_code)
@@ -272,8 +283,9 @@ cd_to_zip <- function(state_fips_code,congressional_district) {
   output <- matched_zips %>% dplyr::select(-.data$CD)
   output$state_fips <- state_fips_code
   output$congressional_district <- congressional_district
-  return(output)
+  return(dplyr::as_tibble(output))
 }
+
 #' Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)
 #'
 #'
@@ -288,10 +300,6 @@ cd_to_zip <- function(state_fips_code,congressional_district) {
 is_zcta <- function(zip_code) {
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
-  # Validate input
-  if (nchar(zip_code) != 5) {
-    stop("Invalid input detected. Please enter a 5-digit U.S. ZIP code")
-  }
   # Test if provided ZIP code exists within Census ZCTA crosswalk
   result <- zip_code %in% zcta_crosswalk$ZCTA5
   return(result)

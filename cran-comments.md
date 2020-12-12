@@ -1,3 +1,22 @@
+# cran-comments (2020-12-12)
+
+## Resubmission
+This is a resubmission. In this version I have added several new features. See the NEWS.md file for details on changes.
+
+## Test environments
+* local macOS Big Sur install, R 3.6.1
+* win-builder (oldrelease, devel, release)
+* Ubuntu 16.04 Xenial, R 4.0.3 via TravisCI
+* local Windows 10 development machine, R 4.0.3
+
+## R CMD check results
+There were no ERRORs, NOTEs or WARNINGs. 
+
+## Downstream dependencies
+I have also run R CMD check on all downstream dependencies used by zipcodeR using revdep. There were no errors.
+
+# Previous cran-comments (2020-09-08)
+
 ## Resubmission
 This is a resubmission. In this version I have:
 

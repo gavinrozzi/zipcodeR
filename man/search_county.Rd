@@ -11,9 +11,10 @@ search_county(county_name, state_abb, ...)
 
 \item{state_abb}{Two-digit code for a U.S. state}
 
-\item{similar}{perform the county lookup using package base function agrep. Default is FALSE.}
-
-\item{max.distance}{if the parameter similar = TRUE, then send the parameter max.distance to the base function agrep. Default is 0.1.}
+\item{...}{if the parameter similar = TRUE, then send the parameter max.distance to the base function agrep. Default is 0.1.}
+}
+\value{
+tibble of all ZIP codes for given county name
 }
 \description{
 Search ZIP codes for a county

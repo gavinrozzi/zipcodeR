@@ -12,7 +12,7 @@ search_fips(state_fips, county_fips)
 \item{county_fips}{A 1-3 digit county FIPS code (optional)}
 }
 \value{
-dataframe of Census tracts and data from Census crosswalk file found for given ZIP code
+tibble of Census tracts and data from Census crosswalk file found for given ZIP code
 }
 \description{
 Returns all ZIP codes found within a given FIPS code

@@ -10,7 +10,7 @@ get_tracts(zip_code)
 \item{zip_code}{A U.S. ZIP code}
 }
 \value{
-dataframe of Census tracts and data from Census crosswalk file found for given ZIP code
+tibble of Census tracts and data from Census crosswalk file found for given ZIP code
 }
 \description{
 Get all Census tracts within a given ZIP code
