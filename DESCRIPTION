@@ -23,3 +23,4 @@ Depends:
     dplyr,
     stringr,
     tidycensus
+VignetteBuilder: utils
