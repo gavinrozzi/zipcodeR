@@ -12,3 +12,4 @@ paper.md$
 paper.bib$
 paper.pdf$
 ^revdep$
+^codemeta\.json$
