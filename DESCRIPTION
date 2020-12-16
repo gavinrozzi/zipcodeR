@@ -1,6 +1,6 @@
 Package: zipcodeR
 Title: Data & Functions for Working with US ZIP Codes
-Version: 0.2.0
+Version: 0.2.1.9000
 Authors@R: 
     person(given = "Gavin",
            family = "Rozzi",
@@ -27,5 +27,7 @@ Suggests:
     rmarkdown,
     markdown,
     readr,
-    tidycensus
+    tidycensus,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr, rmarkdown
+Config/testthat/edition: 3

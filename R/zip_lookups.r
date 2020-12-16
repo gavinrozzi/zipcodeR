@@ -139,7 +139,8 @@ search_city <- function(city_name, state_abb) {
     city_name <- paste0(first_char,remainder)
   }
   # Get matching ZIP codes for city
-  city_zips <- zip_code_db %>% dplyr::filter(.data$state == state_abb & .data$major_city == city_name)
+  city_zips <- zip_code_db %>%
+    dplyr::filter(.data$state == state_abb & .data$major_city == city_name)
   # Throw an error if nothing found
   if (nrow(city_zips) == 0) {
     stop(paste('No ZIP codes found for city:',city_name,',', state_abb))
@@ -159,7 +160,8 @@ search_city <- function(city_name, state_abb) {
 #' @export
 search_tz <- function(tz) {
   # Get matching ZIP codes for timezone
-  tz_zips <- zip_code_db %>% dplyr::filter(.data$timezone %in% tz)
+  tz_zips <- zip_code_db %>%
+    dplyr::filter(.data$timezone %in% tz)
   # Throw an error if nothing found
   if (nrow(tz_zips) == 0) {
     stop(paste('No ZIP codes found for timezone:',tz))
@@ -187,9 +189,11 @@ search_fips <- function(state_fips,county_fips) {
   # Separate routine if only state_fips code provided
   if (missing(county_fips)) {
     # Get matching FIPS data for provided state FIPS code
-    fips_result <- fips_data %>% dplyr::filter(.data$state_code == state_fips)
+    fips_result <- fips_data %>%
+      dplyr::filter(.data$state_code == state_fips)
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
-    result <- zip_code_db %>% dplyr::filter(.data$state == fips_result$state[1])
+    result <- zip_code_db %>%
+      dplyr::filter(.data$state == fips_result$state[1])
     base::cat(nrow(result),'ZIP codes found for FIPS code',fips_result$state_code[1], paste0('(',fips_result$state[1],')'))
     return(result)
   } else {
@@ -199,9 +203,11 @@ search_fips <- function(state_fips,county_fips) {
       county_fips <- base::paste0(strrep('0', difference), county_fips)
     }
     # Get matching FIPS data for provided state & county FIPS code
-    fips_result <- fips_data %>% dplyr::filter(.data$state_code == state_fips & .data$county_code == county_fips)
+    fips_result <- fips_data %>%
+      dplyr::filter(.data$state_code == state_fips & .data$county_code == county_fips)
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
-    result <- zip_code_db %>% dplyr::filter(.data$state == fips_result$state[1] & .data$county == fips_result$county[1])
+    result <- zip_code_db %>%
+      dplyr::filter(.data$state == fips_result$state[1] & .data$county == fips_result$county[1])
     base::cat(nrow(result),'ZIP codes found for FIPS code',fips_result$state_code[1], paste0('(',fips_result$state[1],')'),fips_result$county_code[1], paste0('(',fips_result$county[1],')'))
     return(dplyr::as_tibble(result))
   }
@@ -224,7 +230,8 @@ get_tracts <- function(zip_code) {
     stop("Invalid input detected. Please enter a 5-digit U.S. ZIP code.")
   }
   # Get tract data given ZCTA
-  tracts <- zcta_crosswalk %>% dplyr::filter(.data$ZCTA5 == zip_code)
+  tracts <- zcta_crosswalk %>%
+    dplyr::filter(.data$ZCTA5 == zip_code)
   if (nrow(tracts) == 0) {
     stop(paste("No Census tracts found for ZIP code", zip_code))
   }
@@ -247,15 +254,18 @@ get_cd <- function(zip_code) {
   # Get state FIPS codes data from tidycensus library
   state_fips <- tidycensus::fips_codes
   # Match ZIP codes with congressional districts located within this ZIP
-  matched_cds <- zip_to_cd %>% dplyr::filter(.data$ZIP == zip_code)
+  matched_cds <- zip_to_cd %>%
+    dplyr::filter(.data$ZIP == zip_code)
   # Break out the match from the ZIP to congressional district lookup into state FIPS code and congressional district codes
   district <- stringr::str_sub(matched_cds$CD,-2)
   state <- stringr::str_sub(matched_cds$CD, 1,2)
   # Bind the separated district and state codes together as a dataframe
   result <- data.frame(cbind(district,state))
   # Join the lookup result with tidycensus FIPS code data for more info
-  joined <- result %>% dplyr::left_join(state_fips, by=c('state'='state_code'))
-  output <- data.frame(joined$state.y[1],district) %>% dplyr::rename('state' = 'joined.state.y.1.')
+  joined <- result %>%
+    dplyr::left_join(state_fips, by=c('state'='state_code'))
+  output <- data.frame(joined$state.y[1],district) %>%
+    dplyr::rename('state' = 'joined.state.y.1.')
 
   return(list(state_fips = joined$state.y[1], district = district))
 }
@@ -274,13 +284,15 @@ get_cd <- function(zip_code) {
 search_cd <- function(state_fips_code,congressional_district) {
   # Create code from state and congressional district to match lookup table
   cd_code <- base::paste0(state_fips_code,congressional_district)
-  matched_zips <- zip_to_cd %>% dplyr::filter(.data$CD == cd_code)
+  matched_zips <- zip_to_cd %>%
+    dplyr::filter(.data$CD == cd_code)
   if (nrow(matched_zips) == 0) {
     stop(paste('No ZIP codes found for congressional district:', congressional_district))
   }
   # Print number of ZIP codes found to console
   base::cat(base::paste(nrow(matched_zips), 'ZIP codes found for', 'congressional district', congressional_district,'\n'))
-  output <- matched_zips %>% dplyr::select(-.data$CD)
+  output <- matched_zips %>%
+    dplyr::select(-.data$CD)
   output$state_fips <- state_fips_code
   output$congressional_district <- congressional_district
   return(dplyr::as_tibble(output))

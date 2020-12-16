@@ -9,10 +9,11 @@
 #'
 #' @export
 download_zip_data <- function(force=FALSE) {
+
   # Define URLs for downloading external data
-  url_crosswalk = 'https://github.com/gavinrozzi/zipcodeR-data/blob/master/zip_to_cd.rda?raw=true'
-  url_zip_db = 'https://github.com/gavinrozzi/zipcodeR-data/blob/master/zip_code_db.rda?raw=true'
-  url_cd = 'https://github.com/gavinrozzi/zipcodeR-data/blob/master/zip_to_cd.rda?raw=true'
+  url_crosswalk <- 'https://github.com/gavinrozzi/zipcodeR-data/blob/master/zip_to_cd.rda?raw=true'
+  url_zip_db <- 'https://github.com/gavinrozzi/zipcodeR-data/blob/master/zip_code_db.rda?raw=true'
+  url_cd <- 'https://github.com/gavinrozzi/zipcodeR-data/blob/master/zip_to_cd.rda?raw=true'
 
   # Test if data dir exists and create
   if (dir.exists(paste0(system.file(package = "zipcodeR"),'/data')) == TRUE) {
