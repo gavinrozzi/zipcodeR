@@ -13,3 +13,4 @@ paper.bib$
 paper.pdf$
 ^revdep$
 ^codemeta\.json$
+^\.github$
