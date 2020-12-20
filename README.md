@@ -1,7 +1,10 @@
 # zipcodeR <a href='https://gavinrozzi.github.io/zipcodeR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
-[![Build Status](https://travis-ci.com/gavinrozzi/zipcodeR.svg?branch=master)](https://travis-ci.com/gavinrozzi/zipcodeR)
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/gavinrozzi/zipcodeR/workflows/R-CMD-check/badge.svg)](https://github.com/gavinrozzi/zipcodeR/actions)
 [![CRAN Status](https://www.r-pkg.org/badges/version-last-release/zipcodeR)](https://www.r-pkg.org/badges/version-last-release/zipcodeR)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/zipcodeR)](https://cranlogs.r-pkg.org/badges/grand-total/zipcodeR)
+<!-- badges: end -->
 
 ### Makes dealing with U.S. ZIP codes painless.
 
