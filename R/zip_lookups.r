@@ -249,6 +249,7 @@ get_tracts <- function(zip_code) {
 #' get_cd('90210')
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
+#' @import tidycensus
 #' @export
 get_cd <- function(zip_code) {
   # Get state FIPS codes data from tidycensus library
@@ -317,7 +318,69 @@ is_zcta <- function(zip_code) {
   return(result)
 }
 
+#' Returns that lat / lon pair of the centroid of a given ZIP code
+#'
+#'
+#' @param zip_code A 5-digit U.S. ZIP code
+#' @return tibble of lat lon coordinates
+#'
+#' @examples
+#' geocode_zip('07762')
+#' geocode_zip('90210')
+#' geocode_zip('90210')$lat
+#' geocode_zip('90210')$lng
+#' @export
+geocode_zip <- function(zip_code) {
 
+  # Convert to character so leading zeroes are preserved
+  zip_code <- as.character(zip_code)
+
+  # Get matching ZIP code record for
+  result <- zip_code_db %>%
+    dplyr::filter(.data$zipcode %in% zip_code) %>%
+    dplyr::select(.data$zipcode,.data$lat,.data$lng) %>%
+    dplyr::as_tibble()
+
+  if (nrow(result) == 0) {
+    stop(paste("No results found for ZIP code", zip_code))
+  }
+
+  return(result)
+}
+#' Search for ZIP codes that are within a given radius from a point
+#'
+#'
+#' @param lat latitude
+#' @param lng longitude
+#' @param radius distance to search in miles, set by default to 1
+#' @return ZIP code(s)
+#'
+#' @examples
+#' search_point(39.9, -74.3, 10)
+#' @importFrom raster pointDistance
+#' @importFrom udunits2 ud.convert
+#' @export
+search_point <- function(lat, lng, radius = 1) {
+
+  # Create an instance of the ZIP code database for calculating distance, filter to those with lat / lon pairs
+  zip_data <- zip_code_db %>% dplyr::filter(lat != 'NA')
+
+  # Calculate the distance between all points and the provided coordinate pair
+  for (i in 1:nrow(zip_data)) {
+    zip_data$distance[i] <- raster::pointDistance(c(lat, lng),c(zip_data$lat[i], zip_data$lng[i]),lonlat = TRUE)
+  }
+
+  # Convert meters to miles for distance measurement
+  zip_data$distance <- udunits2::ud.convert(zip_data$distance,'m','mi')
+
+  # Get matching ZIP codes within radius
+  result <- zip_data%>%
+    dplyr::filter(.data$distance <= radius) %>%
+    dplyr::select(.data$zipcode,.data$distance) %>%
+    dplyr::as_tibble() %>%
+    dplyr::arrange(.data$distance)
+  return(result)
+}
 
 
 
