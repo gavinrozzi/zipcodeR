@@ -12,10 +12,10 @@ on:
       - master
       -develop
 
-name: R-CMD-check
+name: R
 
 jobs:
-  R-CMD-check:
+  R:
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
