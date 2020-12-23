@@ -353,7 +353,7 @@ geocode_zip <- function(zip_code) {
 #' @param lat latitude
 #' @param lng longitude
 #' @param radius distance to search in miles, set by default to 1
-#' @return ZIP code(s)
+#' @return a tibble with two columns, the ZIP code(s) and distance from the provided coordinates in miles
 #'
 #' @examples
 #' search_point(39.9, -74.3, 10)
@@ -373,12 +373,18 @@ search_point <- function(lat, lng, radius = 1) {
   # Convert meters to miles for distance measurement
   zip_data$distance <- udunits2::ud.convert(zip_data$distance,'m','mi')
 
-  # Get matching ZIP codes within radius
+  # Get matching ZIP codes within specified search radius
   result <- zip_data%>%
+    # Filter results to those less than or equal to the search radius
     dplyr::filter(.data$distance <= radius) %>%
     dplyr::select(.data$zipcode,.data$distance) %>%
     dplyr::as_tibble() %>%
     dplyr::arrange(.data$distance)
+
+  # Stop if there is nothing found
+  if (nrow(result) == 0) {
+    stop(paste("No ZIP codes found for coordinates",paste0(lat,",",lng),"with radius",radius,"mi"))
+  }
   return(result)
 }
 
