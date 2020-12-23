@@ -383,7 +383,7 @@ search_point <- function(lat, lng, radius = 1) {
 
   # Stop if there is nothing found
   if (nrow(result) == 0) {
-    stop(paste("No ZIP codes found for coordinates",paste0(lat,",",lng),"with radius",radius,"mi"))
+    warning(paste("No ZIP codes found for coordinates",paste0(lat,",",lng),"with radius",radius,"mi"))
   }
   return(result)
 }
