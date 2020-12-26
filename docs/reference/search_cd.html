@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +105,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/gavinrozzi/zipcodeR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -151,7 +151,7 @@
     <p>tibble of all congressional districts found for given ZIP code, including state code</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>search_cd</span><span class='op'>(</span><span class='st'>'34'</span>,<span class='st'>'03'</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'>search_cd</span><span class='op'>(</span><span class='st'>"34"</span>, <span class='st'>"03"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 63 ZIP codes found for congressional district 03 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 63 x 3</span><span>
 #&gt;    ZIP   state_fips congressional_district
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 
@@ -165,7 +165,7 @@
 #&gt; </span><span style='color: #555555;'> 8</span><span> 08019 34         03                    
 #&gt; </span><span style='color: #555555;'> 9</span><span> 08022 34         03                    
 #&gt; </span><span style='color: #555555;'>10</span><span> 08036 34         03                    
-#&gt; </span><span style='color: #555555;'># ... with 53 more rows</span><span></div><div class='input'><span class='fu'>search_cd</span><span class='op'>(</span><span class='st'>'36'</span>,<span class='st'>'05'</span><span class='op'>)</span>
+#&gt; </span><span style='color: #555555;'># ... with 53 more rows</span><span></div><div class='input'><span class='fu'>search_cd</span><span class='op'>(</span><span class='st'>"36"</span>, <span class='st'>"05"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 39 ZIP codes found for congressional district 05 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 39 x 3</span><span>
 #&gt;    ZIP   state_fips congressional_district
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                 

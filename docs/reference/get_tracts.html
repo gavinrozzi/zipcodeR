@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -105,7 +105,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/gavinrozzi/zipcodeR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
     <p>tibble of Census tracts and data from Census crosswalk file found for given ZIP code</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>get_tracts</span><span class='op'>(</span><span class='st'>'08731'</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'>get_tracts</span><span class='op'>(</span><span class='st'>"08731"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 6 Census tracts found for ZIP code 08731 </div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 3</span><span>
 #&gt;   ZCTA5 TRACT        GEOID
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -156,7 +156,7 @@
 #&gt; </span><span style='color: #555555;'>3</span><span> 08731 732101 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>101
 #&gt; </span><span style='color: #555555;'>4</span><span> 08731 732103 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>103
 #&gt; </span><span style='color: #555555;'>5</span><span> 08731 732104 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>104
-#&gt; </span><span style='color: #555555;'>6</span><span> 08731 733000 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>733</span><span>000</div><div class='input'><span class='fu'>get_tracts</span><span class='op'>(</span><span class='st'>'90210'</span><span class='op'>)</span>
+#&gt; </span><span style='color: #555555;'>6</span><span> 08731 733000 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>733</span><span>000</div><div class='input'><span class='fu'>get_tracts</span><span class='op'>(</span><span class='st'>"90210"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 11 Census tracts found for ZIP code 90210 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 11 x 3</span><span>
 #&gt;    ZCTA5 TRACT       GEOID
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
