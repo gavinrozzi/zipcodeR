@@ -16,8 +16,8 @@ tibble of lat lon coordinates
 Returns that lat / lon pair of the centroid of a given ZIP code
 }
 \examples{
-geocode_zip('07762')
-geocode_zip('90210')
-geocode_zip('90210')$lat
-geocode_zip('90210')$lng
+geocode_zip("07762")
+geocode_zip("90210")
+geocode_zip("90210")$lat
+geocode_zip("90210")$lng
 }

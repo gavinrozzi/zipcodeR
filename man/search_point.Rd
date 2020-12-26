@@ -14,7 +14,7 @@ search_point(lat, lng, radius = 1)
 \item{radius}{distance to search in miles, set by default to 1}
 }
 \value{
-ZIP code(s)
+a tibble with two columns, the ZIP code(s) and distance from the provided coordinates in miles
 }
 \description{
 Search for ZIP codes that are within a given radius from a point

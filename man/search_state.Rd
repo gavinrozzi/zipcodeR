@@ -16,7 +16,6 @@ tibble of all ZIP codes for each state code defined in state_abb
 Search for ZIP codes located within a given state
 }
 \examples{
-search_state('NJ')
-search_state(c('NJ','NY','CT'))
-
+search_state("NJ")
+search_state(c("NJ", "NY", "CT"))
 }

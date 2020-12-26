@@ -1,5 +1,10 @@
 # *News*
 
+# zipcodeR 0.3.0 (in development)
+- Added `search_point()` function to allow searching a radius around lat / lon coordinates
+- Added `geocode_zip()` function that returns lat / lon centroid of a given ZIP code
+- The `reverse_zipcode()` function has been updated to return a blank row for invalid ZIP codes with no matches in the zip code database.
+
 # zipcodeR 0.2.0
 - `search_county()` function now allows for approximate matching of county names using agrep (Andre Mikulec)
 - `search_state()` is now vectorized and will accept a vector of state abbreviations

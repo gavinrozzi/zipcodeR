@@ -18,6 +18,6 @@ tibble of all congressional districts found for given ZIP code, including state 
 Get all ZIP codes that fall within a given congressional district
 }
 \examples{
-search_cd('34','03')
-search_cd('36','05')
+search_cd("34", "03")
+search_cd("36", "05")
 }

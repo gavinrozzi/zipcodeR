@@ -16,6 +16,6 @@ tibble of Census tracts and data from Census crosswalk file found for given ZIP 
 Get all Census tracts within a given ZIP code
 }
 \examples{
-get_tracts('08731')
-get_tracts('90210')
+get_tracts("08731")
+get_tracts("90210")
 }

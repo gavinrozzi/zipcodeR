@@ -18,6 +18,6 @@ tibble of all ZIP code data found for given city
 Search ZIP codes for a given city within a state
 }
 \examples{
-search_city('Spring Lake','NJ')
-search_city('Chappaqua','NY')
+search_city("Spring Lake", "NJ")
+search_city("Chappaqua", "NY")
 }

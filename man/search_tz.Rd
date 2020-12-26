@@ -16,6 +16,6 @@ tibble of all ZIP codes found for given timezone
 Search all ZIP codes located within a given timezone
 }
 \examples{
-eastern <- search_tz('Eastern')
-pacific <- search_tz('Mountain')
+eastern <- search_tz("Eastern")
+pacific <- search_tz("Mountain")
 }

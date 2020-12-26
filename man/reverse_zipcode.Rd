@@ -16,9 +16,9 @@ A tibble containing data for the ZIP code(s)
 Given a ZIP code, returns columns of metadata about that ZIP code
 }
 \examples{
-reverse_zipcode('90210')
-reverse_zipcode('08731')
-reverse_zipcode(c('08734','08731'))
-reverse_zipcode('07762')$county
-reverse_zipcode('07762')$state
+reverse_zipcode("90210")
+reverse_zipcode("08731")
+reverse_zipcode(c("08734", "08731"))
+reverse_zipcode("07762")$county
+reverse_zipcode("07762")$state
 }
