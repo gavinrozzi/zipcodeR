@@ -30,6 +30,7 @@ Suggests:
     rmarkdown,
     markdown,
     readr,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    covr
 VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
