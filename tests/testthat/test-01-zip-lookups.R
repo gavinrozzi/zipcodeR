@@ -27,12 +27,12 @@ zipcodeData <- unique(zipcodeData)
 
 test_that("is_zcta() works - TRUE", {
   result <- is_zcta("07762")
-  expect_equal(result, TRUE)
+  expect_true(result)
 })
 
 test_that("is_zcta() works - FALSE", {
   result <- is_zcta("08999")
-  expect_equal(result, FALSE)
+  expect_false(result)
 })
 
 test_that("is_zcta() outputs proper length of data", {
@@ -102,6 +102,10 @@ test_that("reverse_zipcode() works with the pipe operator when chained with othe
   expect_equal(state, "NJ")
 })
 
+test_that("reverse_zipcode() warns on invalid ZIP code input", {
+  expect_warning(reverse_zipcode('08999'))
+})
+
 ###################
 # search_county() #
 ###################
@@ -109,6 +113,11 @@ test_that("reverse_zipcode() works with the pipe operator when chained with othe
 test_that("search_county() outputs proper structure data", {
   result <- class(search_county("Ocean", "NJ"))[1]
   expect_equal(result, "tbl_df")
+})
+
+test_that("search_county() can handle lowercase input", {
+  result <- search_county("ocean", "nj")$county
+  expect_equal(result[1], "Ocean County")
 })
 
 test_that("search_county() filters results to a single county", {
@@ -120,6 +129,15 @@ test_that("search_county() filters results to a single county", {
 test_that("search_county() similar matching works (Issue #1)", {
   result <- search_county("ST BERNARD", "LA", similar = TRUE)$state[1]
   expect_equal(result, "LA")
+})
+
+test_that("search_county() similar works for different distances", {
+  result <- search_county("ST BERNARD", "LA", similar = TRUE, max.distance = 0.5)$state[1]
+  expect_equal(result, "LA")
+})
+
+test_that("search_county() errors on invalid input", {
+  expect_error(search_county('Kenosha','NJ'))
 })
 
 
@@ -144,3 +162,41 @@ test_that("search_state() output is vectorized when given vector of states", {
     unique()
   expect_equal(length(result), 3)
 })
+
+test_that("search_state() errors on invalid input", {
+  expect_error(search_state('XY'))
+})
+
+
+
+#################
+# search_city() #
+#################
+
+test_that("search_city() outputs proper structure data", {
+  result <- class(search_city("Spring Lake", "NJ"))[1]
+  expect_equal(result, "tbl_df")
+})
+
+test_that("search_city() filters results to a single city when given single city", {
+  result <- search_city("Spring Lake", "NJ")$state %>%
+    unique()
+  expect_equal(length(result), 1)
+})
+
+test_that("search_city() filters results to a single city when given single city (lowercase input)", {
+  result <- search_city("wayne", "nj")$major_city %>%
+    unique()
+  expect_equal(length(result), 1)
+})
+
+###############
+# search_tz() #
+###############
+
+test_that("search_tz() outputs proper structure data", {
+  result <- class(search_tz("Mountain"))[1]
+  expect_equal(result, "tbl_df")
+})
+
+

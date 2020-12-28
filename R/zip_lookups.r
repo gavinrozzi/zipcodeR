@@ -160,7 +160,7 @@ search_city <- function(city_name, state_abb) {
   }
   # Print number of ZIP codes found to console
   base::cat(paste(nrow(city_zips), "ZIP codes found for", city_name, ",", state_abb, "\n"))
-  return(city_zips)
+  return(dplyr::as_tibble(city_zips))
 }
 #' Search all ZIP codes located within a given timezone
 #'
