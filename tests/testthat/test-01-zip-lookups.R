@@ -103,8 +103,14 @@ test_that("reverse_zipcode() works with the pipe operator when chained with othe
 })
 
 test_that("reverse_zipcode() warns on invalid ZIP code input", {
-  expect_warning(reverse_zipcode('08999'))
+  expect_warning(reverse_zipcode("08999"))
 })
+
+test_that("reverse_zipcode() errors on ZIP code input with invalid number of characters", {
+  expect_error(reverse_zipcode("099999"))
+})
+
+
 
 ###################
 # search_county() #
@@ -137,7 +143,7 @@ test_that("search_county() similar works for different distances", {
 })
 
 test_that("search_county() errors on invalid input", {
-  expect_error(search_county('Kenosha','NJ'))
+  expect_error(search_county("Kenosha", "NJ"))
 })
 
 
@@ -164,7 +170,7 @@ test_that("search_state() output is vectorized when given vector of states", {
 })
 
 test_that("search_state() errors on invalid input", {
-  expect_error(search_state('XY'))
+  expect_error(search_state("XY"))
 })
 
 
@@ -198,5 +204,3 @@ test_that("search_tz() outputs proper structure data", {
   result <- class(search_tz("Mountain"))[1]
   expect_equal(result, "tbl_df")
 })
-
-

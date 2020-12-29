@@ -48,4 +48,3 @@ test_that("zip_to_cd  has proper number of columns", {
   result <- ncol(zip_to_cd)
   expect_equal(result, 2)
 })
-

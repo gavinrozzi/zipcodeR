@@ -100,6 +100,14 @@ search_county <- function(county_name, state_abb, ...) {
 #' reverse_zipcode("07762")$state
 #' @export
 reverse_zipcode <- function(zip_code) {
+  # Sanity check: validate input for single ZIP before doing anything else
+  if (length(zip_code) == 1) {
+    zip_char <- nchar(as.character(zip_code))
+    if (zip_char != 5) {
+      stop(paste("Invalid ZIP code detected, expected 5 digit ZIP code, got", zip_char))
+    }
+  }
+
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
   # Get matching ZIP code record for
