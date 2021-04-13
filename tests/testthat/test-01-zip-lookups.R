@@ -107,7 +107,7 @@ test_that("reverse_zipcode() warns on invalid ZIP code input", {
 })
 
 test_that("reverse_zipcode() errors on ZIP code input with invalid number of characters", {
-  expect_error(reverse_zipcode("099999"))
+  expect_warning(reverse_zipcode("099999"))
 })
 
 
