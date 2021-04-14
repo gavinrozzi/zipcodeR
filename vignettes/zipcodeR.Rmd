@@ -13,7 +13,8 @@ vignette: >
 
 ```{r setup, include=FALSE}
 library(zipcodeR)
-real_estate_data <- readr::read_csv('https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv', col_types = readr::cols(postal_code = readr::col_character())) %>% dplyr::filter(nchar(postal_code) == 5)
+real_estate_data <- readr::read_csv('https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv', col_types = readr::cols(postal_code = readr::col_character())) 
+real_estate_data <- dplyr::filter(real_estate_data,nchar(postal_code) == 5)
 knitr::opts_chunk$set(echo = TRUE)
 set.seed(1000)
 ```

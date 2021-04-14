@@ -23,10 +23,10 @@ Imports:
     raster,
     udunits2,
     tidycensus,
-    tidyr
-Depends: 
-    R (>= 3.5.0),
+    tidyr,
     dplyr
+Depends: 
+    R (>= 3.5.0)
 Suggests:
     knitr,
     rmarkdown,

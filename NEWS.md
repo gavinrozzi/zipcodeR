@@ -2,7 +2,8 @@
 
 # zipcodeR 0.3.0 (in development)
 - Added `search_point()` function to allow searching a radius around lat / lon coordinates
-- Added `geocode_zip()` function that returns lat / lon centroid of a given ZIP code
+- Added `geocode_zip()` function that returns lat / lng centroid of a given ZIP code
+- Added `normalize_zip()` function for normalizing messy ZIP code input.
 - The `reverse_zipcode()` function has been updated to return a blank row for invalid ZIP codes with no matches in the zip code database.
 
 # zipcodeR 0.2.0
