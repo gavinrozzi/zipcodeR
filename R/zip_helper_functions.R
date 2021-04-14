@@ -5,12 +5,15 @@
 #' @return Normalized zipcode
 #' @examples
 #' normalize_zip(0008731)
+#' @importFrom tidyr extract
+#' @importFrom dplyr pull
+#' @importFrom dplyr tibble
 #' @export
 normalize_zip <- function(zipcode) {
   capture_group <- function(data, regex) {
     tibble(data) %>%
       extract(col = data, into = "captured", regex = regex) %>%
-      pull(captured)
+      pull(.data$captured)
   }
 
   # input can be numeric or character

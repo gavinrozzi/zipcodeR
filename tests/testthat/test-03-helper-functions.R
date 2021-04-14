@@ -1,7 +1,6 @@
 ###########################
 # Helper functions tests #
 ##########################
-library(tidyr)
 
 testthat::expect_equal(
   normalize_zip(
