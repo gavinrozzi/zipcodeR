@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -97,6 +97,18 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/geographic.html">Geographic functions in zipcodeR</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -147,8 +159,8 @@
     <p>tibble of all ZIP codes found for given timezone</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>eastern</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span><span class='op'>(</span><span class='st'>'Eastern'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 14025 ZIP codes found for Eastern timezone </div><div class='input'><span class='va'>pacific</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span><span class='op'>(</span><span class='st'>'Mountain'</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>eastern</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span><span class='op'>(</span><span class='st'>"Eastern"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 14025 ZIP codes found for Eastern timezone </div><div class='input'><span class='va'>pacific</span> <span class='op'>&lt;-</span> <span class='fu'>search_tz</span><span class='op'>(</span><span class='st'>"Mountain"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 1982 ZIP codes found for Mountain timezone </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

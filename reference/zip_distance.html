@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search ZIP codes for a given city within a state — search_city • zipcodeR</title>
+<title>Calculate the distance between two ZIP codes in miles — zip_distance • zipcodeR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Search ZIP codes for a given city within a state — search_city" />
-<meta property="og:description" content="Search ZIP codes for a given city within a state" />
+<meta property="og:title" content="Calculate the distance between two ZIP codes in miles — zip_distance" />
+<meta property="og:description" content="Calculate the distance between two ZIP codes in miles" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -134,58 +134,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search ZIP codes for a given city within a state</h1>
-    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_lookups.r'><code>R/zip_lookups.r</code></a></small>
-    <div class="hidden name"><code>search_city.Rd</code></div>
+    <h1>Calculate the distance between two ZIP codes in miles</h1>
+    <small class="dont-index">Source: <a href='https://github.com/gavinrozzi/zipcodeR/blob/master/R/zip_helper_functions.R'><code>R/zip_helper_functions.R</code></a></small>
+    <div class="hidden name"><code>zip_distance.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search ZIP codes for a given city within a state</p>
+    <p>Calculate the distance between two ZIP codes in miles</p>
     </div>
 
-    <pre class="usage"><span class='fu'>search_city</span><span class='op'>(</span><span class='va'>city_name</span>, <span class='va'>state_abb</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>zip_distance</span><span class='op'>(</span><span class='va'>zipcode_a</span>, <span class='va'>zipcode_b</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>city_name</th>
-      <td><p>Name of major city to search</p></td>
+      <th>zipcode_a</th>
+      <td><p>First ZIP code</p></td>
     </tr>
     <tr>
-      <th>state_abb</th>
-      <td><p>Two-digit code for a U.S. state</p></td>
+      <th>zipcode_b</th>
+      <td><p>Second ZIP code</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>tibble of all ZIP code data found for given city</p>
+    <p>distance calculated from centroids of each ZIP code in miles</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>search_city</span><span class='op'>(</span><span class='st'>"Spring Lake"</span>, <span class='st'>"NJ"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 1 ZIP codes found for Spring Lake , NJ </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 24</span><span>
-#&gt;   zipcode zipcode_type major_city post_office_city common_city_list county state
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;list&lt;raw&gt;&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 07762   Standard     Spring La… Spring Lake, NJ              </span><span style='color: #949494;'>[23]</span><span> Monmo… NJ   
-#&gt; </span><span style='color: #949494;'># … with 17 more variables: lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   radius_in_miles &lt;dbl&gt;, area_code_list &lt;list&lt;raw&gt;&gt;, population &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span><span></div><div class='input'><span class='fu'>search_city</span><span class='op'>(</span><span class='st'>"Chappaqua"</span>, <span class='st'>"NY"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 1 ZIP codes found for Chappaqua , NY </div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 1 x 24</span><span>
-#&gt;   zipcode zipcode_type major_city post_office_city common_city_list county state
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                 </span><span style='color: #949494;font-style: italic;'>&lt;list&lt;raw&gt;&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 10514   Standard     Chappaqua  Chappaqua, NY                </span><span style='color: #949494;'>[21]</span><span> Westc… NY   
-#&gt; </span><span style='color: #949494;'># … with 17 more variables: lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   radius_in_miles &lt;dbl&gt;, area_code_list &lt;list&lt;raw&gt;&gt;, population &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span><span></div></span></pre>
+    <pre class="examples"><div class='input'><span class='fu'>zip_distance</span><span class='op'>(</span><span class='st'>"08731"</span>, <span class='st'>"08901"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 40.7</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
