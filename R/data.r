@@ -54,4 +54,3 @@
 #' }
 #' @source \url{https://www.huduser.gov/portal/datasets/usps_crosswalk.html}
 "zip_to_cd"
-

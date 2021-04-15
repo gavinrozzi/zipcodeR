@@ -16,6 +16,6 @@ a named list of two-digit state code and two digit district code
 Get all congressional districts for a given ZIP code
 }
 \examples{
-get_cd('08731')
-get_cd('90210')
+get_cd("08731")
+get_cd("90210")
 }

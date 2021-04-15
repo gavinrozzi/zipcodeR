@@ -16,7 +16,7 @@ Boolean TRUE or FALSE based upon whether provided ZIP code is a ZCTA by testing 
 Returns true if the given ZIP code is also a ZIP code tabulation area (ZCTA)
 }
 \examples{
-is_zcta('90210')
-is_zcta('99999')
-is_zcta('07762')
+is_zcta("90210")
+is_zcta("99999")
+is_zcta("07762")
 }

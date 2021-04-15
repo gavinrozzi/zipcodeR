@@ -20,7 +20,7 @@ tibble of all ZIP codes for given county name
 Search ZIP codes for a county
 }
 \examples{
-middlesex <- search_county('Middlesex','NJ')
-alameda <- search_county('alameda','CA')
-search_county("ST BERNARD","LA", similar = TRUE)$zipcode
+middlesex <- search_county("Middlesex", "NJ")
+alameda <- search_county("alameda", "CA")
+search_county("ST BERNARD", "LA", similar = TRUE)$zipcode
 }

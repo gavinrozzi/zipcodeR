@@ -18,8 +18,8 @@ tibble of Census tracts and data from Census crosswalk file found for given ZIP 
 Returns all ZIP codes found within a given FIPS code
 }
 \examples{
-search_fips('34')
-search_fips('34','03')
-search_fips('34','3')
-search_fips('36','003')
+search_fips("34")
+search_fips("34", "03")
+search_fips("34", "3")
+search_fips("36", "003")
 }
