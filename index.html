@@ -102,7 +102,8 @@
 <div id="makes-dealing-with-us-zip-codes-painless" class="section level3">
 <h3 class="hasAnchor">
 <a href="#makes-dealing-with-us-zip-codes-painless" class="anchor"></a>Makes dealing with U.S. ZIP codes painless.</h3>
-<p><strong>zipcodeR</strong> is an R library that makes working with ZIP codes in R easier. It provides data on all U.S. ZIP codes using multiple open data sources, making it easier for social science researchers and data scientists to work with ZIP code-level data in projects.</p>
+<p><a href="https://github.com/gavinrozzi/zipcodeR/">zipcodeR</a> is an R package that makes working with ZIP codes in R easier. It provides data on all U.S. ZIP codes using multiple open data sources, making it easier for social science researchers and data scientists to work with ZIP code-level data in data science projects using R.</p>
+<p>The latest update to <a href="https://github.com/gavinrozzi/zipcodeR/">zipcodeR</a> includes new functions for <a href="https://gavinrozzi.github.io/zipcodeR/articles/geographic.html">searching ZIP codes at various geographic levels &amp; geocoding.</a></p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -117,30 +118,34 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load the zipcodeR library into R</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gavinrozzi/zipcodeR/">zipcodeR</a></span><span class="op">)</span>
-
-<span class="co"># Find all ZIP codes for a state</span>
-<span class="fu"><a href="reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NJ'</span><span class="op">)</span>
-
-<span class="co"># Find all ZIP codes for a county</span>
-<span class="fu"><a href="reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span>
-
-<span class="co"># Find ZIP codes for a city</span>
-<span class="fu"><a href="reference/search_city.html">search_city</a></span><span class="op">(</span><span class="st">'Chappaqua'</span>,<span class="st">'NY'</span><span class="op">)</span>
-
-<span class="co"># Find all ZIP codes for a timezone</span>
-<span class="fu"><a href="reference/search_tz.html">search_tz</a></span><span class="op">(</span><span class="st">'Eastern'</span><span class="op">)</span>
-
-<span class="co"># Get all Census tracts for a given ZIP code</span>
-<span class="fu"><a href="reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="st">'08731'</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Load the zipcodeR library into R</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">library</span>(zipcodeR)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Find all ZIP codes for a state</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">search_state</span>(<span class="st">'NJ'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># Calculate distance between ZIP codes</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="kw">zip_distance</span>(<span class="st">'08901'</span>,<span class="st">'08731'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># Geocode a ZIP code to get its centroid</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="kw">geocode_zip</span>(<span class="st">'08901)</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="st"># Find all ZIP codes for a county</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="st">search_county('</span>Ocean<span class="st">','</span>NJ<span class="st">')</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="st"># Find ZIP codes for a city</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="st">search_city('</span>Chappaqua<span class="st">','</span>NY<span class="st">')</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="st"># Find all ZIP codes for a timezone</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="st">search_tz('</span>Eastern<span class="st">')</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a><span class="st"># Get all Census tracts for a given ZIP code</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="st">get_tracts('</span><span class="dv">08731</span><span class="st">')</span></span></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
 <p>Documentation for the current release <a href="https://gavinrozzi.github.io/zipcodeR/">is available here.</a> See the <a href="https://gavinrozzi.github.io/zipcodeR/reference/">reference section</a> for full details on how to use each of the functions provided by zipcodeR.</p>
-<p>Documentation for the current development version <a href="https://zipcoder-documentation-dev.netlify.app">can be viewed here.</a> This version contains new features and functions that may have not been fully tested, but may be used in a future release.</p>
 </div>
 <div id="data-sources" class="section level2">
 <h2 class="hasAnchor">
