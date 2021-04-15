@@ -1,0 +1,52 @@
+---
+title: "Geographic functions in zipcodeR"
+author: "Gavin Rozzi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+description: >
+  This is a quick overview of the new geographic functions introduced in zipcodeR 0.3 and above
+vignette: >
+  %\VignetteIndexEntry{Geographic functions in zipcodeR}
+  %\VignetteEngine{knitr::knitr}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+library(zipcodeR)
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(1000)
+```
+
+`{zipcodeR}` has introduced several new functions geared towards geographic applications. In this vignette we will explore these new functions and some of their typical use cases with examples.
+
+## Calculating the distance between two ZIP codes
+
+This version introduces the new function `zip_distance()` for calculating the distance between two ZIP codes in miles.
+
+```{r}
+zip_distance('08731','08753')
+```
+
+## Geocoding a ZIP code
+
+Users often are seeking to use zipcodeR to geocode ZIP codes. While it is possible to do this already, I have introduced a simple wrapper function that only returns that centroid coordinates of each provided ZIP code to make this process easier.
+
+```{r}
+geocode_zip('08731')
+```
+
+You can also pass a vector of ZIP codes to geocode to quickly geocode ZIP code-level data
+
+```{r}
+geocode_zip(c('08731','08721','08753'))
+```
+
+## Searching for ZIP codes within a radius
+
+Given a pair of latitude / longitude coordinates in WGS84 format you can search for all ZIP codes located within a provided radius in miles. This function will default to searching within 1 mile of your provided coordinates, but can be configured to search any arbitrary radius via the radius argument.
+
+The below code searches for all ZIP codes within 20 miles of the 
+
+```{r}
+search_radius(39.9, -74.3, radius = 20)
+```

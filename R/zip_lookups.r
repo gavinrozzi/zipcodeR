@@ -374,14 +374,14 @@ geocode_zip <- function(zip_code) {
 #' @param lat latitude
 #' @param lng longitude
 #' @param radius distance to search in miles, set by default to 1
-#' @return a tibble with two columns, the ZIP code(s) and distance from the provided coordinates in miles
+#' @return a tibble containing the ZIP code(s) within the provided radius and distance from the provided coordinates in miles
 #'
 #' @examples
-#' search_point(39.9, -74.3, 10)
+#' search_radius(39.9, -74.3, 10)
 #' @importFrom raster pointDistance
 #' @importFrom udunits2 ud.convert
 #' @export
-search_point <- function(lat, lng, radius = 1) {
+search_radius <- function(lat, lng, radius = 1) {
 
   # Create an instance of the ZIP code database for calculating distance,
   # filter to those with lat / lon pairs
@@ -390,7 +390,7 @@ search_point <- function(lat, lng, radius = 1) {
 
   # Calculate the distance between all points and the provided coordinate pair
   for (i in 1:nrow(zip_data)) {
-    zip_data$distance[i] <- raster::pointDistance(c(lat, lng), c(zip_data$lat[i], zip_data$lng[i]), lonlat = TRUE)
+    zip_data$distance[i] <- raster::pointDistance(c(lng, lat), c(zip_data$lng[i], zip_data$lat[i]), lonlat = TRUE)
   }
 
   # Convert meters to miles for distance measurement
