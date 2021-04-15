@@ -71,12 +71,6 @@ search_county <- function(county_name, state_abb, ...) {
       ",", state_abb
     ))
   }
-  print(paste(
-    nrow(county_zips), "ZIP codes found for",
-    paste0(sapply(unique(county_name_proper), function(x) {
-      paste(x, ",", state_abb)
-    }), collapse = " or ")
-  ))
   return(dplyr::as_tibble(county_zips))
 }
 #' Given a ZIP code, returns columns of metadata about that ZIP code
