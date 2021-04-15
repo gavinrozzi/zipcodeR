@@ -17,13 +17,6 @@ search_state <- function(state_abb) {
   if (nrow(state_zips) == 0) {
     stop(paste("No ZIP codes found for state:", state_abb))
   }
-  # Print results to console
-  if (length(state_abb) > 1) {
-    base::cat(nrow(state_zips), "ZIP codes found for states: ")
-  } else if (length(state_abb) == 1) {
-    base::cat(nrow(state_zips), "ZIP codes found for state: ")
-  }
-  base::cat(paste0(shQuote(state_abb), collapse = ", "), "\n")
   return(dplyr::as_tibble(state_zips))
 }
 #' Search ZIP codes for a county
@@ -127,13 +120,6 @@ reverse_zipcode <- function(zip_code) {
   if (nrow(zip_code_data) == 0) {
     stop(paste("No data found for provided ZIP code", .data$zip_code, ",", .data$state))
   }
-  # Print results to console
-  if (length(zip_code) > 1) {
-    base::cat(nrow(zip_code_data), "rows of data found for ZIP codes: ")
-  } else if (length(zip_code) == 1) {
-    base::cat(nrow(zip_code_data), "row of data found for ZIP code: ")
-  }
-  base::cat(paste0(shQuote(zip_code), collapse = ", "), "\n")
   return(dplyr::as_tibble(zip_code_data))
 }
 #' Search ZIP codes for a given city within a state
@@ -166,8 +152,6 @@ search_city <- function(city_name, state_abb) {
   if (nrow(city_zips) == 0) {
     stop(paste("No ZIP codes found for city:", city_name, ",", state_abb))
   }
-  # Print number of ZIP codes found to console
-  base::cat(paste(nrow(city_zips), "ZIP codes found for", city_name, ",", state_abb, "\n"))
   return(dplyr::as_tibble(city_zips))
 }
 #' Search all ZIP codes located within a given timezone
@@ -187,8 +171,6 @@ search_tz <- function(tz) {
   if (nrow(tz_zips) == 0) {
     stop(paste("No ZIP codes found for timezone:", tz))
   }
-  # Print number of ZIP codes found to console
-  base::cat(paste(nrow(tz_zips), "ZIP codes found for", tz, "timezone", "\n"))
   return(dplyr::as_tibble(tz_zips))
 }
 #' Returns all ZIP codes found within a given FIPS code
@@ -215,7 +197,6 @@ search_fips <- function(state_fips, county_fips) {
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
     result <- zip_code_db %>%
       dplyr::filter(.data$state == fips_result$state[1])
-    base::cat(nrow(result), "ZIP codes found for FIPS code", fips_result$state_code[1], paste0("(", fips_result$state[1], ")"))
     return(result)
   } else {
     # Clean up county FIPS code input by adding leading zeroes to match FIPS code data if not present
@@ -229,7 +210,6 @@ search_fips <- function(state_fips, county_fips) {
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
     result <- zip_code_db %>%
       dplyr::filter(.data$state == fips_result$state[1] & .data$county == fips_result$county[1])
-    base::cat(nrow(result), "ZIP codes found for FIPS code", fips_result$state_code[1], paste0("(", fips_result$state[1], ")"), fips_result$county_code[1], paste0("(", fips_result$county[1], ")"))
     return(dplyr::as_tibble(result))
   }
 }
@@ -256,8 +236,6 @@ get_tracts <- function(zip_code) {
   if (nrow(tracts) == 0) {
     stop(paste("No Census tracts found for ZIP code", zip_code))
   }
-  # Print number of tracts found to console
-  base::cat(paste(nrow(tracts), "Census tracts found for ZIP code", zip_code, "\n"))
   return(tracts)
 }
 #' Get all congressional districts for a given ZIP code
@@ -311,8 +289,6 @@ search_cd <- function(state_fips_code, congressional_district) {
   if (nrow(matched_zips) == 0) {
     stop(paste("No ZIP codes found for congressional district:", congressional_district))
   }
-  # Print number of ZIP codes found to console
-  base::cat(base::paste(nrow(matched_zips), "ZIP codes found for", "congressional district", congressional_district, "\n"))
   output <- matched_zips %>%
     dplyr::select(-.data$CD)
   output$state_fips <- state_fips_code
@@ -377,7 +353,8 @@ geocode_zip <- function(zip_code) {
 #' @return a tibble containing the ZIP code(s) within the provided radius and distance from the provided coordinates in miles
 #'
 #' @examples
-#' /dontrun{search_radius(39.9, -74.3, 10)}
+#'
+#' \dontrun{search_radius(39.9, -74.3, 10)}
 #' @importFrom raster pointDistance
 #' @importFrom udunits2 ud.convert
 #' @export
