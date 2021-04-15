@@ -25,7 +25,7 @@ The latest development version can be installed like so using devtools:
 devtools::install_github('gavinrozzi/zipcodeR', ref = "develop")
 ```
 ## Usage
-``` r
+```r
 # Load the zipcodeR library into R
 library(zipcodeR)
 
@@ -36,7 +36,7 @@ search_state('NJ')
 zip_distance('08901','08731')
 
 # Geocode a ZIP code to get its centroid
-geocode_zip('08901)
+geocode_zip('08901')
 
 # Find all ZIP codes for a county
 search_county('Ocean','NJ')
