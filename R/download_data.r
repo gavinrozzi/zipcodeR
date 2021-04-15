@@ -4,7 +4,7 @@
 #' @return Data files needed for package functionality, stored in data directory of package install
 #' @examples
 #'
-#' download_zip_data()
+#' \dontrun{download_zip_data()}
 #' @export
 download_zip_data <- function(force = FALSE) {
 

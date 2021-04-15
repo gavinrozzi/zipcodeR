@@ -17,5 +17,5 @@ Download updated data files needed for library functionality to the package's da
 }
 \examples{
 
-download_zip_data()
+\dontrun{download_zip_data()}
 }
