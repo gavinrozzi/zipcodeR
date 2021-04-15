@@ -20,5 +20,5 @@ a tibble containing the ZIP code(s) within the provided radius and distance from
 Search for ZIP codes that are within a given radius from a point
 }
 \examples{
-search_radius(39.9, -74.3, 10)
+/dontrun{search_radius(39.9, -74.3, 10)}
 }

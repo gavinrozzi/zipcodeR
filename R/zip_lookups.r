@@ -377,7 +377,7 @@ geocode_zip <- function(zip_code) {
 #' @return a tibble containing the ZIP code(s) within the provided radius and distance from the provided coordinates in miles
 #'
 #' @examples
-#' search_radius(39.9, -74.3, 10)
+#' /dontrun{search_radius(39.9, -74.3, 10)}
 #' @importFrom raster pointDistance
 #' @importFrom udunits2 ud.convert
 #' @export
