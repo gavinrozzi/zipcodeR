@@ -22,7 +22,7 @@ install.packages('zipcodeR')
 
 The latest development version can be installed like so using devtools:
 ``` r
-devtools::install_github('gavinrozzi/zipcodeR', ref = "develop")
+devtools::install_github('gavinrozzi/zipcodeR')
 ```
 ## Usage
 ```r
