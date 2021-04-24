@@ -15,3 +15,4 @@ paper.pdf$
 ^codemeta\.json$
 ^\.github$
 ^codecov\.yml$
+^README\.Rmd$

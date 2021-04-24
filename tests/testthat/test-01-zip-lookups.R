@@ -214,7 +214,7 @@ test_that("search_city() outputs proper structure data", {
 })
 
 test_that("search_city() errors on invalid city name", {
-  expect_error(search_city('anytown','NJ'))
+  expect_error(search_city("anytown", "NJ"))
 })
 
 
@@ -231,7 +231,7 @@ test_that("search_tz() outputs proper structure data", {
 })
 
 test_that("search_tz() errors on invalid timezone input", {
-  expect_error(search_tz('Western'))
+  expect_error(search_tz("Western"))
 })
 
 ###################
@@ -266,7 +266,7 @@ test_that("geocode_zip() outputs proper structure data", {
 })
 
 test_that("geocode_zip() errors on single invalid ZIP", {
-  expect_error(geocode_zip('08999'))
+  expect_error(geocode_zip("08999"))
 })
 
 
@@ -279,7 +279,6 @@ test_that("geocode_zip() outputs proper structure data", {
 ##################
 test_that("normalize_zip() fixes missing leading zeroes ", {
   # test with a zipcode missing leading zero
-  result <- normalize_zip('8731')
+  result <- normalize_zip("8731")
   expect_equal(result, "08731")
 })
-
