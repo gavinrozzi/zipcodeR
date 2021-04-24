@@ -102,7 +102,7 @@ reverse_zipcode <- function(zip_code) {
     dplyr::filter(.data$zipcode %in% zip_code)
 
   # Iterate over input and insert NA rows for those with no match
-  for (i in 1:length(zip_code)) {
+  for (i in seq_along(zip_code)) {
     if (zip_code[i] %in% zip_code_db$zipcode == FALSE) {
       warning(paste("No data found for ZIP code", zip_code[i]))
       zip_code_data <- zip_code_data %>%
@@ -361,7 +361,7 @@ search_radius <- function(lat, lng, radius = 1) {
     dplyr::filter(lat != "NA")
 
   # Calculate the distance between all points and the provided coordinate pair
-  for (i in 1:nrow(zip_data)) {
+  for (i in seq_len(nrow(zip_data))) {
     zip_data$distance[i] <- raster::pointDistance(c(lng, lat), c(zip_data$lng[i], zip_data$lat[i]), lonlat = TRUE)
   }
 

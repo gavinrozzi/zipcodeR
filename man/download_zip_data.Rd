@@ -16,6 +16,7 @@ Data files needed for package functionality, stored in data directory of package
 Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.
 }
 \examples{
-
-\dontrun{download_zip_data()}
+\dontrun{
+download_zip_data()
+}
 }
