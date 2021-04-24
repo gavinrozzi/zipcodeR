@@ -191,7 +191,7 @@ search_tz('Eastern')
 #> #   bounds_north <dbl>, bounds_south <dbl>
 ```
 
-# Get all Census tracts for a given ZIP code
+### Get all Census tracts for a given ZIP code
 
 ``` r
 get_tracts('08731')

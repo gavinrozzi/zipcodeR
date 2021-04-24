@@ -90,7 +90,7 @@ search_city('Jersey City','NJ')
 search_tz('Eastern')
 ```
 
-# Get all Census tracts for a given ZIP code
+### Get all Census tracts for a given ZIP code
 ```{r}
 get_tracts('08731')
 ```
