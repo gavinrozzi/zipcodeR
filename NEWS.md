@@ -1,5 +1,8 @@
 # *News*
 
+# zipcodeR 0.3.1
+- Hotfix to address a problem for Mac users on the latest R release, the package no longer depends on `udunits2` for the `zip_distance` and `search_radius` functions.
+
 # zipcodeR 0.3.0
 - Added `search_radius()` function to allow searching for ZIP codes around a radius of lat / lon coordinates.
 - Added `zip_distance()` function for calculating the distance between ZIP codes using their centroids.

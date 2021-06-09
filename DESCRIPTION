@@ -1,6 +1,6 @@
 Package: zipcodeR
 Title: Data & Functions for Working with US ZIP Codes
-Version: 0.4.9000
+Version: 0.3.1
 Authors@R: 
     person(given = "Gavin",
            family = "Rozzi",
@@ -21,7 +21,6 @@ Imports:
     rlang,
     stringr,
     raster,
-    udunits2,
     tidycensus,
     tidyr,
     dplyr

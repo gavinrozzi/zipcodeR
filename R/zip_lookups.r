@@ -351,7 +351,6 @@ geocode_zip <- function(zip_code) {
 #' search_radius(39.9, -74.3, 10)
 #' }
 #' @importFrom raster pointDistance
-#' @importFrom udunits2 ud.convert
 #' @export
 search_radius <- function(lat, lng, radius = 1) {
 
@@ -366,7 +365,7 @@ search_radius <- function(lat, lng, radius = 1) {
   }
 
   # Convert meters to miles for distance measurement
-  zip_data$distance <- udunits2::ud.convert(zip_data$distance, "m", "mi")
+  zip_data$distance <- zip_data$distance * 0.000621371
 
   # Get matching ZIP codes within specified search radius
   result <- zip_data %>%

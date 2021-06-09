@@ -72,7 +72,6 @@ normalize_zip <- function(zipcode) {
 #' @examples
 #' zip_distance("08731", "08901")
 #' @importFrom raster pointDistance
-#' @importFrom udunits2 ud.convert
 #' @export
 zip_distance <- function(zipcode_a, zipcode_b) {
 
@@ -86,7 +85,7 @@ zip_distance <- function(zipcode_a, zipcode_b) {
   distance <- raster::pointDistance(c(zip_data$lng[1], zip_data$lat[1]), c(zip_data$lng[2], zip_data$lat[2]), lonlat = TRUE)
 
   # Convert meters to miles for distance measurement
-  distance <- udunits2::ud.convert(distance, "m", "mi")
+  distance <- distance * 0.000621371
 
   # Round to 2 decimal places to match search_radius()
   distance <- round(distance, digits = 2)
