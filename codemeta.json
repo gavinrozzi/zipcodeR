@@ -14,13 +14,13 @@
   ],
   "issueTracker": "https://github.com/gavinrozzi/zipcodeR/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.5 (2021-03-31)",
+  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -162,18 +162,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "udunits2",
-      "name": "udunits2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=udunits2"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "tidycensus",
       "name": "tidycensus",
       "provider": {
@@ -217,6 +205,6 @@
   ],
   "releaseNotes": "https://github.com/gavinrozzi/zipcodeR/blob/master/NEWS.md",
   "readme": "https://github.com/gavinrozzi/zipcodeR/blob/master/README.md",
-  "fileSize": "3162.028KB",
+  "fileSize": "3059.161KB",
   "contIntegration": "https://codecov.io/gh/gavinrozzi/zipcodeR"
 }
