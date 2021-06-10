@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -160,29 +160,29 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>get_tracts</span><span class='op'>(</span><span class='st'>"08731"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 6 x 3</span>
 #&gt;   ZCTA5 TRACT        GEOID
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 08731 732001 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>001
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 08731 732002 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>002
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 08731 732101 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>101
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 08731 732103 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>103
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 08731 732104 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>732</span><span>104
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 08731 733000 </span><span style='text-decoration: underline;'>34</span><span>029</span><span style='text-decoration: underline;'>733</span><span>000</div><div class='input'><span class='fu'>get_tracts</span><span class='op'>(</span><span class='st'>"90210"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 11 x 3</span><span>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 08731 732001 <span style='text-decoration: underline;'>34</span>029<span style='text-decoration: underline;'>732</span>001
+#&gt; <span style='color: #BCBCBC;'>2</span> 08731 732002 <span style='text-decoration: underline;'>34</span>029<span style='text-decoration: underline;'>732</span>002
+#&gt; <span style='color: #BCBCBC;'>3</span> 08731 732101 <span style='text-decoration: underline;'>34</span>029<span style='text-decoration: underline;'>732</span>101
+#&gt; <span style='color: #BCBCBC;'>4</span> 08731 732103 <span style='text-decoration: underline;'>34</span>029<span style='text-decoration: underline;'>732</span>103
+#&gt; <span style='color: #BCBCBC;'>5</span> 08731 732104 <span style='text-decoration: underline;'>34</span>029<span style='text-decoration: underline;'>732</span>104
+#&gt; <span style='color: #BCBCBC;'>6</span> 08731 733000 <span style='text-decoration: underline;'>34</span>029<span style='text-decoration: underline;'>733</span>000</div><div class='input'><span class='fu'>get_tracts</span><span class='op'>(</span><span class='st'>"90210"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 11 x 3</span>
 #&gt;    ZCTA5 TRACT       GEOID
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> 90210 143901 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>143</span><span>901
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> 90210 143902 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>143</span><span>902
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> 90210 214901 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>214</span><span>901
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> 90210 261101 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>261</span><span>101
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> 90210 261102 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>261</span><span>102
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> 90210 261200 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>261</span><span>200
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> 90210 262100 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>262</span><span>100
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> 90210 700501 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>700</span><span>501
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> 90210 700600 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>700</span><span>600
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> 90210 700700 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>700</span><span>700
-#&gt; </span><span style='color: #BCBCBC;'>11</span><span> 90210 700801 </span><span style='text-decoration: underline;'>6</span><span>037</span><span style='text-decoration: underline;'>700</span><span>801</div></span></pre>
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>       <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> 90210 143901 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>143</span>901
+#&gt; <span style='color: #BCBCBC;'> 2</span> 90210 143902 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>143</span>902
+#&gt; <span style='color: #BCBCBC;'> 3</span> 90210 214901 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>214</span>901
+#&gt; <span style='color: #BCBCBC;'> 4</span> 90210 261101 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>261</span>101
+#&gt; <span style='color: #BCBCBC;'> 5</span> 90210 261102 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>261</span>102
+#&gt; <span style='color: #BCBCBC;'> 6</span> 90210 261200 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>261</span>200
+#&gt; <span style='color: #BCBCBC;'> 7</span> 90210 262100 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>262</span>100
+#&gt; <span style='color: #BCBCBC;'> 8</span> 90210 700501 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>700</span>501
+#&gt; <span style='color: #BCBCBC;'> 9</span> 90210 700600 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>700</span>600
+#&gt; <span style='color: #BCBCBC;'>10</span> 90210 700700 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>700</span>700
+#&gt; <span style='color: #BCBCBC;'>11</span> 90210 700801 <span style='text-decoration: underline;'>6</span>037<span style='text-decoration: underline;'>700</span>801</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
