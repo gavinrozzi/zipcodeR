@@ -2,3 +2,6 @@ authors:
 
   Gavin Rozzi:
     href: "https://www.gavinrozzi.com/"
+
+template:
+  package: preferably

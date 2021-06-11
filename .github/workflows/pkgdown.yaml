@@ -36,7 +36,7 @@ jobs:
         run: |
           options("pkgType" = "binary")
           remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown", type = "binary")
+          install.packages(c("pkgdown","preferably"), type = "binary")
         shell: Rscript {0}
 
       - name: Install package
