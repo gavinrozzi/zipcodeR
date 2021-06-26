@@ -1,0 +1,13 @@
+citHeader("To cite zipcodeR in publications, please use:")
+
+citEntry(entry = "Article",
+         author = "Gavin C. Rozzi",
+         title = "zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R",
+         journal = "Software Impacts",
+         issn = "2665-9638",
+         volume = "9",
+         pages = "100099",
+         year = "2021",
+         url = "https://www.sciencedirect.com/science/article/pii/S2665963821000373/",
+         textVersion = "Rozzi, G.C. (2021) zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R, Software Impacts 9 (2021) 100099."
+)

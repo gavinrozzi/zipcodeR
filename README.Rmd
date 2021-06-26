@@ -43,6 +43,26 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("gavinrozzi/zipcodeR")
 ```
+
+## Citing `{zipcodeR}` in Publications
+
+If you use `{zipcodeR}` in a publication, please cite the following [journal article](https://www.sciencedirect.com/science/article/pii/S2665963821000373/).
+
+A BibTeX entry for LaTeX users is:
+
+```bibtex
+@Article{,
+  author = {Gavin C. Rozzi},
+  title = {zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R},
+  journal = {Software Impacts},
+  issn = {2665-9638},
+  volume = {9},
+  pages = {100099},
+  year = {2021},
+  url = {https://www.sciencedirect.com/science/article/pii/S2665963821000373/},
+}
+```
+
 ## Examples
 
 
