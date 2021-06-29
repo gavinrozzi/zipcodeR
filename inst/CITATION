@@ -8,6 +8,7 @@ citEntry(entry = "Article",
          volume = "9",
          pages = "100099",
          year = "2021",
+         doi = "10.1016/j.simpa.2021.100099",
          url = "https://www.sciencedirect.com/science/article/pii/S2665963821000373/",
-         textVersion = "Rozzi, G.C. (2021) zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R, Software Impacts 9 (2021) 100099."
+         textVersion = "G.C. Rozzi, zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R, Softw. Impacts. (2021) 100099."
 )

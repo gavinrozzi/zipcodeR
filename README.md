@@ -52,15 +52,17 @@ article](https://www.sciencedirect.com/science/article/pii/S2665963821000373/).
 A BibTeX entry for LaTeX users is:
 
 ``` bibtex
-@Article{,
-  author = {Gavin C. Rozzi},
-  title = {zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R},
-  journal = {Software Impacts},
-  issn = {2665-9638},
-  volume = {9},
-  pages = {100099},
-  year = {2021},
-  url = {https://www.sciencedirect.com/science/article/pii/S2665963821000373/},
+@article{ROZZI2021100099,
+title = {zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R},
+journal = {Software Impacts},
+pages = {100099},
+year = {2021},
+issn = {2665-9638},
+doi = {https://doi.org/10.1016/j.simpa.2021.100099},
+url = {https://www.sciencedirect.com/science/article/pii/S2665963821000373},
+author = {Gavin C. Rozzi},
+keywords = {ZIP code, R, ZCTA, ZIP code tabulation area, zipcodeR},
+abstract = {The United States Postal Service (USPS) assigns unique identifiers for postal service areas known as ZIP codes which are commonly used to identify cities and regions throughout the United States in datasets. Despite the widespread use of ZIP codes, there are challenges in using them for geospatial analysis in the social sciences. This paper presents zipcodeR, an R package that facilitates analysis of ZIP code-level data by providing an offline database of ZIP codes and functions for geocoding, normalizing and retrieving data about ZIP codes and relating them to other geographies in R without depending on any external services.}
 }
 ```
 
