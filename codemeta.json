@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "zipcodeR",
-  "description": "Make working with ZIP codes in R painless with an integrated dataset of U.S. ZIP codes and functions for working with them. \n             Search ZIP codes by multiple geographies, including state, county, city & across time zones. Also included are functions for relating\n             ZIP codes to Census data.",
+  "description": "Make working with ZIP codes in R painless with an integrated dataset of U.S. ZIP codes and functions for working with them. \n             Search ZIP codes by multiple geographies, including state, county, city & across time zones. Also included are functions for relating\n             ZIP codes to Census data, geocoding & distance calculations.",
   "name": "zipcodeR: Data & Functions for Working with US ZIP Codes",
   "codeRepository": "https://github.com/gavinrozzi/zipcodeR/",
   "relatedLink": [
@@ -14,7 +14,7 @@
   ],
   "issueTracker": "https://github.com/gavinrozzi/zipcodeR/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -205,6 +205,34 @@
   ],
   "releaseNotes": "https://github.com/gavinrozzi/zipcodeR/blob/master/NEWS.md",
   "readme": "https://github.com/gavinrozzi/zipcodeR/blob/master/README.md",
-  "fileSize": "3059.161KB",
-  "contIntegration": "https://codecov.io/gh/gavinrozzi/zipcodeR"
+  "fileSize": "3061.402KB",
+  "contIntegration": "https://codecov.io/gh/gavinrozzi/zipcodeR",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2021",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": ["Gavin", "C."],
+          "familyName": "Rozzi"
+        }
+      ],
+      "name": "zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R",
+      "identifier": "10.1016/j.simpa.2021.100099",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2665963821000373/",
+      "pagination": "100099",
+      "@id": "https://doi.org/10.1016/j.simpa.2021.100099",
+      "sameAs": "https://doi.org/10.1016/j.simpa.2021.100099",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "datePublished": "2021",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "volumeNumber": "9",
+          "name": "Software Impacts"
+        }
+      }
+    }
+  ]
 }

@@ -1,5 +1,10 @@
 # *News*
 
+# zipcodeR 0.3.2
+- Citation data now included in the package. If using {zipcodeR} in a publication, you can obtain citation info by running `citation("zipcodeR")` at the R console.
+
+- Misc updates to documentation and package reference info.
+
 # zipcodeR 0.3.1
 - Hotfix to address a problem for Mac users on the latest R release, the package no longer depends on `{udunits2}` for the `zip_distance()` and `search_radius()` functions.
 
