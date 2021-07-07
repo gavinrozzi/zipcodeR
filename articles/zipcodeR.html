@@ -117,7 +117,7 @@
       <h1 data-toc-skip>Introduction to zipcodeR</h1>
                         <h4 class="author">Gavin Rozzi</h4>
             
-            <h4 class="date">2021-07-01</h4>
+            <h4 class="date">2021-07-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/master/vignettes/zipcodeR.Rmd"><code>vignettes/zipcodeR.Rmd</code></a></small>
       <div class="hidden name"><code>zipcodeR.Rmd</code></div>
@@ -249,19 +249,19 @@
 <h2 class="hasAnchor">
 <a href="#data-u-s--real-estate-market" class="anchor"></a>Data: U.S. Real Estate Market</h2>
 <p>To explore how zipcodeR can enhance your data &amp; workflow, we will use a public dataset from the <a href="https://www.realtor.com/research/data/">National Association of Realtors</a> containing data about housing market trends in the United States.</p>
-<p>This dataset, which is updated monthly, contains 9259 observations with current housing market data from the National Association of Realtors <a href="https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv">hosted on Amazon S3</a></p>
+<p>This dataset, which is updated monthly, contains 9833 observations with current housing market data from the National Association of Realtors <a href="https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv">hosted on Amazon S3</a></p>
 <p>This is what the data we will be working with looks like:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">real_estate_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 40
 ##   month_date_yyyymm postal_code zip_name flag  median_listing_… median_listing_…
 ##               &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-## 1            202105 90066       los ang… &lt;NA&gt;           1499000          -0.0422
-## 2            202105 48329       waterfo… *               244900          -0.203 
-## 3            202105 35967       fort pa… *               189000          -0.0536
-## 4            202105 73049       jones, … *               499100           0.0204
-## 5            202105 34237       sarasot… *               359000          -0.0297
-## 6            202105 17402       york, pa *               329900           0.0679
+## 1            202106 37076       hermita… &lt;NA&gt;            390000           0.0269
+## 2            202106 16947       troy, pa *               199450           0.140 
+## 3            202106 33154       miami b… *              1110450           0.200 
+## 4            202106 60611       chicago… &lt;NA&gt;            504950           0.0099
+## 5            202106 33896       davenpo… *               347950           0.0547
+## 6            202106 28311       fayette… *               217350           0.0109
 ## # … with 34 more variables: median_listing_price_yy &lt;dbl&gt;,
 ## #   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,
 ## #   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,
@@ -281,13 +281,13 @@
 ## #   total_listing_count_mm &lt;dbl&gt;, total_listing_count_yy &lt;dbl&gt;,
 ## #   pending_ratio &lt;dbl&gt;, pending_ratio_mm &lt;dbl&gt;, pending_ratio_yy &lt;dbl&gt;</code></pre>
 <p>Note: The data used in this vignette was filtered to only include valid 5-digit ZIP codes as zipcodeR does not yet have a function for normalizing ZIP codes. The full Realtor dataset will have a different number of rows.</p>
-<p>We’ll focus on the first row for now, which represents the town of Los Angeles, Ca.</p>
+<p>We’ll focus on the first row for now, which represents the town of Hermitage, Tn.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">real_estate_data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 40
 ##   month_date_yyyymm postal_code zip_name flag  median_listing_… median_listing_…
 ##               &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-## 1            202105 90066       los ang… &lt;NA&gt;           1499000          -0.0422
+## 1            202106 37076       hermita… &lt;NA&gt;            390000           0.0269
 ## # … with 34 more variables: median_listing_price_yy &lt;dbl&gt;,
 ## #   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,
 ## #   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,
@@ -306,7 +306,7 @@
 ## #   average_listing_price_yy &lt;dbl&gt;, total_listing_count &lt;dbl&gt;,
 ## #   total_listing_count_mm &lt;dbl&gt;, total_listing_count_yy &lt;dbl&gt;,
 ## #   pending_ratio &lt;dbl&gt;, pending_ratio_mm &lt;dbl&gt;, pending_ratio_yy &lt;dbl&gt;</code></pre>
-<p>The Realtor dataset contains a column named <strong>postal_code</strong> containing the ZIP code that identifies the town. We’ll use this to find out more about Los Angeles than what is provided in the housing market data.</p>
+<p>The Realtor dataset contains a column named <strong>postal_code</strong> containing the ZIP code that identifies the town. We’ll use this to find out more about Hermitage than what is provided in the housing market data.</p>
 </div>
 <div id="reverse-zip-code-search" class="section level2">
 <h2 class="hasAnchor">
@@ -322,7 +322,7 @@
 <pre><code>## # A tibble: 1 x 24
 ##   zipcode zipcode_type major_city post_office_city common_city_list county state
 ##   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                 &lt;list&lt;raw&gt;&gt; &lt;chr&gt;  &lt;chr&gt;
-## 1 90066   Standard     Los Angel… Los Angeles, CA              [23] Los A… CA   
+## 1 37076   Standard     Hermitage  Hermitage, TN                [21] David… TN   
 ## # … with 17 more variables: lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,
 ## #   radius_in_miles &lt;dbl&gt;, area_code_list &lt;list&lt;raw&gt;&gt;, population &lt;int&gt;,
 ## #   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,
@@ -338,20 +338,21 @@
 <p>Let’s find out how many Census tracts are in the ZIP code from the previous example.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 22 x 3
-##    ZCTA5 TRACT       GEOID
-##    &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;
-##  1 90066 271300 6037271300
-##  2 90066 271400 6037271400
-##  3 90066 271500 6037271500
-##  4 90066 271600 6037271600
-##  5 90066 271901 6037271901
-##  6 90066 271902 6037271902
-##  7 90066 272100 6037272100
-##  8 90066 272201 6037272201
-##  9 90066 272202 6037272202
-## 10 90066 272301 6037272301
-## # … with 12 more rows</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    ZCTA5 TRACT        GEOID
+##    &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
+##  1 37076 015401 47037015401
+##  2 37076 015402 47037015402
+##  3 37076 015404 47037015404
+##  4 37076 015405 47037015405
+##  5 37076 015609 47037015609
+##  6 37076 015610 47037015610
+##  7 37076 015622 47037015622
+##  8 37076 015623 47037015623
+##  9 37076 015624 47037015624
+## 10 37076 015631 47037015631
+## 11 37076 030307 47189030307
+## 12 37076 030901 47189030901</code></pre>
 <p>Now that you have all of the tracts for this ZIP code, it would be very easy to join this with other Census data, such as that which is available from the American Community Survey and other sources.</p>
 <p>But ZIP codes alone are not terribly useful for social science research since they are only meant to represent USPS service areas. The Census Bureau has established <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html">ZIP code tabulation areas (ZCTAs)</a> that provide a representation of ZIP codes and can be used for joining with Census data. But not every ZIP code is also a ZCTA.</p>
 </div>
