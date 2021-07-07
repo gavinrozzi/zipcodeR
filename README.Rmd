@@ -54,6 +54,7 @@ A BibTeX entry for LaTeX users is:
 @article{ROZZI2021100099,
 title = {zipcodeR: Advancing the analysis of spatial data at the ZIP code level in R},
 journal = {Software Impacts},
+volume = {9},
 pages = {100099},
 year = {2021},
 issn = {2665-9638},
