@@ -117,7 +117,7 @@
       <h1 data-toc-skip>Introduction to zipcodeR</h1>
                         <h4 class="author">Gavin Rozzi</h4>
             
-            <h4 class="date">2021-07-07</h4>
+            <h4 class="date">2021-08-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/master/vignettes/zipcodeR.Rmd"><code>vignettes/zipcodeR.Rmd</code></a></small>
       <div class="hidden name"><code>zipcodeR.Rmd</code></div>
@@ -146,7 +146,7 @@
 <p>Getting all ZIP codes for a single state is simple, you only need to pass a two-digit abbreviation of a state’s name to get a tibble of all ZIP codes in that state. Let’s start by finding all of the ZIP codes in New York:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NY'</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 2,208 x 24
+<pre><code>## # A tibble: 2,208 × 24
 ##    zipcode zipcode_type major_city   post_office_city common_city_list county   
 ##    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;                 &lt;list&lt;raw&gt;&gt; &lt;chr&gt;    
 ##  1 00501   Unique       Holtsville   &lt;NA&gt;                         [22] Suffolk …
@@ -177,7 +177,7 @@
 <code class="sourceCode R"><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'NY'</span>,<span class="st">'NJ'</span>,<span class="st">'CT'</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 3,378 x 24
+<pre><code>## # A tibble: 3,378 × 24
 ##    zipcode zipcode_type major_city  post_office_city  common_city_list county   
 ##    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                  &lt;list&lt;raw&gt;&gt; &lt;chr&gt;    
 ##  1 06001   Standard     Avon        Avon, CT                      [16] Hartford…
@@ -207,7 +207,7 @@
 <p>Let’s find all of the ZIP codes located within Ocean County, New Jersey:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 32 x 24
+<pre><code>## # A tibble: 32 × 24
 ##    zipcode zipcode_type major_city   post_office_city  common_city_list county  
 ##    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;                  &lt;list&lt;raw&gt;&gt; &lt;chr&gt;   
 ##  1 08005   Standard     Barnegat     Barnegat, NJ                  [20] Ocean C…
@@ -253,59 +253,37 @@
 <p>This is what the data we will be working with looks like:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">real_estate_data</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 40
-##   month_date_yyyymm postal_code zip_name flag  median_listing_… median_listing_…
-##               &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-## 1            202106 37076       hermita… &lt;NA&gt;            390000           0.0269
-## 2            202106 16947       troy, pa *               199450           0.140 
-## 3            202106 33154       miami b… *              1110450           0.200 
-## 4            202106 60611       chicago… &lt;NA&gt;            504950           0.0099
-## 5            202106 33896       davenpo… *               347950           0.0547
-## 6            202106 28311       fayette… *               217350           0.0109
+<pre><code>## # A tibble: 6 × 40
+##   month_date_yyyymm postal_code zip_name         flag  median_listing_… median_listing_…
+##   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1 202106            37076       hermitage, tn    &lt;NA&gt;            390000           0.0269
+## 2 202106            16947       troy, pa         *               199450           0.140 
+## 3 202106            33154       miami beach, fl  *              1110450           0.200 
+## 4 202106            60611       chicago, il      &lt;NA&gt;            504950           0.0099
+## 5 202106            33896       davenport, fl    *               347950           0.0547
+## 6 202106            28311       fayetteville, nc *               217350           0.0109
 ## # … with 34 more variables: median_listing_price_yy &lt;dbl&gt;,
 ## #   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,
 ## #   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,
 ## #   median_days_on_market_mm &lt;dbl&gt;, median_days_on_market_yy &lt;dbl&gt;,
 ## #   new_listing_count &lt;dbl&gt;, new_listing_count_mm &lt;dbl&gt;,
 ## #   new_listing_count_yy &lt;dbl&gt;, price_increased_count &lt;dbl&gt;,
-## #   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;,
-## #   price_reduced_count &lt;dbl&gt;, price_reduced_count_mm &lt;dbl&gt;,
-## #   price_reduced_count_yy &lt;dbl&gt;, pending_listing_count &lt;dbl&gt;,
-## #   pending_listing_count_mm &lt;dbl&gt;, pending_listing_count_yy &lt;dbl&gt;,
-## #   median_listing_price_per_square_foot &lt;dbl&gt;,
-## #   median_listing_price_per_square_foot_mm &lt;dbl&gt;,
-## #   median_listing_price_per_square_foot_yy &lt;dbl&gt;, median_square_feet &lt;dbl&gt;,
-## #   median_square_feet_mm &lt;dbl&gt;, median_square_feet_yy &lt;dbl&gt;,
-## #   average_listing_price &lt;dbl&gt;, average_listing_price_mm &lt;dbl&gt;,
-## #   average_listing_price_yy &lt;dbl&gt;, total_listing_count &lt;dbl&gt;,
-## #   total_listing_count_mm &lt;dbl&gt;, total_listing_count_yy &lt;dbl&gt;,
-## #   pending_ratio &lt;dbl&gt;, pending_ratio_mm &lt;dbl&gt;, pending_ratio_yy &lt;dbl&gt;</code></pre>
+## #   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;, …</code></pre>
 <p>Note: The data used in this vignette was filtered to only include valid 5-digit ZIP codes as zipcodeR does not yet have a function for normalizing ZIP codes. The full Realtor dataset will have a different number of rows.</p>
 <p>We’ll focus on the first row for now, which represents the town of Hermitage, Tn.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">real_estate_data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 40
-##   month_date_yyyymm postal_code zip_name flag  median_listing_… median_listing_…
-##               &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-## 1            202106 37076       hermita… &lt;NA&gt;            390000           0.0269
+<pre><code>## # A tibble: 1 × 40
+##   month_date_yyyymm postal_code zip_name      flag  median_listing_… median_listing_…
+##   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1 202106            37076       hermitage, tn &lt;NA&gt;            390000           0.0269
 ## # … with 34 more variables: median_listing_price_yy &lt;dbl&gt;,
 ## #   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,
 ## #   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,
 ## #   median_days_on_market_mm &lt;dbl&gt;, median_days_on_market_yy &lt;dbl&gt;,
 ## #   new_listing_count &lt;dbl&gt;, new_listing_count_mm &lt;dbl&gt;,
 ## #   new_listing_count_yy &lt;dbl&gt;, price_increased_count &lt;dbl&gt;,
-## #   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;,
-## #   price_reduced_count &lt;dbl&gt;, price_reduced_count_mm &lt;dbl&gt;,
-## #   price_reduced_count_yy &lt;dbl&gt;, pending_listing_count &lt;dbl&gt;,
-## #   pending_listing_count_mm &lt;dbl&gt;, pending_listing_count_yy &lt;dbl&gt;,
-## #   median_listing_price_per_square_foot &lt;dbl&gt;,
-## #   median_listing_price_per_square_foot_mm &lt;dbl&gt;,
-## #   median_listing_price_per_square_foot_yy &lt;dbl&gt;, median_square_feet &lt;dbl&gt;,
-## #   median_square_feet_mm &lt;dbl&gt;, median_square_feet_yy &lt;dbl&gt;,
-## #   average_listing_price &lt;dbl&gt;, average_listing_price_mm &lt;dbl&gt;,
-## #   average_listing_price_yy &lt;dbl&gt;, total_listing_count &lt;dbl&gt;,
-## #   total_listing_count_mm &lt;dbl&gt;, total_listing_count_yy &lt;dbl&gt;,
-## #   pending_ratio &lt;dbl&gt;, pending_ratio_mm &lt;dbl&gt;, pending_ratio_yy &lt;dbl&gt;</code></pre>
+## #   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;, …</code></pre>
 <p>The Realtor dataset contains a column named <strong>postal_code</strong> containing the ZIP code that identifies the town. We’ll use this to find out more about Hermitage than what is provided in the housing market data.</p>
 </div>
 <div id="reverse-zip-code-search" class="section level2">
@@ -319,7 +297,7 @@
 <span class="co"># Pass the ZIP code to the reverse_zipcode() function</span>
 
 <span class="fu"><a href="../reference/reverse_zipcode.html">reverse_zipcode</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 24
+<pre><code>## # A tibble: 1 × 24
 ##   zipcode zipcode_type major_city post_office_city common_city_list county state
 ##   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                 &lt;list&lt;raw&gt;&gt; &lt;chr&gt;  &lt;chr&gt;
 ## 1 37076   Standard     Hermitage  Hermitage, TN                [21] David… TN   
@@ -338,7 +316,7 @@
 <p>Let’s find out how many Census tracts are in the ZIP code from the previous example.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 3
+<pre><code>## # A tibble: 12 × 3
 ##    ZCTA5 TRACT        GEOID
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
 ##  1 37076 015401 47037015401
