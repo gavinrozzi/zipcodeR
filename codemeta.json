@@ -205,8 +205,8 @@
   ],
   "releaseNotes": "https://github.com/gavinrozzi/zipcodeR/blob/master/NEWS.md",
   "readme": "https://github.com/gavinrozzi/zipcodeR/blob/master/README.md",
-  "fileSize": "3061.402KB",
-  "contIntegration": "https://codecov.io/gh/gavinrozzi/zipcodeR",
+  "fileSize": "3063.144KB",
+  "contIntegration": ["https://github.com/gavinrozzi/zipcodeR/actions", "https://codecov.io/gh/gavinrozzi/zipcodeR"],
   "citation": [
     {
       "@type": "ScholarlyArticle",
