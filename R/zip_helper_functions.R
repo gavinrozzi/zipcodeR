@@ -67,13 +67,14 @@ normalize_zip <- function(zipcode) {
 #'
 #' @param zipcode_a First ZIP code
 #' @param zipcode_b Second ZIP code
+#' @param lonlat lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.
 #' @return distance calculated from centroids of each ZIP code in miles
 #'
 #' @examples
 #' zip_distance("08731", "08901")
 #' @importFrom raster pointDistance
 #' @export
-zip_distance <- function(zipcode_a, zipcode_b) {
+zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE) {
 
   # Create an instance of the ZIP code database for calculating distance,
   # filter to those with lat / lon pairs
@@ -82,7 +83,7 @@ zip_distance <- function(zipcode_a, zipcode_b) {
     dplyr::filter(.data$zipcode == zipcode_a | .data$zipcode == zipcode_b) %>%
     dplyr::select(.data$zipcode, .data$lat, .data$lng)
 
-  distance <- raster::pointDistance(c(zip_data$lng[1], zip_data$lat[1]), c(zip_data$lng[2], zip_data$lat[2]), lonlat = TRUE)
+  distance <- raster::pointDistance(c(zip_data$lng[1], zip_data$lat[1]), c(zip_data$lng[2], zip_data$lat[2]), lonlat = lonlat)
 
   # Convert meters to miles for distance measurement
   distance <- distance * 0.000621371

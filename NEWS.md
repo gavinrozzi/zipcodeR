@@ -1,8 +1,8 @@
 # *News*
 
 # zipcodeR 0.3.2
-- Citation data now included in the package. If using {zipcodeR} in a publication, you can obtain citation info by running `citation("zipcodeR")` at the R console.
-
+- `download_zip_data()` has been refactored to make data updates more easily accessible and compare against existing data. Data is now directly downloaded from the upstream source and the existing data GitHub repository will no longer be updated.
+- Citation data is now included with package. If using `{zipcodeR}` in a publication, you can obtain citation info by running `citation("zipcodeR")`.
 - Misc updates to documentation and package reference info.
 
 # zipcodeR 0.3.1

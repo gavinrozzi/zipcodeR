@@ -23,7 +23,12 @@ Imports:
     raster,
     tidycensus,
     tidyr,
-    dplyr
+    dplyr,
+    jsonlite,
+    httr,
+    curl,
+    RSQLite,
+    DBI
 Depends: 
     R (>= 3.5.0)
 Suggests:

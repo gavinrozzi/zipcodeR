@@ -4,12 +4,14 @@
 \alias{zip_distance}
 \title{Calculate the distance between two ZIP codes in miles}
 \usage{
-zip_distance(zipcode_a, zipcode_b)
+zip_distance(zipcode_a, zipcode_b, lonlat = TRUE)
 }
 \arguments{
 \item{zipcode_a}{First ZIP code}
 
 \item{zipcode_b}{Second ZIP code}
+
+\item{lonlat}{lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.}
 }
 \value{
 distance calculated from centroids of each ZIP code in miles
