@@ -177,7 +177,7 @@
     <p>Calculate the distance between two ZIP codes in miles</p>
     </div>
 
-    <pre class="usage"><span class='fu'>zip_distance</span><span class='op'>(</span><span class='va'>zipcode_a</span>, <span class='va'>zipcode_b</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>zip_distance</span><span class='op'>(</span><span class='va'>zipcode_a</span>, <span class='va'>zipcode_b</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,6 +189,10 @@
     <tr>
       <th>zipcode_b</th>
       <td><p>Second ZIP code</p></td>
+    </tr>
+    <tr>
+      <th>lonlat</th>
+      <td><p>lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.</p></td>
     </tr>
     </table>
 
