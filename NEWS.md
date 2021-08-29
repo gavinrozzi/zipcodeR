@@ -1,7 +1,9 @@
 # *News*
 
 # zipcodeR 0.3.2
+- `zip_code_db` has been updated.
 - `download_zip_data()` has been refactored to make data updates more easily accessible and compare against existing data. Data is now directly downloaded from the upstream source and the existing data GitHub repository will no longer be updated.
+- `zip_distance()` has been updated to allow changing the type of distance calculation performed if specified via the lonlat argument.
 - Citation data is now included with package. If using `{zipcodeR}` in a publication, you can obtain citation info by running `citation("zipcodeR")`.
 - Misc updates to documentation and package reference info.
 
