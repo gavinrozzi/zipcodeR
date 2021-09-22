@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+library(tibble)
 ```
 
 # zipcodeR <a href='https://gavinrozzi.github.io/zipcodeR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
@@ -85,6 +86,17 @@ search_state('NJ')
 
 ```{r}
 zip_distance('08901','08731')
+```
+
+
+### Calculate the distance between vectors of ZIP codes
+
+```{r}
+zip_codes <- tribble(~zip_a,  ~zip_b,
+"08731",  "08901",
+"08734",  "08005")
+
+zip_distance(zip_codes$zip_a,zip_codes$zip_b)
 ```
 
 ### Geocode a ZIP code to get its centroid
