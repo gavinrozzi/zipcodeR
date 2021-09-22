@@ -1,7 +1,7 @@
-# cran-comments (2021-08-28)
+# cran-comments (2021-09-21)
 
 ## Resubmission
-This is a resubmission. In this version I have modified the package to refactor existing functions, add citation data and updates to documentation.
+This is a resubmission. In this version I have modified the package to refactor existing functions
 
 ## Test environments
 * local M1 macOS Big Sur install, R release
