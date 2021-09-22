@@ -56,7 +56,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -117,7 +117,7 @@
       <h1 data-toc-skip>Introduction to zipcodeR</h1>
                         <h4 class="author">Gavin Rozzi</h4>
             
-            <h4 class="date">2021-09-02</h4>
+            <h4 class="date">2021-09-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/master/vignettes/zipcodeR.Rmd"><code>vignettes/zipcodeR.Rmd</code></a></small>
       <div class="hidden name"><code>zipcodeR.Rmd</code></div>
@@ -249,19 +249,19 @@
 <h2 class="hasAnchor">
 <a href="#data-u-s--real-estate-market" class="anchor"></a>Data: U.S. Real Estate Market</h2>
 <p>To explore how zipcodeR can enhance your data &amp; workflow, we will use a public dataset from the <a href="https://www.realtor.com/research/data/">National Association of Realtors</a> containing data about housing market trends in the United States.</p>
-<p>This dataset, which is updated monthly, contains 9833 observations with current housing market data from the National Association of Realtors <a href="https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv">hosted on Amazon S3</a></p>
+<p>This dataset, which is updated monthly, contains 10833 observations with current housing market data from the National Association of Realtors <a href="https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv">hosted on Amazon S3</a></p>
 <p>This is what the data we will be working with looks like:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">real_estate_data</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 40
-##   month_date_yyyymm postal_code zip_name         flag  median_listing_… median_listing_…
-##   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-## 1 202106            37076       hermitage, tn    &lt;NA&gt;            390000           0.0269
-## 2 202106            16947       troy, pa         *               199450           0.140 
-## 3 202106            33154       miami beach, fl  *              1110450           0.200 
-## 4 202106            60611       chicago, il      &lt;NA&gt;            504950           0.0099
-## 5 202106            33896       davenport, fl    *               347950           0.0547
-## 6 202106            28311       fayetteville, nc *               217350           0.0109
+##   month_date_yyyymm postal_code zip_name          flag  median_listing_… median_listing_…
+##   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1 202108            47803       terre haute, in   &lt;NA&gt;           219990            0.0732
+## 2 202108            48617       clare, mi         &lt;NA&gt;           187775            0.0438
+## 3 202108            98902       yakima, wa        *              246500           -0.0592
+## 4 202108            32112       crescent city, fl &lt;NA&gt;           280000           -0.0175
+## 5 202108            11764       miller place, ny  &lt;NA&gt;           607442.          -0.0295
+## 6 202108            48317       utica, mi         &lt;NA&gt;           257400            0.03  
 ## # … with 34 more variables: median_listing_price_yy &lt;dbl&gt;,
 ## #   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,
 ## #   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,
@@ -270,13 +270,13 @@
 ## #   new_listing_count_yy &lt;dbl&gt;, price_increased_count &lt;dbl&gt;,
 ## #   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;, …</code></pre>
 <p>Note: The data used in this vignette was filtered to only include valid 5-digit ZIP codes as zipcodeR does not yet have a function for normalizing ZIP codes. The full Realtor dataset will have a different number of rows.</p>
-<p>We’ll focus on the first row for now, which represents the town of Hermitage, Tn.</p>
+<p>We’ll focus on the first row for now, which represents the town of Terre Haute, In.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">real_estate_data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 40
-##   month_date_yyyymm postal_code zip_name      flag  median_listing_… median_listing_…
-##   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-## 1 202106            37076       hermitage, tn &lt;NA&gt;            390000           0.0269
+##   month_date_yyyymm postal_code zip_name        flag  median_listing_… median_listing_…
+##   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1 202108            47803       terre haute, in &lt;NA&gt;            219990           0.0732
 ## # … with 34 more variables: median_listing_price_yy &lt;dbl&gt;,
 ## #   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,
 ## #   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,
@@ -284,7 +284,7 @@
 ## #   new_listing_count &lt;dbl&gt;, new_listing_count_mm &lt;dbl&gt;,
 ## #   new_listing_count_yy &lt;dbl&gt;, price_increased_count &lt;dbl&gt;,
 ## #   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;, …</code></pre>
-<p>The Realtor dataset contains a column named <strong>postal_code</strong> containing the ZIP code that identifies the town. We’ll use this to find out more about Hermitage than what is provided in the housing market data.</p>
+<p>The Realtor dataset contains a column named <strong>postal_code</strong> containing the ZIP code that identifies the town. We’ll use this to find out more about Terre Haute than what is provided in the housing market data.</p>
 </div>
 <div id="reverse-zip-code-search" class="section level2">
 <h2 class="hasAnchor">
@@ -300,7 +300,7 @@
 <pre><code>## # A tibble: 1 × 24
 ##   zipcode zipcode_type major_city post_office_city common_city_list county state
 ##   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                      &lt;blob&gt; &lt;chr&gt;  &lt;chr&gt;
-## 1 37076   Standard     Hermitage  Hermitage, TN          &lt;raw 21 B&gt; David… TN   
+## 1 47803   Standard     Terre Hau… Terre Haute, IN        &lt;raw 23 B&gt; Vigo … IN   
 ## # … with 17 more variables: lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,
 ## #   radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;, population &lt;int&gt;,
 ## #   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,
@@ -316,21 +316,20 @@
 <p>Let’s find out how many Census tracts are in the ZIP code from the previous example.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 12 × 3
+<pre><code>## # A tibble: 11 × 3
 ##    ZCTA5 TRACT        GEOID
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;
-##  1 37076 015401 47037015401
-##  2 37076 015402 47037015402
-##  3 37076 015404 47037015404
-##  4 37076 015405 47037015405
-##  5 37076 015609 47037015609
-##  6 37076 015610 47037015610
-##  7 37076 015622 47037015622
-##  8 37076 015623 47037015623
-##  9 37076 015624 47037015624
-## 10 37076 015631 47037015631
-## 11 37076 030307 47189030307
-## 12 37076 030901 47189030901</code></pre>
+##  1 47803 000400 18167000400
+##  2 47803 000700 18167000700
+##  3 47803 001300 18167001300
+##  4 47803 001400 18167001400
+##  5 47803 001500 18167001500
+##  6 47803 001600 18167001600
+##  7 47803 001700 18167001700
+##  8 47803 010100 18167010100
+##  9 47803 010600 18167010600
+## 10 47803 010701 18167010701
+## 11 47803 010702 18167010702</code></pre>
 <p>Now that you have all of the tracts for this ZIP code, it would be very easy to join this with other Census data, such as that which is available from the American Community Survey and other sources.</p>
 <p>But ZIP codes alone are not terribly useful for social science research since they are only meant to represent USPS service areas. The Census Bureau has established <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html">ZIP code tabulation areas (ZCTAs)</a> that provide a representation of ZIP codes and can be used for joining with Census data. But not every ZIP code is also a ZCTA.</p>
 </div>

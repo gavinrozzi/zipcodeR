@@ -109,7 +109,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -177,32 +177,35 @@
     <p>Calculate the distance between two ZIP codes in miles</p>
     </div>
 
-    <pre class="usage"><span class='fu'>zip_distance</span><span class='op'>(</span><span class='va'>zipcode_a</span>, <span class='va'>zipcode_b</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>zip_distance</span><span class='op'>(</span><span class='va'>zipcode_a</span>, <span class='va'>zipcode_b</span>, lonlat <span class='op'>=</span> <span class='cn'>TRUE</span>, units <span class='op'>=</span> <span class='st'>"miles"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>zipcode_a</th>
-      <td><p>First ZIP code</p></td>
+      <td><p>First vector of ZIP codes</p></td>
     </tr>
     <tr>
       <th>zipcode_b</th>
-      <td><p>Second ZIP code</p></td>
+      <td><p>Second vector of ZIP codes</p></td>
     </tr>
     <tr>
       <th>lonlat</th>
       <td><p>lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.</p></td>
     </tr>
+    <tr>
+      <th>units</th>
+      <td><p>Specify which units to return distance calculations in. Choices include meters or miles.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>distance calculated from centroids of each ZIP code in miles</p>
+    <p>a data.frame containing a column for each ZIP code and a new column containing the distance between the two columns of ZIP code</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>zip_distance</span><span class='op'>(</span><span class='st'>"08731"</span>, <span class='st'>"08901"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 40.7</div></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
