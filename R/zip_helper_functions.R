@@ -75,13 +75,6 @@ normalize_zip <- function(zipcode) {
 #' Example with a single pair of ZIP codes
 #' zip_distance("08731", "08901")
 #'
-#' zip_codes <- tribble(~zip_a,  ~zip_b,
-#' "08731",  "08901",
-#' "08734",  "08005")
-#'
-#' Example with two vectors of ZIP codes
-#' zip_distance(zip_codes$zip_a,zip_codes$zip_b)
-#'
 #' @importFrom raster pointDistance
 #' @export
 zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
