@@ -248,13 +248,6 @@ test_that("search_radius() returns a single ZIP code when centroid of ZIP is sub
   expect_equal(nrow(result), 1)
 })
 
-test_that("search_radius() output is consistent with zip_distance()", {
-  result <- search_radius(39.9, -74.3, 10)
-  expect_equal(
-    zip_distance(result$zipcode[1], result$zipcode[2]),
-    round(result$distance[2], digits = 2)
-  )
-})
 
 ################
 # geocode_zip()#
