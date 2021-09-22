@@ -65,31 +65,72 @@ normalize_zip <- function(zipcode) {
 #' Calculate the distance between two ZIP codes in miles
 #'
 #'
-#' @param zipcode_a First ZIP code
-#' @param zipcode_b Second ZIP code
+#' @param zipcode_a First vector of ZIP codes
+#' @param zipcode_b Second vector of ZIP codes
 #' @param lonlat lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.
-#' @return distance calculated from centroids of each ZIP code in miles
+#' @param units Specify which units to return distance calculations in. Choices include meters or miles.
+#' @return a data.frame containing a column for each ZIP code and a new column containing the distance between the two columns of ZIP code
 #'
 #' @examples
+#' Example with a single pair of ZIP codes
 #' zip_distance("08731", "08901")
+#'
+#' zip_codes <- tribble(~zip_a,  ~zip_b,
+#' "08731",  "08901",
+#' "08734",  "08005")
+#'
+#' Example with two vectors of ZIP codes
+#' zip_distance(zip_codes$zip_a,zip_codes$zip_b)
+#'
 #' @importFrom raster pointDistance
 #' @export
-zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE) {
+zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
+  zipcode_a <- as.character(zipcode_a)
+  zipcode_b <- as.character(zipcode_b)
 
   # Create an instance of the ZIP code database for calculating distance,
   # filter to those with lat / lon pairs
   zip_data <- zip_code_db %>%
     dplyr::filter(.data$lat != "NA" & .data$lng != "NA") %>%
-    dplyr::filter(.data$zipcode == zipcode_a | .data$zipcode == zipcode_b) %>%
+    dplyr::filter(.data$zipcode %in% zipcode_a | .data$zipcode %in% zipcode_b) %>%
     dplyr::select(.data$zipcode, .data$lat, .data$lng)
 
-  distance <- raster::pointDistance(c(zip_data$lng[1], zip_data$lat[1]), c(zip_data$lng[2], zip_data$lat[2]), lonlat = lonlat)
+  # Filter the data points for each set of ZIP codes
+  zip_a_data <- zip_data %>%
+    dplyr::filter(.data$zipcode %in% zipcode_a)
 
-  # Convert meters to miles for distance measurement
-  distance <- distance * 0.000621371
+  zip_b_data <- zip_data %>%
+    dplyr::filter(.data$zipcode %in% zipcode_b)
+
+  # Create a matrix of points to feed to raster
+  points_a <- cbind(cbind(zip_a_data$lng, zip_a_data$lat))
+  points_b <- cbind(cbind(zip_b_data$lng, zip_b_data$lat))
+
+  # Calculate the distance matrix between both sets of points
+  distance <- raster::pointDistance(points_a, points_b, lonlat = lonlat)
+
+  # Convert the distance matrix from meters to miles
+  if (units == "miles") {
+    distance <- distance * 0.000621371
+  }
 
   # Round to 2 decimal places to match search_radius()
   distance <- round(distance, digits = 2)
 
-  return(distance)
+  # Put together the results in a data.frame
+  result <- data.frame(zipcode_a, zipcode_b, distance)
+
+  # Insert NA values in rows that could not be found in zip_code_db
+  for (i in 1:nrow(result)) {
+    if (result$zipcode_a[i] %in% zip_data$zipcode == FALSE) {
+      result$distance[i] <- NA
+    }
+
+    if (result$zipcode_b[i] %in% zip_data$zipcode == FALSE) {
+      result$distance[i] <- NA
+    }
+  }
+
+
+  return(result)
 }

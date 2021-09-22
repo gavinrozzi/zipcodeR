@@ -4,21 +4,32 @@
 \alias{zip_distance}
 \title{Calculate the distance between two ZIP codes in miles}
 \usage{
-zip_distance(zipcode_a, zipcode_b, lonlat = TRUE)
+zip_distance(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles")
 }
 \arguments{
-\item{zipcode_a}{First ZIP code}
+\item{zipcode_a}{First vector of ZIP codes}
 
-\item{zipcode_b}{Second ZIP code}
+\item{zipcode_b}{Second vector of ZIP codes}
 
 \item{lonlat}{lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.}
+
+\item{units}{Specify which units to return distance calculations in. Choices include meters or miles.}
 }
 \value{
-distance calculated from centroids of each ZIP code in miles
+a data.frame containing a column for each ZIP code and a new column containing the distance between the two columns of ZIP code
 }
 \description{
 Calculate the distance between two ZIP codes in miles
 }
 \examples{
+Example with a single pair of ZIP codes
 zip_distance("08731", "08901")
+
+zip_codes <- tribble(~zip_a,  ~zip_b,
+"08731",  "08901",
+"08734",  "08005")
+
+Example with two vectors of ZIP codes
+zip_distance(zip_codes$zip_a,zip_codes$zip_b)
+
 }

@@ -24,10 +24,10 @@ download_zip_data <- function(force = FALSE) {
   if (file.exists(system.file("data", "zcta_crosswalk.rda", package = "zipcodeR")) == TRUE && force == FALSE) {
     cat("Crosswalk file found, skipping")
   } else if (file.exists(system.file("data", "zcta_crosswalk.rda", package = "zipcodeR")) == FALSE) {
-    cat(paste("zipcodeR: Downloading ZCTA crosswalk file","\n"))
+    cat(paste("zipcodeR: Downloading ZCTA crosswalk file", "\n"))
     utils::download.file(url_crosswalk, paste0(system.file("data", package = "zipcodeR"), "/zcta_crosswalk.rda"))
   } else if (force == TRUE) {
-    cat(paste("zipcodeR: forcing Download of ZCTA crosswalk file","\n"))
+    cat(paste("zipcodeR: forcing Download of ZCTA crosswalk file", "\n"))
     utils::download.file(url_crosswalk, paste0(system.file("data", package = "zipcodeR"), "/zcta_crosswalk.rda"))
   }
 
