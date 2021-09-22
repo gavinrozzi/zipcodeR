@@ -72,7 +72,6 @@ normalize_zip <- function(zipcode) {
 #' @return a data.frame containing a column for each ZIP code and a new column containing the distance between the two columns of ZIP code
 #'
 #' @examples
-#' Example with a single pair of ZIP codes
 #' zip_distance("08731", "08901")
 #'
 #' @importFrom raster pointDistance

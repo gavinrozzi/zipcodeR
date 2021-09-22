@@ -22,7 +22,6 @@ a data.frame containing a column for each ZIP code and a new column containing t
 Calculate the distance between two ZIP codes in miles
 }
 \examples{
-Example with a single pair of ZIP codes
 zip_distance("08731", "08901")
 
 }
