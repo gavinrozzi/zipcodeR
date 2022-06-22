@@ -86,7 +86,7 @@ zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
 
   # create subset of zip_code_db with only zipcode, lat, and lng
   zip_db_small <- zip_code_db %>%
-    dplyr::select(zipcode, lat, lng) %>%
+    dplyr::select(.data$zipcode, .data$lat, .data$lng) %>%
     dplyr::filter(.data$lat != "NA" & .data$lng != "NA")
 
   # join input data with zip_code_db
