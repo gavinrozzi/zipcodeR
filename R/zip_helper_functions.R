@@ -8,6 +8,7 @@
 #' @importFrom tidyr extract
 #' @importFrom dplyr pull
 #' @importFrom dplyr tibble
+#' @importFrom dplyr left_join
 #' @export
 normalize_zip <- function(zipcode) {
   capture_group <- function(data, regex) {
@@ -80,23 +81,22 @@ zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
   zipcode_a <- as.character(zipcode_a)
   zipcode_b <- as.character(zipcode_b)
 
-  # Create an instance of the ZIP code database for calculating distance,
-  # filter to those with lat / lon pairs
-  zip_data <- zip_code_db %>%
-    dplyr::filter(.data$lat != "NA" & .data$lng != "NA") %>%
-    dplyr::filter(.data$zipcode %in% zipcode_a | .data$zipcode %in% zipcode_b) %>%
-    dplyr::select(.data$zipcode, .data$lat, .data$lng)
+  # assemble zipcodes in dataframe
+  zip_data <- data.frame(zipcode_a, zipcode_b)
 
-  # Filter the data points for each set of ZIP codes
-  zip_a_data <- zip_data %>%
-    dplyr::filter(.data$zipcode %in% zipcode_a)
+  # create subset of zip_code_db with only zipcode, lat, and lng
+  zip_db_small <- zip_code_db %>%
+    dplyr::select(.data$zipcode, .data$lat, .data$lng) %>%
+    dplyr::filter(.data$lat != "NA" & .data$lng != "NA")
 
-  zip_b_data <- zip_data %>%
-    dplyr::filter(.data$zipcode %in% zipcode_b)
+  # join input data with zip_code_db
+  zip_data <- zip_data %>%
+    dplyr::left_join(zip_db_small, by = c('zipcode_a' = 'zipcode')) %>%
+    dplyr::left_join(zip_db_small, by = c('zipcode_b' = 'zipcode'), suffix = c('.a', '.b'))
 
-  # Create a matrix of points to feed to raster
-  points_a <- cbind(cbind(zip_a_data$lng, zip_a_data$lat))
-  points_b <- cbind(cbind(zip_b_data$lng, zip_b_data$lat))
+  # assemble matrices for distance calculation
+  points_a <- cbind(cbind(zip_data$lng.a, zip_data$lat.a))
+  points_b <- cbind(cbind(zip_data$lng.b, zip_data$lat.b))
 
   # Calculate the distance matrix between both sets of points
   distance <- raster::pointDistance(points_a, points_b, lonlat = lonlat)
@@ -111,18 +111,6 @@ zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
 
   # Put together the results in a data.frame
   result <- data.frame(zipcode_a, zipcode_b, distance)
-
-  # Insert NA values in rows that could not be found in zip_code_db
-  for (i in 1:nrow(result)) {
-    if (result$zipcode_a[i] %in% zip_data$zipcode == FALSE) {
-      result$distance[i] <- NA
-    }
-
-    if (result$zipcode_b[i] %in% zip_data$zipcode == FALSE) {
-      result$distance[i] <- NA
-    }
-  }
-
 
   return(result)
 }
