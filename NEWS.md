@@ -1,5 +1,8 @@
 # *News*
 
+# zipcodeR 0.3.4
+- Bug fix. Resolved an issue with ordering `zip_distance()` results (@nicholasxlee).
+
 # zipcodeR 0.3.3
 - This update vectorizes the `zip_distance()` function to allow distance calculations between two vectors or columns of ZIP codes. The function now returns a data.frame of the resulting distance calculation.
 - `zip_distance()` now includes an additional argument, units, which allows selection between miles and meters for distance calculations.
