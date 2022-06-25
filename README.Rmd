@@ -18,7 +18,7 @@ library(tibble)
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/gavinrozzi/zipcodeR/workflows/R-CMD-check/badge.svg)](https://github.com/gavinrozzi/zipcodeR/actions)
-[![codecov](https://codecov.io/gh/gavinrozzi/zipcodeR/branch/master/graph/badge.svg?token=9HDL7QUPCE)](https://codecov.io/gh/gavinrozzi/zipcodeR)
+[![codecov](https://codecov.io/gh/gavinrozzi/zipcodeR/branch/master/graph/badge.svg?token=9HDL7QUPCE)](https://app.codecov.io/gh/gavinrozzi/zipcodeR)
 [![CRAN Status](https://www.r-pkg.org/badges/version-last-release/zipcodeR)](https://www.r-pkg.org/badges/version-last-release/zipcodeR)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/zipcodeR)](https://cranlogs.r-pkg.org/badges/grand-total/zipcodeR)
 [![CRAN Downloads Per Month](https://cranlogs.r-pkg.org/badges/last-month/zipcodeR)](https://cranlogs.r-pkg.org/badges/grand-total/zipcodeR)
