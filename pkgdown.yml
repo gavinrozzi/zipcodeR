@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.4
 pkgdown_sha: ~
 articles:
   geographic: geographic.html
   zipcodeR: zipcodeR.html
-last_built: 2021-09-22T11:57Z
+last_built: 2022-06-25T00:39Z
 
