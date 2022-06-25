@@ -162,18 +162,18 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NJ'</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 732 × 24</span>
-<span class="co">#&gt;    zipcode zipcode_type major_city   post_office_city common_city_list county   </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;                      &lt;blob&gt; &lt;chr&gt;    </span>
-<span class="co">#&gt;  1 07001   Standard     Avenel       Avenel, NJ             &lt;raw 18 B&gt; Middlese…</span>
-<span class="co">#&gt;  2 07002   Standard     Bayonne      Bayonne, NJ            &lt;raw 19 B&gt; Hudson C…</span>
-<span class="co">#&gt;  3 07003   Standard     Bloomfield   Bloomfield, NJ         &lt;raw 22 B&gt; Essex Co…</span>
-<span class="co">#&gt;  4 07004   Standard     Fairfield    Fairfield, NJ          &lt;raw 21 B&gt; Essex Co…</span>
-<span class="co">#&gt;  5 07005   Standard     Boonton      Boonton, NJ            &lt;raw 36 B&gt; Morris C…</span>
-<span class="co">#&gt;  6 07006   Standard     Caldwell     Caldwell, NJ           &lt;raw 39 B&gt; Essex Co…</span>
-<span class="co">#&gt;  7 07007   PO Box       Caldwell     &lt;NA&gt;                   &lt;raw 30 B&gt; Essex Co…</span>
-<span class="co">#&gt;  8 07008   Standard     Carteret     Carteret, NJ           &lt;raw 20 B&gt; Middlese…</span>
-<span class="co">#&gt;  9 07009   Standard     Cedar Grove  Cedar Grove, NJ        &lt;raw 23 B&gt; Essex Co…</span>
-<span class="co">#&gt; 10 07010   Standard     Cliffside P… Cliffside Park,…       &lt;raw 32 B&gt; Bergen C…</span>
+<span class="co">#&gt;    zipcode zipcode_type major_city     post_office_city  common_city_list county</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt; </span>
+<span class="co">#&gt;  1 07001   Standard     Avenel         Avenel, NJ              &lt;raw 18 B&gt; Middl…</span>
+<span class="co">#&gt;  2 07002   Standard     Bayonne        Bayonne, NJ             &lt;raw 19 B&gt; Hudso…</span>
+<span class="co">#&gt;  3 07003   Standard     Bloomfield     Bloomfield, NJ          &lt;raw 22 B&gt; Essex…</span>
+<span class="co">#&gt;  4 07004   Standard     Fairfield      Fairfield, NJ           &lt;raw 21 B&gt; Essex…</span>
+<span class="co">#&gt;  5 07005   Standard     Boonton        Boonton, NJ             &lt;raw 36 B&gt; Morri…</span>
+<span class="co">#&gt;  6 07006   Standard     Caldwell       Caldwell, NJ            &lt;raw 39 B&gt; Essex…</span>
+<span class="co">#&gt;  7 07007   PO Box       Caldwell       &lt;NA&gt;                    &lt;raw 30 B&gt; Essex…</span>
+<span class="co">#&gt;  8 07008   Standard     Carteret       Carteret, NJ            &lt;raw 20 B&gt; Middl…</span>
+<span class="co">#&gt;  9 07009   Standard     Cedar Grove    Cedar Grove, NJ         &lt;raw 23 B&gt; Essex…</span>
+<span class="co">#&gt; 10 07010   Standard     Cliffside Park Cliffside Park, …       &lt;raw 32 B&gt; Berge…</span>
 <span class="co">#&gt; # … with 722 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span>
 <span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
@@ -200,8 +200,8 @@
 
 <span class="fu"><a href="reference/zip_distance.html">zip_distance</a></span><span class="op">(</span><span class="va">zip_codes</span><span class="op">$</span><span class="va">zip_a</span>,<span class="va">zip_codes</span><span class="op">$</span><span class="va">zip_b</span><span class="op">)</span>
 <span class="co">#&gt;   zipcode_a zipcode_b distance</span>
-<span class="co">#&gt; 1     08731     08901      6.9</span>
-<span class="co">#&gt; 2     08734     08005     45.1</span></code></pre></div>
+<span class="co">#&gt; 1     08731     08901    40.70</span>
+<span class="co">#&gt; 2     08734     08005     8.06</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="geocode-a-zip-code-to-get-its-centroid">Geocode a ZIP code to get its centroid<a class="anchor" aria-label="anchor" href="#geocode-a-zip-code-to-get-its-centroid"></a>
@@ -236,18 +236,18 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 32 × 24</span>
-<span class="co">#&gt;    zipcode zipcode_type major_city   post_office_city  common_city_list county  </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;        &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt;   </span>
-<span class="co">#&gt;  1 08005   Standard     Barnegat     Barnegat, NJ            &lt;raw 20 B&gt; Ocean C…</span>
-<span class="co">#&gt;  2 08006   PO Box       Barnegat Li… Barnegat Light, …       &lt;raw 33 B&gt; Ocean C…</span>
-<span class="co">#&gt;  3 08008   Standard     Beach Haven  Beach Haven, NJ         &lt;raw 61 B&gt; Ocean C…</span>
-<span class="co">#&gt;  4 08050   Standard     Manahawkin   Manahawkin, NJ          &lt;raw 47 B&gt; Ocean C…</span>
-<span class="co">#&gt;  5 08087   Standard     Tuckerton    Tuckerton, NJ           &lt;raw 51 B&gt; Ocean C…</span>
-<span class="co">#&gt;  6 08092   Standard     West Creek   West Creek, NJ          &lt;raw 22 B&gt; Ocean C…</span>
-<span class="co">#&gt;  7 08527   Standard     Jackson      Jackson, NJ             &lt;raw 19 B&gt; Ocean C…</span>
-<span class="co">#&gt;  8 08533   Standard     New Egypt    New Egypt, NJ           &lt;raw 21 B&gt; Ocean C…</span>
-<span class="co">#&gt;  9 08701   Standard     Lakewood     Lakewood, NJ            &lt;raw 20 B&gt; Ocean C…</span>
-<span class="co">#&gt; 10 08721   Standard     Bayville     Bayville, NJ            &lt;raw 20 B&gt; Ocean C…</span>
+<span class="co">#&gt;    zipcode zipcode_type major_city     post_office_city  common_city_list county</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt; </span>
+<span class="co">#&gt;  1 08005   Standard     Barnegat       Barnegat, NJ            &lt;raw 20 B&gt; Ocean…</span>
+<span class="co">#&gt;  2 08006   PO Box       Barnegat Light Barnegat Light, …       &lt;raw 33 B&gt; Ocean…</span>
+<span class="co">#&gt;  3 08008   Standard     Beach Haven    Beach Haven, NJ         &lt;raw 61 B&gt; Ocean…</span>
+<span class="co">#&gt;  4 08050   Standard     Manahawkin     Manahawkin, NJ          &lt;raw 47 B&gt; Ocean…</span>
+<span class="co">#&gt;  5 08087   Standard     Tuckerton      Tuckerton, NJ           &lt;raw 51 B&gt; Ocean…</span>
+<span class="co">#&gt;  6 08092   Standard     West Creek     West Creek, NJ          &lt;raw 22 B&gt; Ocean…</span>
+<span class="co">#&gt;  7 08527   Standard     Jackson        Jackson, NJ             &lt;raw 19 B&gt; Ocean…</span>
+<span class="co">#&gt;  8 08533   Standard     New Egypt      New Egypt, NJ           &lt;raw 21 B&gt; Ocean…</span>
+<span class="co">#&gt;  9 08701   Standard     Lakewood       Lakewood, NJ            &lt;raw 20 B&gt; Ocean…</span>
+<span class="co">#&gt; 10 08721   Standard     Bayville       Bayville, NJ            &lt;raw 20 B&gt; Ocean…</span>
 <span class="co">#&gt; # … with 22 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span>
 <span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
@@ -291,18 +291,18 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/search_tz.html">search_tz</a></span><span class="op">(</span><span class="st">'Eastern'</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 14,025 × 24</span>
-<span class="co">#&gt;    zipcode zipcode_type major_city  post_office_city  common_city_list county   </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt;    </span>
-<span class="co">#&gt;  1 06001   Standard     Avon        Avon, CT                &lt;raw 16 B&gt; Hartford…</span>
-<span class="co">#&gt;  2 06002   Standard     Bloomfield  Bloomfield, CT          &lt;raw 22 B&gt; Hartford…</span>
-<span class="co">#&gt;  3 06010   Standard     Bristol     Bristol, CT             &lt;raw 19 B&gt; Hartford…</span>
-<span class="co">#&gt;  4 06013   Standard     Burlington  Burlington, CT          &lt;raw 36 B&gt; Hartford…</span>
-<span class="co">#&gt;  5 06016   Standard     Broad Brook Broad Brook, CT         &lt;raw 46 B&gt; Hartford…</span>
-<span class="co">#&gt;  6 06018   Standard     Canaan      Canaan, CT              &lt;raw 18 B&gt; Litchfie…</span>
-<span class="co">#&gt;  7 06019   Standard     Canton      Canton, CT              &lt;raw 34 B&gt; Hartford…</span>
-<span class="co">#&gt;  8 06020   Standard     Canton Cen… Canton Center, CT       &lt;raw 25 B&gt; Hartford…</span>
-<span class="co">#&gt;  9 06021   Standard     Colebrook   Colebrook, CT           &lt;raw 21 B&gt; Litchfie…</span>
-<span class="co">#&gt; 10 06022   Standard     Collinsvil… Collinsville, CT        &lt;raw 24 B&gt; Hartford…</span>
+<span class="co">#&gt;    zipcode zipcode_type major_city    post_office_city  common_city_list county </span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt;  </span>
+<span class="co">#&gt;  1 06001   Standard     Avon          Avon, CT                &lt;raw 16 B&gt; Hartfo…</span>
+<span class="co">#&gt;  2 06002   Standard     Bloomfield    Bloomfield, CT          &lt;raw 22 B&gt; Hartfo…</span>
+<span class="co">#&gt;  3 06010   Standard     Bristol       Bristol, CT             &lt;raw 19 B&gt; Hartfo…</span>
+<span class="co">#&gt;  4 06013   Standard     Burlington    Burlington, CT          &lt;raw 36 B&gt; Hartfo…</span>
+<span class="co">#&gt;  5 06016   Standard     Broad Brook   Broad Brook, CT         &lt;raw 46 B&gt; Hartfo…</span>
+<span class="co">#&gt;  6 06018   Standard     Canaan        Canaan, CT              &lt;raw 18 B&gt; Litchf…</span>
+<span class="co">#&gt;  7 06019   Standard     Canton        Canton, CT              &lt;raw 34 B&gt; Hartfo…</span>
+<span class="co">#&gt;  8 06020   Standard     Canton Center Canton Center, CT       &lt;raw 25 B&gt; Hartfo…</span>
+<span class="co">#&gt;  9 06021   Standard     Colebrook     Colebrook, CT           &lt;raw 21 B&gt; Litchf…</span>
+<span class="co">#&gt; 10 06022   Standard     Collinsville  Collinsville, CT        &lt;raw 24 B&gt; Hartfo…</span>
 <span class="co">#&gt; # … with 14,015 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span>
 <span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
