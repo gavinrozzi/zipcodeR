@@ -1,26 +1,20 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "zipcodeR",
-  "description": "Make working with ZIP codes in R painless with an integrated dataset of U.S. ZIP codes and functions for working with them. \n             Search ZIP codes by multiple geographies, including state, county, city & across time zones. Also included are functions for relating\n             ZIP codes to Census data, geocoding & distance calculations.",
+  "description": "Make working with ZIP codes in R painless with an integrated dataset of U.S. ZIP codes and functions for working with them. Search ZIP codes by multiple geographies, including state, county, city & across time zones. Also included are functions for relating ZIP codes to Census data, geocoding & distance calculations.",
   "name": "zipcodeR: Data & Functions for Working with US ZIP Codes",
+  "relatedLink": "https://www.gavinrozzi.com/project/zipcoder/",
   "codeRepository": "https://github.com/gavinrozzi/zipcodeR/",
-  "relatedLink": [
-    "https://www.gavinrozzi.com/project/zipcoder/",
-    "https://CRAN.R-project.org/package=zipcodeR"
-  ],
   "issueTracker": "https://github.com/gavinrozzi/zipcodeR/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -36,9 +30,6 @@
       "@id": "https://orcid.org/0000-0002-9969-8175"
     }
   ],
-  "contributor": {},
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -123,8 +114,8 @@
       "sameAs": "https://CRAN.R-project.org/package=covr"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "rlang",
       "name": "rlang",
@@ -136,7 +127,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rlang"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -148,7 +139,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "raster",
       "name": "raster",
@@ -160,7 +151,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=raster"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "tidycensus",
       "name": "tidycensus",
@@ -172,7 +163,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidycensus"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -184,7 +175,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -196,7 +187,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -208,7 +199,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
@@ -220,7 +211,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "curl",
       "name": "curl",
@@ -232,7 +223,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=curl"
     },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "RSQLite",
       "name": "RSQLite",
@@ -244,7 +235,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=RSQLite"
     },
-    {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "DBI",
       "name": "DBI",
@@ -256,17 +247,15 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=DBI"
     },
-    {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.5.0"
-    }
-  ],
-  "releaseNotes": "https://github.com/gavinrozzi/zipcodeR/blob/master/NEWS.md",
-  "readme": "https://github.com/gavinrozzi/zipcodeR/blob/master/README.md",
-  "fileSize": "3771.828KB",
-  "contIntegration": ["https://github.com/gavinrozzi/zipcodeR/actions", "https://codecov.io/gh/gavinrozzi/zipcodeR"],
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "3772.105KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
