@@ -1,5 +1,8 @@
 # *News*
 
+# zipcodeR 0.3.5
+- Hotfix to address failing vignette to prevent package being archived by CRAN team.
+
 # zipcodeR 0.3.4
 -  Bug fix. Resolved an issue with ordering `zip_distance()` results (Pull request contributed by Nicholas X Lee).
 

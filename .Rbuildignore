@@ -16,3 +16,4 @@ paper.pdf$
 ^\.github$
 ^codecov\.yml$
 ^README\.Rmd$
+^CRAN-SUBMISSION$
