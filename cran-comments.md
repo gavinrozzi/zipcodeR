@@ -1,14 +1,14 @@
-# cran-comments (2022-06-24)
+# cran-comments (2022-10-02)
 
 ## Resubmission
-This is a resubmission. In this version I have implemented a bugfix.
+I am submitting this version in response to a concern raised by Brian Ripley. This version eliminates an error involving internet resources on the zipcodeR.Rmd vignette.
 
 ## Test environments
 * local M1 macOS Big Sur install, R release
 * r-Hub (Windows-devel & oldrelease on Windows Server 2008)
 * Ubuntu 20.04, R release via GitHub Actions
 * Ubuntu 20.04 Xenial, R devel via GitHub Actions
-* local Windows 10 development machine, R 4.1.1
+* local Windows 10 development machine, R 4.2.1
 
 ## R CMD check results
 There were no ERRORs, NOTEs or WARNINGs. 

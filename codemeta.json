@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/gavinrozzi/zipcodeR/",
   "issueTracker": "https://github.com/gavinrozzi/zipcodeR/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -112,6 +112,11 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tribble",
+      "name": "tribble"
     }
   ],
   "softwareRequirements": {
@@ -255,7 +260,7 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "3772.105KB",
+  "fileSize": "3772.513KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",

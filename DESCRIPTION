@@ -1,6 +1,6 @@
 Package: zipcodeR
 Title: Data & Functions for Working with US ZIP Codes
-Version: 0.3.4
+Version: 0.3.5
 Authors@R: 
     person(given = "Gavin",
            family = "Rozzi",
@@ -16,7 +16,7 @@ BugReports: https://github.com/gavinrozzi/zipcodeR/issues/
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Imports: 
     rlang,
     stringr,
@@ -37,6 +37,7 @@ Suggests:
     markdown,
     readr,
     testthat (>= 3.0.0),
-    covr
+    covr,
+    tibble
 VignetteBuilder: knitr, rmarkdown
 Config/testthat/edition: 3
