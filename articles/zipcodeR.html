@@ -112,7 +112,7 @@
       <h1 data-toc-skip>Introduction to zipcodeR</h1>
                         <h4 data-toc-skip class="author">Gavin Rozzi</h4>
             
-            <h4 data-toc-skip class="date">2022-06-25</h4>
+            <h4 data-toc-skip class="date">2022-10-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/HEAD/vignettes/zipcodeR.Rmd" class="external-link"><code>vignettes/zipcodeR.Rmd</code></a></small>
       <div class="hidden name"><code>zipcodeR.Rmd</code></div>
@@ -140,58 +140,58 @@
 <p>Let’s begin by using zipcodeR to find all ZIP codes within a given state.</p>
 <p>Getting all ZIP codes for a single state is simple, you only need to pass a two-digit abbreviation of a state’s name to get a tibble of all ZIP codes in that state. Let’s start by finding all of the ZIP codes in New York:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NY'</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 2,208 × 24</span></span>
-<span class="co">##    zipcode zipcode_type major_city     post_office_city  common_city_list county</span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 00501   Unique       Holtsville     <span style="color: #BB0000;">NA</span>                      <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Suffo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 00544   Unique       Holtsville     <span style="color: #BB0000;">NA</span>                      <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Suffo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 06390   PO Box       Fishers Island Fishers Island, …       <span style="color: #949494;">&lt;raw </span>32 B<span style="color: #949494;">&gt;</span> Suffo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 10001   Standard     New York       New York, NY            <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> New Y…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 10002   Standard     New York       New York, NY            <span style="color: #949494;">&lt;raw </span>34 B<span style="color: #949494;">&gt;</span> New Y…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 10003   Standard     New York       New York, NY            <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> New Y…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 10004   Standard     New York       New York, NY            <span style="color: #949494;">&lt;raw </span>37 B<span style="color: #949494;">&gt;</span> New Y…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 10005   Standard     New York       New York, NY            <span style="color: #949494;">&lt;raw </span>35 B<span style="color: #949494;">&gt;</span> New Y…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 10006   Standard     New York       New York, NY            <span style="color: #949494;">&lt;raw </span>31 B<span style="color: #949494;">&gt;</span> New Y…</span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 10007   Standard     New York       New York, NY            <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> New Y…</span>
-<span class="co">## <span style="color: #949494;"># … with 2,198 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NY'</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2,208 × 24</span></span></span>
+<span><span class="co">##    zipcode zipcode…¹ major…² post_…³ common_c…⁴ county state   lat   lng timez…⁵</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 00501   Unique    Holtsv… <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Suffo… NY     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 00544   Unique    Holtsv… <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Suffo… NY     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 06390   PO Box    Fisher… Fisher… <span style="color: #949494;">&lt;raw </span>32 B<span style="color: #949494;">&gt;</span> Suffo… NY     41.3 -<span style="color: #BB0000;">72.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 10001   Standard  New Yo… New Yo… <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> New Y… NY     40.8 -<span style="color: #BB0000;">74.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 10002   Standard  New Yo… New Yo… <span style="color: #949494;">&lt;raw </span>34 B<span style="color: #949494;">&gt;</span> New Y… NY     40.7 -<span style="color: #BB0000;">74.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 10003   Standard  New Yo… New Yo… <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> New Y… NY     40.7 -<span style="color: #BB0000;">74.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 10004   Standard  New Yo… New Yo… <span style="color: #949494;">&lt;raw </span>37 B<span style="color: #949494;">&gt;</span> New Y… NY     40.7 -<span style="color: #BB0000;">74.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 10005   Standard  New Yo… New Yo… <span style="color: #949494;">&lt;raw </span>35 B<span style="color: #949494;">&gt;</span> New Y… NY     40.7 -<span style="color: #BB0000;">74.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 10006   Standard  New Yo… New Yo… <span style="color: #949494;">&lt;raw </span>31 B<span style="color: #949494;">&gt;</span> New Y… NY     40.7 -<span style="color: #BB0000;">74.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 10007   Standard  New Yo… New Yo… <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> New Y… NY     40.7 -<span style="color: #BB0000;">74.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 2,198 more rows, 14 more variables: radius_in_miles &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   area_code_list &lt;blob&gt;, population &lt;int&gt;, population_density &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   land_area_in_sqmi &lt;dbl&gt;, water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   ¹​zipcode_type, ²​major_city, ³​post_office_city, ⁴​common_city_list, …</span></span></span></code></pre>
 <p>What if you only wanted the actual ZIP codes and no other variables? You can use R’s dollar sign operator to select one column at a time from the output of <code>zipcodeR</code>’s search functions:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nyzip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NY'</span><span class="op">)</span><span class="op">$</span><span class="va">zipcode</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nyzip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NY'</span><span class="op">)</span><span class="op">$</span><span class="va">zipcode</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="searching-multiple-states-at-once">Searching multiple states at once<a class="anchor" aria-label="anchor" href="#searching-multiple-states-at-once"></a>
 </h3>
 <p>You can also search for ZIP codes in multiple states at once by passing a vector of state abbreviations to the search_states function like so:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'NY'</span>,<span class="st">'NJ'</span>,<span class="st">'CT'</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 3,378 × 24</span></span>
-<span class="co">##    zipcode zipcode_type major_city    post_office_city  common_city_list county </span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 06001   Standard     Avon          Avon, CT                <span style="color: #949494;">&lt;raw </span>16 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 06002   Standard     Bloomfield    Bloomfield, CT          <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 06006   Unique       Windsor       <span style="color: #BB0000;">NA</span>                      <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 06010   Standard     Bristol       Bristol, CT             <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 06011   PO Box       Bristol       <span style="color: #BB0000;">NA</span>                      <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 06013   Standard     Burlington    Burlington, CT          <span style="color: #949494;">&lt;raw </span>36 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 06016   Standard     Broad Brook   Broad Brook, CT         <span style="color: #949494;">&lt;raw </span>46 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 06018   Standard     Canaan        Canaan, CT              <span style="color: #949494;">&lt;raw </span>18 B<span style="color: #949494;">&gt;</span> Litchf…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 06019   Standard     Canton        Canton, CT              <span style="color: #949494;">&lt;raw </span>34 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 06020   Standard     Canton Center Canton Center, CT       <span style="color: #949494;">&lt;raw </span>25 B<span style="color: #949494;">&gt;</span> Hartfo…</span>
-<span class="co">## <span style="color: #949494;"># … with 3,368 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">states</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'NY'</span>,<span class="st">'NJ'</span>,<span class="st">'CT'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/search_state.html">search_state</a></span><span class="op">(</span><span class="va">states</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3,378 × 24</span></span></span>
+<span><span class="co">##    zipcode zipcode…¹ major…² post_…³ common_c…⁴ county state   lat   lng timez…⁵</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 06001   Standard  Avon    Avon, … <span style="color: #949494;">&lt;raw </span>16 B<span style="color: #949494;">&gt;</span> Hartf… CT     41.8 -<span style="color: #BB0000;">72.9</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 06002   Standard  Bloomf… Bloomf… <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Hartf… CT     41.8 -<span style="color: #BB0000;">72.7</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 06006   Unique    Windsor <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Hartf… CT     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 06010   Standard  Bristol Bristo… <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Hartf… CT     41.7 -<span style="color: #BB0000;">72.9</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 06011   PO Box    Bristol <span style="color: #BB0000;">NA</span>      <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Hartf… CT     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>   <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 06013   Standard  Burlin… Burlin… <span style="color: #949494;">&lt;raw </span>36 B<span style="color: #949494;">&gt;</span> Hartf… CT     41.8 -<span style="color: #BB0000;">73.0</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 06016   Standard  Broad … Broad … <span style="color: #949494;">&lt;raw </span>46 B<span style="color: #949494;">&gt;</span> Hartf… CT     41.9 -<span style="color: #BB0000;">72.6</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 06018   Standard  Canaan  Canaan… <span style="color: #949494;">&lt;raw </span>18 B<span style="color: #949494;">&gt;</span> Litch… CT     42.0 -<span style="color: #BB0000;">73.3</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 06019   Standard  Canton  Canton… <span style="color: #949494;">&lt;raw </span>34 B<span style="color: #949494;">&gt;</span> Hartf… CT     41.9 -<span style="color: #BB0000;">72.9</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 06020   Standard  Canton… Canton… <span style="color: #949494;">&lt;raw </span>25 B<span style="color: #949494;">&gt;</span> Hartf… CT     41.8 -<span style="color: #BB0000;">72.9</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 3,368 more rows, 14 more variables: radius_in_miles &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   area_code_list &lt;blob&gt;, population &lt;int&gt;, population_density &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   land_area_in_sqmi &lt;dbl&gt;, water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   ¹​zipcode_type, ²​major_city, ³​post_office_city, ⁴​common_city_list, …</span></span></span></code></pre>
 <p>This results in a tibble containing all ZIP codes for the states passed to the <code>search_states()</code> function.</p>
 </div>
 </div>
@@ -201,27 +201,27 @@
 <p>It is also possible to search for ZIP codes located in a particular county within a state.</p>
 <p>Let’s find all of the ZIP codes located within Ocean County, New Jersey:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 32 × 24</span></span>
-<span class="co">##    zipcode zipcode_type major_city     post_office_city  common_city_list county</span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 08005   Standard     Barnegat       Barnegat, NJ            <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 08006   PO Box       Barnegat Light Barnegat Light, …       <span style="color: #949494;">&lt;raw </span>33 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 08008   Standard     Beach Haven    Beach Haven, NJ         <span style="color: #949494;">&lt;raw </span>61 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 08050   Standard     Manahawkin     Manahawkin, NJ          <span style="color: #949494;">&lt;raw </span>47 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 08087   Standard     Tuckerton      Tuckerton, NJ           <span style="color: #949494;">&lt;raw </span>51 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 08092   Standard     West Creek     West Creek, NJ          <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 08527   Standard     Jackson        Jackson, NJ             <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 08533   Standard     New Egypt      New Egypt, NJ           <span style="color: #949494;">&lt;raw </span>21 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 08701   Standard     Lakewood       Lakewood, NJ            <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 08721   Standard     Bayville       Bayville, NJ            <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> Ocean…</span>
-<span class="co">## <span style="color: #949494;"># … with 22 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 32 × 24</span></span></span>
+<span><span class="co">##    zipcode zipcode…¹ major…² post_…³ common_c…⁴ county state   lat   lng timez…⁵</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 08005   Standard  Barneg… Barneg… <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> Ocean… NJ     39.8 -<span style="color: #BB0000;">74.3</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 08006   PO Box    Barneg… Barneg… <span style="color: #949494;">&lt;raw </span>33 B<span style="color: #949494;">&gt;</span> Ocean… NJ     39.8 -<span style="color: #BB0000;">74.1</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 08008   Standard  Beach … Beach … <span style="color: #949494;">&lt;raw </span>61 B<span style="color: #949494;">&gt;</span> Ocean… NJ     39.6 -<span style="color: #BB0000;">74.2</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 08050   Standard  Manaha… Manaha… <span style="color: #949494;">&lt;raw </span>47 B<span style="color: #949494;">&gt;</span> Ocean… NJ     39.7 -<span style="color: #BB0000;">74.3</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 08087   Standard  Tucker… Tucker… <span style="color: #949494;">&lt;raw </span>51 B<span style="color: #949494;">&gt;</span> Ocean… NJ     39.6 -<span style="color: #BB0000;">74.4</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 08092   Standard  West C… West C… <span style="color: #949494;">&lt;raw </span>22 B<span style="color: #949494;">&gt;</span> Ocean… NJ     39.7 -<span style="color: #BB0000;">74.3</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 08527   Standard  Jackson Jackso… <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Ocean… NJ     40.1 -<span style="color: #BB0000;">74.4</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 08533   Standard  New Eg… New Eg… <span style="color: #949494;">&lt;raw </span>21 B<span style="color: #949494;">&gt;</span> Ocean… NJ     40.0 -<span style="color: #BB0000;">74.5</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 08701   Standard  Lakewo… Lakewo… <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> Ocean… NJ     40.1 -<span style="color: #BB0000;">74.2</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 08721   Standard  Bayvil… Bayvil… <span style="color: #949494;">&lt;raw </span>20 B<span style="color: #949494;">&gt;</span> Ocean… NJ     39.9 -<span style="color: #BB0000;">74.2</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 22 more rows, 14 more variables: radius_in_miles &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   area_code_list &lt;blob&gt;, population &lt;int&gt;, population_density &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   land_area_in_sqmi &lt;dbl&gt;, water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   ¹​zipcode_type, ²​major_city, ³​post_office_city, ⁴​common_city_list, …</span></span></span></code></pre>
 <div class="section level3">
 <h3 id="approximate-matching-of-county-names">Approximate matching of county names<a class="anchor" aria-label="anchor" href="#approximate-matching-of-county-names"></a>
 </h3>
@@ -229,8 +229,8 @@
 <p>One example where this feature is useful comes from the state of Louisiana. Since Louisiana has parishes, their county names don’t line up exactly with how other states name their counties.</p>
 <p>This example uses approxmiate matching to retrieve all ZIP codes for St. Bernard Parish in Louisiana:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">"ST BERNARD"</span>,<span class="st">"LA"</span>, similar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">zipcode</span></code></pre></div>
-<pre><code><span class="co">## [1] "70032" "70043" "70044" "70075" "70085" "70092"</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">"ST BERNARD"</span>,<span class="st">"LA"</span>, similar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">zipcode</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "70032" "70043" "70044" "70075" "70085" "70092"</span></span></code></pre>
 <p>Try running the above code with the similar parameter set to FALSE or not present and you’ll receive an error.</p>
 </div>
 </div>
@@ -244,65 +244,51 @@
 <h2 id="data-u-s--real-estate-market">Data: U.S. Real Estate Market<a class="anchor" aria-label="anchor" href="#data-u-s--real-estate-market"></a>
 </h2>
 <p>To explore how zipcodeR can enhance your data &amp; workflow, we will use a public dataset from the <a href="https://www.realtor.com/research/data/" class="external-link">National Association of Realtors</a> containing data about housing market trends in the United States.</p>
-<p>This dataset, which is updated monthly, contains 25011 observations with current housing market data from the National Association of Realtors <a href="https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv" class="external-link">hosted on Amazon S3</a></p>
+<p>This dataset, which is updated monthly, contains 10 observations with current housing market data from the National Association of Realtors <a href="https://econdata.s3-us-west-2.amazonaws.com/Reports/Core/RDC_Inventory_Core_Metrics_Zip.csv" class="external-link">hosted on Amazon S3</a></p>
 <p>This is what the data we will be working with looks like:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">real_estate_data</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 40</span></span>
-<span class="co">##   month_date_yyyymm postal_code zip_name       median_listing_… median_listing_…</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 202205            48342       pontiac, mi              <span style="text-decoration: underline;">100</span>000          -<span style="color: #BB0000;">0.150</span> </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 202205            35043       chelsea, al              <span style="text-decoration: underline;">454</span>500           0.035<span style="text-decoration: underline;">3</span></span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 202205            16921       gaines, pa               <span style="text-decoration: underline;">115</span>500          -<span style="color: #BB0000;">0.524</span> </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 202205            18323       buck hill fal…           <span style="text-decoration: underline;">359</span>900           0     </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 202205            30344       atlanta, ga              <span style="text-decoration: underline;">299</span>900           0.037<span style="text-decoration: underline;">7</span></span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 202205            20646       la plata, md             <span style="text-decoration: underline;">529</span>950           0.070<span style="text-decoration: underline;">8</span></span>
-<span class="co">## <span style="color: #949494;"># … with 35 more variables: median_listing_price_yy &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   median_days_on_market_mm &lt;dbl&gt;, median_days_on_market_yy &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   new_listing_count &lt;dbl&gt;, new_listing_count_mm &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   new_listing_count_yy &lt;dbl&gt;, price_increased_count &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;, …</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">real_estate_data</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
+<span><span class="co">##   postal_code zip_name         </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 34102       naples, fl       </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 64105       kansas city, mo  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 33544       wesley chapel, fl</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 76550       lampasas, tx     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 85335       el mirage, az    </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> 61264       milan, il</span></span></code></pre>
 <p>Note: The data used in this vignette was filtered to only include valid 5-digit ZIP codes as zipcodeR does not yet have a function for normalizing ZIP codes. The full Realtor dataset will have a different number of rows.</p>
-<p>We’ll focus on the first row for now, which represents the town of Pontiac, Mi.</p>
+<p>We’ll focus on the first row for now, which represents the town of Naples, Fl.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">real_estate_data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 40</span></span>
-<span class="co">##   month_date_yyyymm postal_code zip_name    median_listing_pri… median_listing_…</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 202205            48342       pontiac, mi              <span style="text-decoration: underline;">100</span>000           -<span style="color: #BB0000;">0.150</span></span>
-<span class="co">## <span style="color: #949494;"># … with 35 more variables: median_listing_price_yy &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   active_listing_count &lt;dbl&gt;, active_listing_count_mm &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   active_listing_count_yy &lt;dbl&gt;, median_days_on_market &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   median_days_on_market_mm &lt;dbl&gt;, median_days_on_market_yy &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   new_listing_count &lt;dbl&gt;, new_listing_count_mm &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   new_listing_count_yy &lt;dbl&gt;, price_increased_count &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   price_increased_count_mm &lt;dbl&gt;, price_increased_count_yy &lt;dbl&gt;, …</span></span></code></pre>
-<p>The Realtor dataset contains a column named <strong>postal_code</strong> containing the ZIP code that identifies the town. We’ll use this to find out more about Pontiac than what is provided in the housing market data.</p>
+<code class="sourceCode R"><span><span class="va">real_estate_data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">##   postal_code zip_name  </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 34102       naples, fl</span></span></code></pre>
+<p>The Realtor dataset contains a column named <strong>postal_code</strong> containing the ZIP code that identifies the town. We’ll use this to find out more about Naples than what is provided in the housing market data.</p>
 </div>
 <div class="section level2">
 <h2 id="reverse-zip-code-search">Reverse ZIP code search<a class="anchor" aria-label="anchor" href="#reverse-zip-code-search"></a>
 </h2>
 <p>So far we’ve covered the functions provided by <code>zipcodeR</code> for searching ZIP codes across multiple geographies. The package also provides a function for going in reverse, when given a 5-digit ZIP code. Introducing <code><a href="../reference/reverse_zipcode.html">reverse_zipcode()</a></code>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Get the ZIP code of the first row of data</span>
-<span class="va">zip_code</span> <span class="op">&lt;-</span> <span class="va">real_estate_data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">$</span><span class="va">postal_code</span>
-
-<span class="co"># Pass the ZIP code to the reverse_zipcode() function</span>
-
-<span class="fu"><a href="../reference/reverse_zipcode.html">reverse_zipcode</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 24</span></span>
-<span class="co">##   zipcode zipcode_type major_city post_office_city common_city_list county state</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 48342   Standard     Pontiac    Pontiac, MI            <span style="color: #949494;">&lt;raw </span>19 B<span style="color: #949494;">&gt;</span> Oakla… MI   </span>
-<span class="co">## <span style="color: #949494;"># … with 17 more variables: lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;, population &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
-<span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre>
+<code class="sourceCode R"><span><span class="co"># Get the ZIP code of the first row of data</span></span>
+<span><span class="va">zip_code</span> <span class="op">&lt;-</span> <span class="va">real_estate_data</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">$</span><span class="va">postal_code</span></span>
+<span></span>
+<span><span class="co"># Pass the ZIP code to the reverse_zipcode() function</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/reverse_zipcode.html">reverse_zipcode</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 24</span></span></span>
+<span><span class="co">##   zipcode zipcode_…¹ major…² post_…³ common_c…⁴ county state   lat   lng timez…⁵</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;blob&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 34102   Standard   Naples  Naples… <span style="color: #949494;">&lt;raw </span>18 B<span style="color: #949494;">&gt;</span> Colli… FL     26.1 -<span style="color: #BB0000;">81.8</span> Eastern</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 14 more variables: radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;, and abbreviated variable names</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   ¹​zipcode_type, ²​major_city, ³​post_office_city, ⁴​common_city_list, …</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="relating-zip-codes-to-census-data">Relating ZIP codes to Census data<a class="anchor" aria-label="anchor" href="#relating-zip-codes-to-census-data"></a>
@@ -310,16 +296,21 @@
 <p>You may also be interested in relating data at the ZIP code level to Census data. <code>zipcodeR</code> currently provides a function for getting all Census tracts when provided with a 5-digit ZIP code.</p>
 <p>Let’s find out how many Census tracts are in the ZIP code from the previous example.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 3</span></span>
-<span class="co">##   ZCTA5 TRACT        GEOID</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 48342 141500 <span style="text-decoration: underline;">26</span>125<span style="text-decoration: underline;">141</span>500</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 48342 141600 <span style="text-decoration: underline;">26</span>125<span style="text-decoration: underline;">141</span>600</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 48342 141700 <span style="text-decoration: underline;">26</span>125<span style="text-decoration: underline;">141</span>700</span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 48342 142200 <span style="text-decoration: underline;">26</span>125<span style="text-decoration: underline;">142</span>200</span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 48342 142300 <span style="text-decoration: underline;">26</span>125<span style="text-decoration: underline;">142</span>300</span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 48342 142400 <span style="text-decoration: underline;">26</span>125<span style="text-decoration: underline;">142</span>400</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 11 × 3</span></span></span>
+<span><span class="co">##    ZCTA5 TRACT        GEOID</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 34102 000101 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>101</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 34102 000102 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>102</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 34102 000200 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>200</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 34102 000302 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>302</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 34102 000402 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>402</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 34102 000500 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>500</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 34102 000600 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>600</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 34102 000700 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">000</span>700</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 34102 010210 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">010</span>210</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 34102 010601 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">010</span>601</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> 34102 010701 <span style="text-decoration: underline;">12</span>021<span style="text-decoration: underline;">010</span>701</span></span></code></pre>
 <p>Now that you have all of the tracts for this ZIP code, it would be very easy to join this with other Census data, such as that which is available from the American Community Survey and other sources.</p>
 <p>But ZIP codes alone are not terribly useful for social science research since they are only meant to represent USPS service areas. The Census Bureau has established <a href="https://www.census.gov/programs-surveys/geography/guidance/geo-areas/zctas.html" class="external-link">ZIP code tabulation areas (ZCTAs)</a> that provide a representation of ZIP codes and can be used for joining with Census data. But not every ZIP code is also a ZCTA.</p>
 </div>
@@ -328,8 +319,8 @@
 </h2>
 <p><code>zipcodeR</code> provides a function for testing if a given ZIP code is also a ZIP code tabulation area. When provided with a vector of 5-digit ZIP codes the function will return TRUE or FALSE based upon whether the ZIP code is also a ZCTA.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/is_zcta.html">is_zcta</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] TRUE</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/is_zcta.html">is_zcta</a></span><span class="op">(</span><span class="va">zip_code</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] TRUE</span></span></code></pre>
 </div>
   </div>
 
@@ -350,7 +341,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

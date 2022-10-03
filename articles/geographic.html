@@ -112,7 +112,7 @@
       <h1 data-toc-skip>Geographic functions in zipcodeR</h1>
                         <h4 data-toc-skip class="author">Gavin Rozzi</h4>
             
-            <h4 data-toc-skip class="date">2022-06-25</h4>
+            <h4 data-toc-skip class="date">2022-10-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/HEAD/vignettes/geographic.Rmd" class="external-link"><code>vignettes/geographic.Rmd</code></a></small>
       <div class="hidden name"><code>geographic.Rmd</code></div>
@@ -127,29 +127,29 @@
 </h2>
 <p>This version introduces the new function <code><a href="../reference/zip_distance.html">zip_distance()</a></code> for calculating the distance between two ZIP codes in miles.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/zip_distance.html">zip_distance</a></span><span class="op">(</span><span class="st">'08731'</span>,<span class="st">'08753'</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##   zipcode_a zipcode_b distance</span>
-<span class="co">## 1     08731     08753     9.69</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/zip_distance.html">zip_distance</a></span><span class="op">(</span><span class="st">'08731'</span>,<span class="st">'08753'</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   zipcode_a zipcode_b distance</span></span>
+<span><span class="co">## 1     08731     08753     9.69</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="geocoding-a-zip-code">Geocoding a ZIP code<a class="anchor" aria-label="anchor" href="#geocoding-a-zip-code"></a>
 </h2>
 <p>Users often are seeking to use zipcodeR to geocode ZIP codes. While it is possible to do this already, I have introduced a simple wrapper function that only returns that centroid coordinates of each provided ZIP code to make this process easier.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/geocode_zip.html">geocode_zip</a></span><span class="op">(</span><span class="st">'08731'</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 3</span></span>
-<span class="co">##   zipcode   lat   lng</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 08731    39.9 -<span style="color: #BB0000;">74.3</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/geocode_zip.html">geocode_zip</a></span><span class="op">(</span><span class="st">'08731'</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
+<span><span class="co">##   zipcode   lat   lng</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 08731    39.9 -<span style="color: #BB0000;">74.3</span></span></span></code></pre>
 <p>You can also pass a vector of ZIP codes to geocode to quickly geocode ZIP code-level data</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/geocode_zip.html">geocode_zip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'08731'</span>,<span class="st">'08721'</span>,<span class="st">'08753'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 3 × 3</span></span>
-<span class="co">##   zipcode   lat   lng</span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 08721    39.9 -<span style="color: #BB0000;">74.2</span></span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 08731    39.9 -<span style="color: #BB0000;">74.3</span></span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 08753    40.0 -<span style="color: #BB0000;">74.2</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/geocode_zip.html">geocode_zip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'08731'</span>,<span class="st">'08721'</span>,<span class="st">'08753'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
+<span><span class="co">##   zipcode   lat   lng</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 08721    39.9 -<span style="color: #BB0000;">74.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 08731    39.9 -<span style="color: #BB0000;">74.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 08753    40.0 -<span style="color: #BB0000;">74.2</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="searching-for-zip-codes-within-a-radius">Searching for ZIP codes within a radius<a class="anchor" aria-label="anchor" href="#searching-for-zip-codes-within-a-radius"></a>
@@ -157,21 +157,21 @@
 <p>Given a pair of latitude / longitude coordinates in WGS84 format you can search for all ZIP codes located within a provided radius in miles. This function will default to searching within 1 mile of your provided coordinates, but can be configured to search any arbitrary radius via the radius argument.</p>
 <p>The below code searches for all ZIP codes within 20 miles of the</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/search_radius.html">search_radius</a></span><span class="op">(</span><span class="fl">39.9</span>, <span class="op">-</span><span class="fl">74.3</span>, radius <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 41 × 2</span></span>
-<span class="co">##    zipcode distance</span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 08731       0   </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 08757       5.28</span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 08721       5.31</span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 08759       5.31</span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 08722       5.70</span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 08005       6.90</span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 08758       7.22</span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 08734       7.44</span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 08741       7.72</span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 08755       7.84</span>
-<span class="co">## <span style="color: #949494;"># … with 31 more rows</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/search_radius.html">search_radius</a></span><span class="op">(</span><span class="fl">39.9</span>, <span class="op">-</span><span class="fl">74.3</span>, radius <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 41 × 2</span></span></span>
+<span><span class="co">##    zipcode distance</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 08731       0   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 08757       5.28</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 08721       5.31</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 08759       5.31</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 08722       5.70</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 08005       6.90</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 08758       7.22</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 08734       7.44</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 08741       7.72</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 08755       7.84</span></span>
+<span><span class="co">## <span style="color: #949494;"># … with 31 more rows</span></span></span></code></pre>
 </div>
   </div>
 
@@ -192,7 +192,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

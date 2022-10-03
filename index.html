@@ -125,11 +125,11 @@
 </h2>
 <p>You can install the released version of zipcodeR from <a href="https://CRAN.R-project.org" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"zipcodeR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"zipcodeR"</span><span class="op">)</span></span></code></pre></div>
 <p>And the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gavinrozzi/zipcodeR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"gavinrozzi/zipcodeR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="citing-zipcoder-in-publications">Citing <code>{zipcodeR}</code> in Publications<a class="anchor" aria-label="anchor" href="#citing-zipcoder-in-publications"></a>
@@ -154,177 +154,177 @@
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load zipcodeR into R</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gavinrozzi/zipcodeR/" class="external-link">zipcodeR</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Load zipcodeR into R</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gavinrozzi/zipcodeR/" class="external-link">zipcodeR</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="find-all-zip-codes-for-a-state">Find all ZIP codes for a state<a class="anchor" aria-label="anchor" href="#find-all-zip-codes-for-a-state"></a>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NJ'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 732 × 24</span>
-<span class="co">#&gt;    zipcode zipcode_type major_city     post_office_city  common_city_list county</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt; </span>
-<span class="co">#&gt;  1 07001   Standard     Avenel         Avenel, NJ              &lt;raw 18 B&gt; Middl…</span>
-<span class="co">#&gt;  2 07002   Standard     Bayonne        Bayonne, NJ             &lt;raw 19 B&gt; Hudso…</span>
-<span class="co">#&gt;  3 07003   Standard     Bloomfield     Bloomfield, NJ          &lt;raw 22 B&gt; Essex…</span>
-<span class="co">#&gt;  4 07004   Standard     Fairfield      Fairfield, NJ           &lt;raw 21 B&gt; Essex…</span>
-<span class="co">#&gt;  5 07005   Standard     Boonton        Boonton, NJ             &lt;raw 36 B&gt; Morri…</span>
-<span class="co">#&gt;  6 07006   Standard     Caldwell       Caldwell, NJ            &lt;raw 39 B&gt; Essex…</span>
-<span class="co">#&gt;  7 07007   PO Box       Caldwell       &lt;NA&gt;                    &lt;raw 30 B&gt; Essex…</span>
-<span class="co">#&gt;  8 07008   Standard     Carteret       Carteret, NJ            &lt;raw 20 B&gt; Middl…</span>
-<span class="co">#&gt;  9 07009   Standard     Cedar Grove    Cedar Grove, NJ         &lt;raw 23 B&gt; Essex…</span>
-<span class="co">#&gt; 10 07010   Standard     Cliffside Park Cliffside Park, …       &lt;raw 32 B&gt; Berge…</span>
-<span class="co">#&gt; # … with 722 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span>
-<span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span>
-<span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span>
-<span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/search_state.html">search_state</a></span><span class="op">(</span><span class="st">'NJ'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 732 × 24</span></span>
+<span><span class="co">#&gt;    zipcode zipcode_type major_city     post_office_city  common_city_list county</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt; </span></span>
+<span><span class="co">#&gt;  1 07001   Standard     Avenel         Avenel, NJ              &lt;raw 18 B&gt; Middl…</span></span>
+<span><span class="co">#&gt;  2 07002   Standard     Bayonne        Bayonne, NJ             &lt;raw 19 B&gt; Hudso…</span></span>
+<span><span class="co">#&gt;  3 07003   Standard     Bloomfield     Bloomfield, NJ          &lt;raw 22 B&gt; Essex…</span></span>
+<span><span class="co">#&gt;  4 07004   Standard     Fairfield      Fairfield, NJ           &lt;raw 21 B&gt; Essex…</span></span>
+<span><span class="co">#&gt;  5 07005   Standard     Boonton        Boonton, NJ             &lt;raw 36 B&gt; Morri…</span></span>
+<span><span class="co">#&gt;  6 07006   Standard     Caldwell       Caldwell, NJ            &lt;raw 39 B&gt; Essex…</span></span>
+<span><span class="co">#&gt;  7 07007   PO Box       Caldwell       &lt;NA&gt;                    &lt;raw 30 B&gt; Essex…</span></span>
+<span><span class="co">#&gt;  8 07008   Standard     Carteret       Carteret, NJ            &lt;raw 20 B&gt; Middl…</span></span>
+<span><span class="co">#&gt;  9 07009   Standard     Cedar Grove    Cedar Grove, NJ         &lt;raw 23 B&gt; Essex…</span></span>
+<span><span class="co">#&gt; 10 07010   Standard     Cliffside Park Cliffside Park, …       &lt;raw 32 B&gt; Berge…</span></span>
+<span><span class="co">#&gt; # … with 722 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span></span>
+<span><span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="calculate-the-distance-between-two-zip-codes-in-miles">Calculate the distance between two ZIP codes in miles<a class="anchor" aria-label="anchor" href="#calculate-the-distance-between-two-zip-codes-in-miles"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/zip_distance.html">zip_distance</a></span><span class="op">(</span><span class="st">'08901'</span>,<span class="st">'08731'</span><span class="op">)</span>
-<span class="co">#&gt;   zipcode_a zipcode_b distance</span>
-<span class="co">#&gt; 1     08901     08731     40.7</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/zip_distance.html">zip_distance</a></span><span class="op">(</span><span class="st">'08901'</span>,<span class="st">'08731'</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   zipcode_a zipcode_b distance</span></span>
+<span><span class="co">#&gt; 1     08901     08731     40.7</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="calculate-the-distance-between-vectors-of-zip-codes">Calculate the distance between vectors of ZIP codes<a class="anchor" aria-label="anchor" href="#calculate-the-distance-between-vectors-of-zip-codes"></a>
 </h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">zip_codes</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span><span class="op">~</span><span class="va">zip_a</span>,  <span class="op">~</span><span class="va">zip_b</span>,
-<span class="st">"08731"</span>,  <span class="st">"08901"</span>,
-<span class="st">"08734"</span>,  <span class="st">"08005"</span><span class="op">)</span>
-
-<span class="fu"><a href="reference/zip_distance.html">zip_distance</a></span><span class="op">(</span><span class="va">zip_codes</span><span class="op">$</span><span class="va">zip_a</span>,<span class="va">zip_codes</span><span class="op">$</span><span class="va">zip_b</span><span class="op">)</span>
-<span class="co">#&gt;   zipcode_a zipcode_b distance</span>
-<span class="co">#&gt; 1     08731     08901    40.70</span>
-<span class="co">#&gt; 2     08734     08005     8.06</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">zip_codes</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span><span class="op">~</span><span class="va">zip_a</span>,  <span class="op">~</span><span class="va">zip_b</span>,</span>
+<span><span class="st">"08731"</span>,  <span class="st">"08901"</span>,</span>
+<span><span class="st">"08734"</span>,  <span class="st">"08005"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/zip_distance.html">zip_distance</a></span><span class="op">(</span><span class="va">zip_codes</span><span class="op">$</span><span class="va">zip_a</span>,<span class="va">zip_codes</span><span class="op">$</span><span class="va">zip_b</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   zipcode_a zipcode_b distance</span></span>
+<span><span class="co">#&gt; 1     08731     08901    40.70</span></span>
+<span><span class="co">#&gt; 2     08734     08005     8.06</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="geocode-a-zip-code-to-get-its-centroid">Geocode a ZIP code to get its centroid<a class="anchor" aria-label="anchor" href="#geocode-a-zip-code-to-get-its-centroid"></a>
 </h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/geocode_zip.html">geocode_zip</a></span><span class="op">(</span><span class="st">'08901'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 × 3</span>
-<span class="co">#&gt;   zipcode   lat   lng</span>
-<span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 08901    40.5 -74.4</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/geocode_zip.html">geocode_zip</a></span><span class="op">(</span><span class="st">'08901'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span><span class="co">#&gt;   zipcode   lat   lng</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 08901    40.5 -74.4</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="get-data-about-a-zip-code">Get data about a ZIP code<a class="anchor" aria-label="anchor" href="#get-data-about-a-zip-code"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/reverse_zipcode.html">reverse_zipcode</a></span><span class="op">(</span><span class="st">'08901'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 × 24</span>
-<span class="co">#&gt;   zipcode zipcode_type major_city post_office_city common_city_list county state</span>
-<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                      &lt;blob&gt; &lt;chr&gt;  &lt;chr&gt;</span>
-<span class="co">#&gt; 1 08901   Standard     New Bruns… New Brunswick, …       &lt;raw 25 B&gt; Middl… NJ   </span>
-<span class="co">#&gt; # … with 17 more variables: lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,</span>
-<span class="co">#&gt; #   radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;, population &lt;int&gt;,</span>
-<span class="co">#&gt; #   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span>
-<span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span>
-<span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/reverse_zipcode.html">reverse_zipcode</a></span><span class="op">(</span><span class="st">'08901'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 × 24</span></span>
+<span><span class="co">#&gt;   zipcode zipcode_type major_city post_office_city common_city_list county state</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;                      &lt;blob&gt; &lt;chr&gt;  &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; 1 08901   Standard     New Bruns… New Brunswick, …       &lt;raw 25 B&gt; Middl… NJ   </span></span>
+<span><span class="co">#&gt; # … with 17 more variables: lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;, population &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="find-all-zip-codes-for-a-county">Find all ZIP codes for a county<a class="anchor" aria-label="anchor" href="#find-all-zip-codes-for-a-county"></a>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 32 × 24</span>
-<span class="co">#&gt;    zipcode zipcode_type major_city     post_office_city  common_city_list county</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt; </span>
-<span class="co">#&gt;  1 08005   Standard     Barnegat       Barnegat, NJ            &lt;raw 20 B&gt; Ocean…</span>
-<span class="co">#&gt;  2 08006   PO Box       Barnegat Light Barnegat Light, …       &lt;raw 33 B&gt; Ocean…</span>
-<span class="co">#&gt;  3 08008   Standard     Beach Haven    Beach Haven, NJ         &lt;raw 61 B&gt; Ocean…</span>
-<span class="co">#&gt;  4 08050   Standard     Manahawkin     Manahawkin, NJ          &lt;raw 47 B&gt; Ocean…</span>
-<span class="co">#&gt;  5 08087   Standard     Tuckerton      Tuckerton, NJ           &lt;raw 51 B&gt; Ocean…</span>
-<span class="co">#&gt;  6 08092   Standard     West Creek     West Creek, NJ          &lt;raw 22 B&gt; Ocean…</span>
-<span class="co">#&gt;  7 08527   Standard     Jackson        Jackson, NJ             &lt;raw 19 B&gt; Ocean…</span>
-<span class="co">#&gt;  8 08533   Standard     New Egypt      New Egypt, NJ           &lt;raw 21 B&gt; Ocean…</span>
-<span class="co">#&gt;  9 08701   Standard     Lakewood       Lakewood, NJ            &lt;raw 20 B&gt; Ocean…</span>
-<span class="co">#&gt; 10 08721   Standard     Bayville       Bayville, NJ            &lt;raw 20 B&gt; Ocean…</span>
-<span class="co">#&gt; # … with 22 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span>
-<span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span>
-<span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span>
-<span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/search_county.html">search_county</a></span><span class="op">(</span><span class="st">'Ocean'</span>,<span class="st">'NJ'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 32 × 24</span></span>
+<span><span class="co">#&gt;    zipcode zipcode_type major_city     post_office_city  common_city_list county</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt; </span></span>
+<span><span class="co">#&gt;  1 08005   Standard     Barnegat       Barnegat, NJ            &lt;raw 20 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  2 08006   PO Box       Barnegat Light Barnegat Light, …       &lt;raw 33 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  3 08008   Standard     Beach Haven    Beach Haven, NJ         &lt;raw 61 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  4 08050   Standard     Manahawkin     Manahawkin, NJ          &lt;raw 47 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  5 08087   Standard     Tuckerton      Tuckerton, NJ           &lt;raw 51 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  6 08092   Standard     West Creek     West Creek, NJ          &lt;raw 22 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  7 08527   Standard     Jackson        Jackson, NJ             &lt;raw 19 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  8 08533   Standard     New Egypt      New Egypt, NJ           &lt;raw 21 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt;  9 08701   Standard     Lakewood       Lakewood, NJ            &lt;raw 20 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt; 10 08721   Standard     Bayville       Bayville, NJ            &lt;raw 20 B&gt; Ocean…</span></span>
+<span><span class="co">#&gt; # … with 22 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span></span>
+<span><span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="find-all-zip-codes-for-a-city">Find all ZIP codes for a city<a class="anchor" aria-label="anchor" href="#find-all-zip-codes-for-a-city"></a>
 </h3>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/search_city.html">search_city</a></span><span class="op">(</span><span class="st">'Jersey City'</span>,<span class="st">'NJ'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 13 × 24</span>
-<span class="co">#&gt;    zipcode zipcode_type major_city  post_office_city common_city_list county    </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                      &lt;blob&gt; &lt;chr&gt;     </span>
-<span class="co">#&gt;  1 07097   Unique       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  2 07302   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  3 07303   PO Box       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  4 07304   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  5 07305   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  6 07306   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  7 07307   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  8 07308   PO Box       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt;  9 07309   Standard     Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt; 10 07310   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt; 11 07311   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt; 12 07395   Unique       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt; 13 07399   Unique       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span>
-<span class="co">#&gt; # … with 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,</span>
-<span class="co">#&gt; #   radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;, population &lt;int&gt;,</span>
-<span class="co">#&gt; #   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span>
-<span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span>
-<span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/search_city.html">search_city</a></span><span class="op">(</span><span class="st">'Jersey City'</span>,<span class="st">'NJ'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 13 × 24</span></span>
+<span><span class="co">#&gt;    zipcode zipcode_type major_city  post_office_city common_city_list county    </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;                      &lt;blob&gt; &lt;chr&gt;     </span></span>
+<span><span class="co">#&gt;  1 07097   Unique       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  2 07302   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  3 07303   PO Box       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  4 07304   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  5 07305   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  6 07306   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  7 07307   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  8 07308   PO Box       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt;  9 07309   Standard     Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt; 10 07310   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt; 11 07311   Standard     Jersey City Jersey City, NJ        &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt; 12 07395   Unique       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt; 13 07399   Unique       Jersey City &lt;NA&gt;                   &lt;raw 23 B&gt; Hudson Co…</span></span>
+<span><span class="co">#&gt; # … with 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;, timezone &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;, population &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="find-all-zip-codes-for-a-timezone">Find all ZIP codes for a timezone<a class="anchor" aria-label="anchor" href="#find-all-zip-codes-for-a-timezone"></a>
 </h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/search_tz.html">search_tz</a></span><span class="op">(</span><span class="st">'Eastern'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 14,025 × 24</span>
-<span class="co">#&gt;    zipcode zipcode_type major_city    post_office_city  common_city_list county </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt;  </span>
-<span class="co">#&gt;  1 06001   Standard     Avon          Avon, CT                &lt;raw 16 B&gt; Hartfo…</span>
-<span class="co">#&gt;  2 06002   Standard     Bloomfield    Bloomfield, CT          &lt;raw 22 B&gt; Hartfo…</span>
-<span class="co">#&gt;  3 06010   Standard     Bristol       Bristol, CT             &lt;raw 19 B&gt; Hartfo…</span>
-<span class="co">#&gt;  4 06013   Standard     Burlington    Burlington, CT          &lt;raw 36 B&gt; Hartfo…</span>
-<span class="co">#&gt;  5 06016   Standard     Broad Brook   Broad Brook, CT         &lt;raw 46 B&gt; Hartfo…</span>
-<span class="co">#&gt;  6 06018   Standard     Canaan        Canaan, CT              &lt;raw 18 B&gt; Litchf…</span>
-<span class="co">#&gt;  7 06019   Standard     Canton        Canton, CT              &lt;raw 34 B&gt; Hartfo…</span>
-<span class="co">#&gt;  8 06020   Standard     Canton Center Canton Center, CT       &lt;raw 25 B&gt; Hartfo…</span>
-<span class="co">#&gt;  9 06021   Standard     Colebrook     Colebrook, CT           &lt;raw 21 B&gt; Litchf…</span>
-<span class="co">#&gt; 10 06022   Standard     Collinsville  Collinsville, CT        &lt;raw 24 B&gt; Hartfo…</span>
-<span class="co">#&gt; # … with 14,015 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span>
-<span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span>
-<span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span>
-<span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/search_tz.html">search_tz</a></span><span class="op">(</span><span class="st">'Eastern'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 14,025 × 24</span></span>
+<span><span class="co">#&gt;    zipcode zipcode_type major_city    post_office_city  common_city_list county </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;         &lt;chr&gt;                       &lt;blob&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt;  1 06001   Standard     Avon          Avon, CT                &lt;raw 16 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt;  2 06002   Standard     Bloomfield    Bloomfield, CT          &lt;raw 22 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt;  3 06010   Standard     Bristol       Bristol, CT             &lt;raw 19 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt;  4 06013   Standard     Burlington    Burlington, CT          &lt;raw 36 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt;  5 06016   Standard     Broad Brook   Broad Brook, CT         &lt;raw 46 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt;  6 06018   Standard     Canaan        Canaan, CT              &lt;raw 18 B&gt; Litchf…</span></span>
+<span><span class="co">#&gt;  7 06019   Standard     Canton        Canton, CT              &lt;raw 34 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt;  8 06020   Standard     Canton Center Canton Center, CT       &lt;raw 25 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt;  9 06021   Standard     Colebrook     Colebrook, CT           &lt;raw 21 B&gt; Litchf…</span></span>
+<span><span class="co">#&gt; 10 06022   Standard     Collinsville  Collinsville, CT        &lt;raw 24 B&gt; Hartfo…</span></span>
+<span><span class="co">#&gt; # … with 14,015 more rows, and 18 more variables: state &lt;chr&gt;, lat &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   lng &lt;dbl&gt;, timezone &lt;chr&gt;, radius_in_miles &lt;dbl&gt;, area_code_list &lt;blob&gt;,</span></span>
+<span><span class="co">#&gt; #   population &lt;int&gt;, population_density &lt;dbl&gt;, land_area_in_sqmi &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   water_area_in_sqmi &lt;dbl&gt;, housing_units &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   occupied_housing_units &lt;int&gt;, median_home_value &lt;int&gt;,</span></span>
+<span><span class="co">#&gt; #   median_household_income &lt;int&gt;, bounds_west &lt;dbl&gt;, bounds_east &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   bounds_north &lt;dbl&gt;, bounds_south &lt;dbl&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="get-all-census-tracts-for-a-given-zip-code">Get all Census tracts for a given ZIP code<a class="anchor" aria-label="anchor" href="#get-all-census-tracts-for-a-given-zip-code"></a>
 </h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="st">'08731'</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 × 3</span>
-<span class="co">#&gt;   ZCTA5 TRACT        GEOID</span>
-<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 08731 732001 34029732001</span>
-<span class="co">#&gt; 2 08731 732002 34029732002</span>
-<span class="co">#&gt; 3 08731 732101 34029732101</span>
-<span class="co">#&gt; 4 08731 732103 34029732103</span>
-<span class="co">#&gt; 5 08731 732104 34029732104</span>
-<span class="co">#&gt; 6 08731 733000 34029733000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/get_tracts.html">get_tracts</a></span><span class="op">(</span><span class="st">'08731'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span><span class="co">#&gt;   ZCTA5 TRACT        GEOID</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 08731 732001 34029732001</span></span>
+<span><span class="co">#&gt; 2 08731 732002 34029732002</span></span>
+<span><span class="co">#&gt; 3 08731 732101 34029732101</span></span>
+<span><span class="co">#&gt; 4 08731 732103 34029732103</span></span>
+<span><span class="co">#&gt; 5 08731 732104 34029732104</span></span>
+<span><span class="co">#&gt; 6 08731 733000 34029733000</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -396,7 +396,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
