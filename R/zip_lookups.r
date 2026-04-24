@@ -350,7 +350,6 @@ geocode_zip <- function(zip_code) {
 #' \dontrun{
 #' search_radius(39.9, -74.3, 10)
 #' }
-#' @importFrom raster pointDistance
 #' @export
 search_radius <- function(lat, lng, radius = 1) {
 
@@ -360,9 +359,9 @@ search_radius <- function(lat, lng, radius = 1) {
     dplyr::filter(lat != "NA")
 
   # Calculate the distance between all points and the provided coordinate pair
-  for (i in seq_len(nrow(zip_data))) {
-    zip_data$distance[i] <- raster::pointDistance(c(lng, lat), c(zip_data$lng[i], zip_data$lat[i]), lonlat = TRUE)
-  }
+  origin <- matrix(c(lng, lat), ncol = 2)[rep(1, nrow(zip_data)), , drop = FALSE]
+  targets <- cbind(zip_data$lng, zip_data$lat)
+  zip_data$distance <- point_distance(origin, targets, lonlat = TRUE)
 
   # Convert meters to miles for distance measurement
   zip_data$distance <- zip_data$distance * 0.000621371

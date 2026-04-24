@@ -63,19 +63,42 @@ normalize_zip <- function(zipcode) {
   zipcode
 }
 
+# Vectorised great-circle (Haversine) distance in metres using the WGS84
+# equatorial radius. Used as an internal replacement for raster::pointDistance()
+# so that zipcodeR does not depend on the retired sp/rgdal/rgeos stack.
+point_distance <- function(p1, p2, lonlat = TRUE) {
+  x1 <- p1[, 1]; y1 <- p1[, 2]
+  x2 <- p2[, 1]; y2 <- p2[, 2]
+
+  if (!isTRUE(lonlat)) {
+    return(sqrt((x2 - x1)^2 + (y2 - y1)^2))
+  }
+
+  r <- 6378137
+  lon1 <- x1 * pi / 180
+  lat1 <- y1 * pi / 180
+  lon2 <- x2 * pi / 180
+  lat2 <- y2 * pi / 180
+  dlat <- lat2 - lat1
+  dlon <- lon2 - lon1
+  a <- sin(dlat / 2)^2 + cos(lat1) * cos(lat2) * sin(dlon / 2)^2
+  2 * r * asin(pmin(1, sqrt(a)))
+}
+
 #' Calculate the distance between two ZIP codes in miles
 #'
 #'
 #' @param zipcode_a First vector of ZIP codes
 #' @param zipcode_b Second vector of ZIP codes
-#' @param lonlat lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.
+#' @param lonlat If TRUE (the default), distances are calculated over a
+#'   spherical projection using the Haversine formula. If FALSE, distances are
+#'   calculated in Euclidean (planar) space.
 #' @param units Specify which units to return distance calculations in. Choices include meters or miles.
 #' @return a data.frame containing a column for each ZIP code and a new column containing the distance between the two columns of ZIP code
 #'
 #' @examples
 #' zip_distance("08731", "08901")
 #'
-#' @importFrom raster pointDistance
 #' @export
 zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
   zipcode_a <- as.character(zipcode_a)
@@ -95,13 +118,13 @@ zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
     dplyr::left_join(zip_db_small, by = c('zipcode_b' = 'zipcode'), suffix = c('.a', '.b'))
 
   # assemble matrices for distance calculation
-  points_a <- cbind(cbind(zip_data$lng.a, zip_data$lat.a))
-  points_b <- cbind(cbind(zip_data$lng.b, zip_data$lat.b))
+  points_a <- cbind(zip_data$lng.a, zip_data$lat.a)
+  points_b <- cbind(zip_data$lng.b, zip_data$lat.b)
 
-  # Calculate the distance matrix between both sets of points
-  distance <- raster::pointDistance(points_a, points_b, lonlat = lonlat)
+  # Calculate the distance between both sets of points (in meters)
+  distance <- point_distance(points_a, points_b, lonlat = lonlat)
 
-  # Convert the distance matrix from meters to miles
+  # Convert the distance from meters to miles
   if (units == "miles") {
     distance <- distance * 0.000621371
   }

@@ -11,7 +11,9 @@ zip_distance(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles")
 
 \item{zipcode_b}{Second vector of ZIP codes}
 
-\item{lonlat}{lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.}
+\item{lonlat}{If TRUE (the default), distances are calculated over a
+spherical projection using the Haversine formula. If FALSE, distances are
+calculated in Euclidean (planar) space.}
 
 \item{units}{Specify which units to return distance calculations in. Choices include meters or miles.}
 }

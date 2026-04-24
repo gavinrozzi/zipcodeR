@@ -1,5 +1,8 @@
 # *News*
 
+# zipcodeR 0.3.6
+- Removed dependency on `{raster}` (which transitively loaded the retired `{sp}`/`{rgdal}`/`{rgeos}`/`{maptools}` stack) by replacing `raster::pointDistance()` with an internal Haversine implementation. This silences the legacy spatial package warning at load time (#28).
+
 # zipcodeR 0.3.5
 - Hotfix to address failing vignette to prevent package being archived by CRAN team.
 
