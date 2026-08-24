@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Package Overview
 
-zipcodeR is an R package that simplifies working with U.S. ZIP codes. It provides an offline database of 41,877 ZIP codes with 24 attributes each, plus functions for geographic search, distance calculations, and Census data integration.
+zipcodeR is an R package that simplifies working with U.S. ZIP codes. It provides an offline database of 42,725 ZIP codes with 24 attributes each (rebuildable via the data-raw/ pipeline), plus functions for geographic search, distance calculations, and Census data integration.
 
 ## Development Commands
 
@@ -32,9 +32,9 @@ devtools::load_all()
 
 ### Data Layer (`data/`)
 Three bundled `.rda` datasets loaded lazily:
-- `zip_code_db` - Main ZIP code database (41,877 rows, 24 columns)
-- `zcta_crosswalk` - ZCTA-to-Census Tract mapping (148,897 rows)
-- `zip_to_cd` - ZIP-to-Congressional District mapping (45,914 rows)
+- `zip_code_db` - Main ZIP code database (42,725 rows, 24 columns)
+- `zcta_crosswalk` - ZCTA-to-Census Tract mapping, 2020 vintage (168,212 rows)
+- `zip_to_cd` - ZIP-to-Congressional District mapping, 119th Congress (40,147 rows)
 
 ### Source Files (`R/`)
 - `data.r` - Roxygen documentation for the three datasets
