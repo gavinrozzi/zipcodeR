@@ -1,6 +1,6 @@
 Package: zipcodeR
 Title: Data & Functions for Working with US ZIP Codes
-Version: 0.3.5
+Version: 0.4.0
 Authors@R: 
     person(given = "Gavin",
            family = "Rozzi",

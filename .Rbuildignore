@@ -18,3 +18,6 @@ paper.pdf$
 ^README\.Rmd$
 ^CRAN-SUBMISSION$
 ^data-raw$
+^AUDIT\.md$
+^CLAUDE\.md$
+^issue_comments$

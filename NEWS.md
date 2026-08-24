@@ -1,5 +1,70 @@
 # *News*
 
+# zipcodeR 0.4.0
+
+## Breaking changes / behavior changes
+
+- Distance calculations (`zip_distance()`, `search_radius()`) now use an
+  internal haversine implementation (mean Earth radius 6,371,008.8 m) instead
+  of `raster::pointDistance()`'s WGS84 geodesic. Distances may differ from
+  previous releases by up to ~0.5% (typically ~0.1%). (#21, #24, #28)
+- `reverse_zipcode()` now returns exactly one row per input element, in input
+  order, with duplicates preserved and NA rows (plus a warning) for ZIP codes
+  not found in `zip_code_db`. Previously results came back in database order
+  and duplicate inputs were collapsed, which made the function unusable inside
+  `dplyr::mutate()`. (#27)
+- `geocode_zip()` likewise now preserves input order and duplicates and
+  returns NA-coordinate rows (with a warning) for unmatched ZIP codes instead
+  of silently dropping them; it still errors when no input ZIP matches. (#27)
+
+## Dependency changes
+
+- `raster` and `tidycensus` have been removed from Imports. Loading zipcodeR
+  no longer pulls in the retired `sp` lineage or any GDAL/GEOS/PROJ/arrow
+  system dependency, resolving the namespace load failure (#21), the
+  `libarrow` GDAL warnings on load (#24), and the legacy-package retirement
+  warning (#28). The Census FIPS code table previously read from
+  `tidycensus::fips_codes` is now bundled as internal data
+  (see `data-raw/fips_codes.R`).
+- `tidyr` removed from Imports (replaced by base R in `normalize_zip()`).
+- `jsonlite`, `httr`, `curl`, `RSQLite` and `DBI` moved from Imports to
+  Suggests; they are only needed by `download_zip_data()`, which now prompts
+  to install them via `rlang::check_installed()`.
+- Imports is now: `dplyr`, `rlang`, `stringr`, `utils`.
+
+## Performance
+
+- `search_radius()` computes distances in a single vectorized call instead of
+  a ~42,000-iteration loop, reducing a typical query from seconds to
+  milliseconds. Further optimization is planned. (#33, with thanks to the
+  reporter for the vectorization proposal)
+
+## Bug fixes
+
+- `search_radius()`'s filter for ZIP codes without coordinates was a no-op
+  due to argument shadowing; it now correctly excludes coordinate-less rows.
+- Fixed a latent error in `reverse_zipcode()`'s no-match path and removed the
+  quadratic row-insertion loop.
+
+## Documentation
+
+- New FAQ vignette covering the western-hemisphere longitude sign convention
+  (#14), missing ZIP codes and the ZIP-vs-ZCTA distinction (#19, #25, #26),
+  jurisdiction accuracy limitations (#32), and the lazy-data installation
+  error (#13).
+- `zip_code_db` documentation now includes a provenance-and-limitations
+  section (#32) and corrects the `zipcode_type` description; `zip_to_cd`
+  documentation discloses its pre-2020-redistricting vintage (#29).
+- Added regression tests for the `zip_distance()` ordering fix shipped in
+  0.3.4. (#20)
+
+## Infrastructure
+
+- GitHub Actions workflows modernized to r-lib/actions v2 with an
+  ubuntu/macOS/windows check matrix across release, devel, and oldrel-1,
+  plus a Codecov test-coverage workflow.
+- `inst/CITATION` migrated from the deprecated `citEntry()` to `bibentry()`.
+
 # zipcodeR 0.3.5
 - Hotfix to address failing vignette to prevent package being archived by CRAN team.
 
