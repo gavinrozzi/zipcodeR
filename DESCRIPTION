@@ -29,6 +29,7 @@ Suggests:
     curl,
     httr,
     jsonlite,
+    openssl,
     knitr,
     rmarkdown,
     markdown,
