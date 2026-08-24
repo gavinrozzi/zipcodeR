@@ -1,0 +1,2 @@
+zipcode,zipcode_type,major_city,state,county,lat,lng,source,note
+91230,PO Box,Glendale,CA,Los Angeles County,34.1425,-118.2551,"USPS ZIP lookup via third-party references (researchmaniacs.com, postcodebase.com), coordinates = central Glendale CA","USPS-only ZIP with no ZCTA; reported missing in issue #26. Replace this row with HUD-USPS crosswalk data once a HUD API token is configured (see README)."
