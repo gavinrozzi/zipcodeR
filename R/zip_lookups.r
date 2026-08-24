@@ -76,8 +76,11 @@ search_county <- function(county_name, state_abb, ...) {
 #' Given a ZIP code, returns columns of metadata about that ZIP code
 #'
 #'
-#' @param zip_code A 5-digit U.S. ZIP code or chracter vector with multiple ZIP codes
-#' @return A tibble containing data for the ZIP code(s)
+#' @param zip_code A 5-digit U.S. ZIP code or character vector with multiple ZIP codes
+#' @return A tibble with one row per element of \code{zip_code}, in input order
+#'   (duplicates preserved). ZIP codes with no match in \code{zip_code_db} return
+#'   a row of NA values (with a warning), so the output is always the same length
+#'   as the input and safe to use inside \code{dplyr::mutate()}.
 #'
 #' @examples
 #' reverse_zipcode("90210")
@@ -97,23 +100,19 @@ reverse_zipcode <- function(zip_code) {
 
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
-  # Get matching ZIP code record for
-  zip_code_data <- zip_code_db %>%
-    dplyr::filter(.data$zipcode %in% zip_code)
 
-  # Iterate over input and insert NA rows for those with no match
-  for (i in seq_along(zip_code)) {
-    if (zip_code[i] %in% zip_code_db$zipcode == FALSE) {
-      warning(paste("No data found for ZIP code", zip_code[i]))
-      zip_code_data <- zip_code_data %>%
-        dplyr::add_row(zipcode = zip_code[i], .before = i)
-    }
+  # Match each input against the database, preserving input order and
+  # duplicates so the result always has one row per input element
+  matched <- match(zip_code, zip_code_db$zipcode)
+
+  for (missing_zip in unique(zip_code[is.na(matched)])) {
+    warning(paste("No data found for ZIP code", missing_zip))
   }
 
-  # Throw an error if nothing found
-  if (nrow(zip_code_data) == 0) {
-    stop(paste("No data found for provided ZIP code", .data$zip_code, ",", .data$state))
-  }
+  zip_code_data <- zip_code_db[matched, , drop = FALSE]
+  # Unmatched inputs become NA rows; keep the queried ZIP in the zipcode column
+  zip_code_data$zipcode <- zip_code
+
   return(dplyr::as_tibble(zip_code_data))
 }
 #' Search ZIP codes for a given city within a state
@@ -309,11 +308,18 @@ is_zcta <- function(zip_code) {
   return(result)
 }
 
-#' Returns that lat / lon pair of the centroid of a given ZIP code
+#' Returns the lat / lon pair of the centroid of a given ZIP code
 #'
+#' Note on sign convention: longitudes in the United States are negative
+#' because the U.S. lies in the western hemisphere (west of the prime
+#' meridian). This is the standard convention, not an error; do not flip
+#' the sign of \code{lng}.
 #'
-#' @param zip_code A 5-digit U.S. ZIP code
-#' @return tibble of lat lon coordinates
+#' @param zip_code A 5-digit U.S. ZIP code or character vector with multiple ZIP codes
+#' @return A tibble of coordinates with one row per element of \code{zip_code},
+#'   in input order (duplicates preserved). ZIP codes with no match return a row
+#'   of NA coordinates (with a warning); an error is raised only when no input
+#'   ZIP code matches at all.
 #'
 #' @examples
 #' geocode_zip("07762")
@@ -326,15 +332,26 @@ geocode_zip <- function(zip_code) {
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
 
-  # Get matching ZIP code record for
-  result <- zip_code_db %>%
-    dplyr::filter(.data$zipcode %in% zip_code) %>%
-    dplyr::select(.data$zipcode, .data$lat, .data$lng) %>%
-    dplyr::as_tibble()
+  # Match against the database, preserving input order and duplicates
+  matched <- match(zip_code, zip_code_db$zipcode)
 
-  if (nrow(result) == 0) {
-    stop(paste("No results found for ZIP code", zip_code))
+  if (all(is.na(matched))) {
+    stop(paste("No results found for ZIP code", paste(zip_code, collapse = ", ")))
   }
+
+  if (anyNA(matched)) {
+    warning(paste(
+      "No results found for ZIP code(s):",
+      paste(unique(zip_code[is.na(matched)]), collapse = ", ")
+    ))
+  }
+
+  # Unmatched inputs come back as NA rows rather than being dropped
+  result <- dplyr::tibble(
+    zipcode = zip_code,
+    lat = zip_code_db$lat[matched],
+    lng = zip_code_db$lng[matched]
+  )
 
   return(result)
 }

@@ -64,6 +64,20 @@ test_that("geocode_zip() outputs proper number of columns", {
   expect_equal(result, 3)
 })
 
+test_that("geocode_zip() preserves input order and length (#27)", {
+  result <- geocode_zip(c("08734", "08731"))
+  expect_equal(result$zipcode, c("08734", "08731"))
+  # Unmatched ZIPs come back as NA rows rather than being dropped
+  result <- suppressWarnings(geocode_zip(c("08731", "00000", "08734")))
+  expect_equal(result$zipcode, c("08731", "00000", "08734"))
+  expect_true(is.na(result$lat[2]))
+  expect_false(anyNA(result$lat[c(1, 3)]))
+})
+
+test_that("geocode_zip() errors when no ZIP codes match", {
+  expect_error(suppressWarnings(geocode_zip("00000")))
+})
+
 test_that("geocode_zip() outputs proper number of rows", {
   result <- nrow(geocode_zip("08731"))
   expect_equal(result, 1)
@@ -117,6 +131,42 @@ test_that("reverse_zipcode() errors on ZIP code input with invalid number of cha
 
 test_that("reverse_zipcode() errors on empty input", {
   expect_error(reverse_zipcode())
+})
+
+test_that("reverse_zipcode() preserves input order (#27)", {
+  result <- reverse_zipcode(c("08734", "08731"))
+  expect_equal(result$zipcode, c("08734", "08731"))
+})
+
+test_that("reverse_zipcode() preserves duplicate inputs (#27)", {
+  result <- reverse_zipcode(c("08731", "08731"))
+  expect_equal(nrow(result), 2)
+  expect_equal(result$zipcode, c("08731", "08731"))
+})
+
+test_that("reverse_zipcode() returns one row per input, aligned, with NA rows for misses (#27)", {
+  input <- c("96753", "00000", "96744", "96817", "00000", "96817")
+  result <- suppressWarnings(reverse_zipcode(input))
+  expect_equal(nrow(result), length(input))
+  expect_equal(result$zipcode, input)
+  expect_true(all(is.na(result$county[input == "00000"])))
+  expect_equal(length(unique(result$county[input == "96817"])), 1)
+})
+
+test_that("reverse_zipcode() works inside dplyr::mutate (#27)", {
+  df <- data.frame(
+    id = 1:13,
+    zipcode = c(
+      "96753", "00000", "96744", "96782", "00000", "96720", "96813",
+      "96712", "96817", "96818", "96822", "00000", "96817"
+    )
+  )
+  result <- suppressWarnings(
+    dplyr::mutate(df, county = reverse_zipcode(zipcode)$county)
+  )
+  expect_equal(nrow(result), 13)
+  expect_true(is.na(result$county[2]))
+  expect_equal(result$county[9], result$county[13])
 })
 
 
