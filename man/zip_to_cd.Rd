@@ -18,6 +18,12 @@ A data frame with 45914 rows and 2 variables:
 zip_to_cd
 }
 \description{
-A dataset containing mappings between ZIP codes and congressional districts
+A dataset containing mappings between ZIP codes and congressional districts.
+}
+\details{
+Note: this crosswalk predates the post-2020-census redistricting cycle and
+reflects the district boundaries in force at the time it was built. A
+refresh from the current Census ZCTA-to-congressional-district relationship
+files is planned as part of the reproducible data pipeline (see issue #29).
 }
 \keyword{datasets}

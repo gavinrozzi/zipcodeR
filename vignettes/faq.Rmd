@@ -1,0 +1,85 @@
+---
+title: "Frequently Asked Questions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Frequently Asked Questions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(zipcodeR)
+```
+
+## Why are the longitude values negative?
+
+Because the United States is in the western hemisphere. Geographic
+coordinates follow a standard sign convention: latitudes north of the
+equator are positive, and longitudes **west of the prime meridian are
+negative**. Every location in the U.S. therefore has a negative
+longitude:
+
+```{r}
+geocode_zip("90210")
+```
+
+This is not an error, and you should not multiply `lng` by -1: mapping
+libraries, spatial packages, and web APIs all expect this convention.
+
+## Why is a valid ZIP code missing from `zip_code_db`?
+
+Two common reasons:
+
+1. **Data vintage.** The bundled database is a snapshot; ZIP codes
+   introduced after the snapshot date will be absent until the next data
+   refresh. Check `zip_code_db` directly to see whether a code is
+   present.
+2. **ZIP codes are not ZCTAs.** USPS ZIP codes are collections of
+   delivery routes and points, not areas. The Census Bureau's ZIP Code
+   Tabulation Areas (ZCTAs) approximate most — but not all — ZIP codes.
+   Some USPS-only codes (typically P.O. Box or single-building "unique"
+   codes, such as 91230 in Glendale, CA) have no ZCTA and no
+   Census-derived attributes, and may be missing from ZCTA-oriented
+   sources. Use `is_zcta()` to check whether a given ZIP code is also a
+   ZCTA.
+
+Relatedly, about 20% of the ZIP codes in `zip_code_db` (P.O. Box and
+unique codes) have no `lat`/`lng` coordinates; functions such as
+`zip_distance()` return `NA` distances for them.
+
+## How accurate is the city / county ("jurisdiction") information?
+
+Treat it as approximate. A ZIP code is a postal-delivery construct, not
+a municipal boundary: one ZIP code can cross city, county, and even
+state lines, and the USPS "city" name is the preferred *mailing* name,
+which frequently differs from the municipality a given address actually
+lies in (addresses just outside a city's limits often carry that city's
+name). The `county` column reflects the predominant county for the ZIP
+code. If you need authoritative jurisdiction assignment, geocode the
+full street address against boundary files (e.g., Census TIGER/Line)
+rather than relying on the ZIP code alone.
+
+## I get `object 'zip_code_db' not found`
+
+The datasets are lazy-loaded with the package. This error almost always
+indicates a broken or partial installation — for example, a package
+library that was migrated between R versions. Reinstalling usually
+fixes it:
+
+```r
+install.packages("zipcodeR")
+```
+
+If you want the data without attaching the package, use
+`zipcodeR::zip_code_db`.
+
+## Where does the data come from?
+
+`zip_code_db` derives from the
+[uszipcode](https://github.com/MacHu-GWU/uszipcode-project) project's
+database, which aggregates U.S. Census Bureau data (decennial census,
+ACS, gazetteer files) with USPS-derived ZIP code attributes.
+`zcta_crosswalk` comes from the Census Bureau's ZCTA-to-tract
+relationship files, and `zip_to_cd` from HUD-USPS crosswalk data. See
+the help page of each dataset for details and known limitations.
