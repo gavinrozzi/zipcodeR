@@ -51,12 +51,12 @@ test_that("is_zcta() outputs proper structure data", {
 
 test_that("geocode_zip() works - lat", {
   result <- geocode_zip("08731")$lat
-  expect_equal(result, 39.9)
+  expect_equal(round(result, 1), 39.9)
 })
 
 test_that("geocode_zip() works - lng", {
   result <- geocode_zip("08731")$lng
-  expect_equal(result, -74.3)
+  expect_equal(round(result, 1), -74.3)
 })
 
 test_that("geocode_zip() outputs proper number of columns", {
@@ -293,9 +293,12 @@ test_that("search_radius() outputs proper structure data", {
   expect_equal(result, "tbl_df")
 })
 
-test_that("search_radius() returns a single ZIP code when centroid of ZIP is submitted", {
-  result <- search_radius(39.9, -74.3, 1)
-  expect_equal(nrow(result), 1)
+test_that("search_radius() finds the ZIP itself first when its centroid is submitted", {
+  centroid <- geocode_zip("08731")
+  result <- search_radius(centroid$lat, centroid$lng, 1)
+  expect_gte(nrow(result), 1)
+  expect_equal(result$zipcode[1], "08731")
+  expect_equal(result$distance[1], 0)
 })
 
 

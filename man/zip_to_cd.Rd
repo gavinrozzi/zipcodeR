@@ -5,25 +5,23 @@
 \alias{zip_to_cd}
 \title{ZIP Code to Congressional District Relationship File}
 \format{
-A data frame with 45914 rows and 2 variables:
+A data frame with 40147 rows and 2 variables:
 \describe{
 \item{ZIP}{5 digit U.S. ZIP code}
 \item{CD}{Four digit congressional district code (State FIPS code + district number)}
 }
 }
 \source{
-\url{https://www.huduser.gov/portal/datasets/usps_crosswalk.html}
+\url{https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html}
 }
 \usage{
 zip_to_cd
 }
 \description{
-A dataset containing mappings between ZIP codes and congressional districts.
-}
-\details{
-Note: this crosswalk predates the post-2020-census redistricting cycle and
-reflects the district boundaries in force at the time it was built. A
-refresh from the current Census ZCTA-to-congressional-district relationship
-files is planned as part of the reproducible data pipeline (see issue #29).
+A dataset containing mappings between ZIP codes (as 2020 ZCTAs) and
+congressional districts of the 119th Congress, reflecting post-2020-census
+redistricting. ZIP codes spanning multiple districts appear once per
+district. Built by \code{data-raw/04_build_zip_to_cd.R} from the Census
+relationship file; see \code{zip_data_version()} for the data release.
 }
 \keyword{datasets}

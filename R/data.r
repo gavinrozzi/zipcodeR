@@ -1,12 +1,12 @@
-#' ZCTA to Census Tract (2010) Crosswalk
+#' ZCTA to Census Tract (2020) Crosswalk
 #'
-#' A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.
+#' A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official relationship file. Built by \code{data-raw/03_build_zcta_crosswalk.R}; see \code{zip_data_version()} for the data release.
 #'
-#' @format A data frame with 148897 rows and 4 variables:
+#' @format A data frame with 168212 rows and 3 variables:
 #' \describe{
-#'   \item{ZCTA5}{2010 ZIP Code Tabulation Area}
-#'   \item{TRACT}{2010 Census Tract Code}
-#'   \item{GEOID}{Concatenation of 2010 State, County, and Tract}
+#'   \item{ZCTA5}{2020 ZIP Code Tabulation Area}
+#'   \item{TRACT}{2020 Census Tract Code}
+#'   \item{GEOID}{Concatenation of 2020 State, County, and Tract}
 #' }
 #' @source \url{https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html}
 "zcta_crosswalk"
@@ -15,11 +15,15 @@
 #' A dataset containing detailed information for U.S. ZIP codes
 #'
 #' @section Provenance and limitations:
-#' This dataset is a snapshot of the \code{simple_zipcode} table of the
+#' This dataset is built by the reproducible pipeline in \code{data-raw/}
+#' (see \code{zip_data_version()} for the loaded data release). Its base is
+#' the \code{simple_zipcode} table of the
 #' \href{https://github.com/MacHu-GWU/uszipcode-project}{uszipcode} project's
-#' database (release of 2021-06-08), which aggregates U.S. Census Bureau data
-#' (decennial census, ACS, gazetteer files) with USPS-derived ZIP code
-#' attributes. Users should be aware of inherent limitations of ZIP-code-level
+#' database (MIT license), refreshed with current U.S. Census Bureau data:
+#' coordinates and land/water areas from the Gazetteer (2020 ZCTAs),
+#' demographic attributes from ACS 5-year estimates, and place names for
+#' post-2021 additions from GeoNames (CC BY 4.0).
+#' Users should be aware of inherent limitations of ZIP-code-level
 #' data: ZIP codes are postal delivery constructs, not polygons or
 #' jurisdictions. They can cross city, county, and state boundaries, and the
 #' \code{major_city}/\code{county} columns reflect the predominant postal
@@ -28,10 +32,10 @@
 #' ZIP codes; USPS-only codes (P.O. Box and unique codes) may lack coordinates
 #' and demographic attributes. See \code{vignette("faq", package = "zipcodeR")}.
 #'
-#' @format A data frame with 41877 rows and 24 variables:
+#' @format A data frame with 42725 rows and 24 variables:
 #' \describe{
 #'   \item{zipcode}{5 digit U.S. ZIP code}
-#'   \item{zipcode_type}{Type of ZIP code: Standard, PO Box or Unique}
+#'   \item{zipcode_type}{Type of ZIP code: Standard, PO Box, Unique or Military}
 #'   \item{major_city}{Major city serving the ZIP code}
 #'   \item{post_office_city}{City of post office serving the ZIP code}
 #'   \item{common_city_list}{List of common cities represented by the ZIP code}
@@ -59,17 +63,16 @@
 "zip_code_db"
 #' ZIP Code to Congressional District Relationship File
 #'
-#' A dataset containing mappings between ZIP codes and congressional districts.
+#' A dataset containing mappings between ZIP codes (as 2020 ZCTAs) and
+#' congressional districts of the 119th Congress, reflecting post-2020-census
+#' redistricting. ZIP codes spanning multiple districts appear once per
+#' district. Built by \code{data-raw/04_build_zip_to_cd.R} from the Census
+#' relationship file; see \code{zip_data_version()} for the data release.
 #'
-#' Note: this crosswalk predates the post-2020-census redistricting cycle and
-#' reflects the district boundaries in force at the time it was built. A
-#' refresh from the current Census ZCTA-to-congressional-district relationship
-#' files is planned as part of the reproducible data pipeline (see issue #29).
-#'
-#' @format A data frame with 45914 rows and 2 variables:
+#' @format A data frame with 40147 rows and 2 variables:
 #' \describe{
 #'   \item{ZIP}{5 digit U.S. ZIP code}
 #'   \item{CD}{Four digit congressional district code (State FIPS code + district number)}
 #' }
-#' @source \url{https://www.huduser.gov/portal/datasets/usps_crosswalk.html}
+#' @source \url{https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html}
 "zip_to_cd"

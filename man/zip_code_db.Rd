@@ -5,10 +5,10 @@
 \alias{zip_code_db}
 \title{ZIP Code Database}
 \format{
-A data frame with 41877 rows and 24 variables:
+A data frame with 42725 rows and 24 variables:
 \describe{
 \item{zipcode}{5 digit U.S. ZIP code}
-\item{zipcode_type}{Type of ZIP code: Standard, PO Box or Unique}
+\item{zipcode_type}{Type of ZIP code: Standard, PO Box, Unique or Military}
 \item{major_city}{Major city serving the ZIP code}
 \item{post_office_city}{City of post office serving the ZIP code}
 \item{common_city_list}{List of common cities represented by the ZIP code}
@@ -44,11 +44,15 @@ A dataset containing detailed information for U.S. ZIP codes
 }
 \section{Provenance and limitations}{
 
-This dataset is a snapshot of the \code{simple_zipcode} table of the
+This dataset is built by the reproducible pipeline in \code{data-raw/}
+(see \code{zip_data_version()} for the loaded data release). Its base is
+the \code{simple_zipcode} table of the
 \href{https://github.com/MacHu-GWU/uszipcode-project}{uszipcode} project's
-database (release of 2021-06-08), which aggregates U.S. Census Bureau data
-(decennial census, ACS, gazetteer files) with USPS-derived ZIP code
-attributes. Users should be aware of inherent limitations of ZIP-code-level
+database (MIT license), refreshed with current U.S. Census Bureau data:
+coordinates and land/water areas from the Gazetteer (2020 ZCTAs),
+demographic attributes from ACS 5-year estimates, and place names for
+post-2021 additions from GeoNames (CC BY 4.0).
+Users should be aware of inherent limitations of ZIP-code-level
 data: ZIP codes are postal delivery constructs, not polygons or
 jurisdictions. They can cross city, county, and state boundaries, and the
 \code{major_city}/\code{county} columns reflect the predominant postal
