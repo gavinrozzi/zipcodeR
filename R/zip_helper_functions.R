@@ -5,16 +5,15 @@
 #' @return Normalized zipcode
 #' @examples
 #' normalize_zip(0008731)
-#' @importFrom tidyr extract
-#' @importFrom dplyr pull
-#' @importFrom dplyr tibble
-#' @importFrom dplyr left_join
 #' @export
 normalize_zip <- function(zipcode) {
   capture_group <- function(data, regex) {
-    tibble(data) %>%
-      extract(col = data, into = "captured", regex = regex) %>%
-      pull(.data$captured)
+    matches <- regmatches(data, regexec(regex, data))
+    vapply(
+      matches,
+      function(m) if (length(m) >= 2) m[[2]] else NA_character_,
+      character(1)
+    )
   }
 
   # input can be numeric or character

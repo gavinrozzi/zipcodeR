@@ -15,21 +15,12 @@ export(search_radius)
 export(search_state)
 export(search_tz)
 export(zip_distance)
-importFrom(DBI,dbGetQuery)
-importFrom(RSQLite,dbConnect)
-importFrom(curl,has_internet)
 importFrom(dplyr,
   "%>%",
-  filter,
-  left_join,
-  pull,
-  tibble
+  filter
 )
-importFrom(httr,http_error)
-importFrom(jsonlite,fromJSON)
 importFrom(rlang,
   .data,
   list2
 )
 importFrom(stringr,str_detect)
-importFrom(tidyr,extract)

@@ -16,19 +16,19 @@ BugReports: https://github.com/gavinrozzi/zipcodeR/issues/
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Imports: 
+Imports:
     rlang,
     stringr,
-    tidyr,
     dplyr,
-    jsonlite,
-    httr,
-    curl,
-    RSQLite,
-    DBI
-Depends: 
+    utils
+Depends:
     R (>= 3.5.0)
 Suggests:
+    DBI,
+    RSQLite,
+    curl,
+    httr,
+    jsonlite,
     knitr,
     rmarkdown,
     markdown,

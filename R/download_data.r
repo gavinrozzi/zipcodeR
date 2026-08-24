@@ -6,15 +6,15 @@
 #' \dontrun{
 #' download_zip_data()
 #' }
-#' @importFrom RSQLite dbConnect
-#' @importFrom DBI dbGetQuery
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr http_error
 #' @importFrom dplyr %>%
 #' @importFrom dplyr filter
-#' @importFrom curl has_internet
 #' @export
 download_zip_data <- function(force = FALSE) {
+  # These packages are only needed for data download, not core lookups
+  rlang::check_installed(
+    c("jsonlite", "httr", "curl", "RSQLite", "DBI"),
+    reason = "to download updated ZIP code data with `download_zip_data()`"
+  )
 
   # Define URLs for downloading external datasets used in the package
   url_crosswalk <- "https://github.com/gavinrozzi/zipcodeR-data/blob/master/zcta_crosswalk.rda?raw=true"
@@ -77,7 +77,7 @@ download_zip_data <- function(force = FALSE) {
   conn <- RSQLite::dbConnect(RSQLite::SQLite(), dbname = zip_file)
 
   # Read in the new data
-  zip_code_db <- dbGetQuery(conn, "SELECT * FROM simple_zipcode")
+  zip_code_db <- DBI::dbGetQuery(conn, "SELECT * FROM simple_zipcode")
 
   # Save the updated zip_code_db file to package data directory
   save(zip_code_db, file = paste0(system.file("data", package = "zipcodeR"), "/zip_code_db.rda"))
