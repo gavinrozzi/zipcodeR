@@ -154,8 +154,8 @@ message("supplemental USPS-only ZIPs: ", nrow(sup))
 # zone of split-timezone states - the count is tracked in the refresh summary
 # so reviewers can judge the exposure on every refresh.
 imputed_tz <- c(
-  if (length(missing_zcta) > 0) nz$zipcode[!is.na(nz$timezone)],
-  if (nrow(supplement) > 0) sup$zipcode[!is.na(sup$timezone)]
+  nz$zipcode[!is.na(nz$timezone)],
+  sup$zipcode[!is.na(sup$timezone)]
 )
 
 # --- combine ---------------------------------------------------------------
@@ -188,9 +188,21 @@ zip_code_db_new$population_density <- ifelse(
 )
 
 # --- clean upstream garbage coordinates -----------------------------------
+# Coordinates must come in pairs: a row with only one of lat/lng is not
+# usable, so NA both rather than shipping a half-coordinate.
+half_coord <- xor(is.na(zip_code_db_new$lat), is.na(zip_code_db_new$lng))
+if (any(half_coord)) {
+  message(
+    "clearing half-specified coordinates for ", sum(half_coord), " row(s): ",
+    paste(zip_code_db_new$zipcode[half_coord], collapse = ", ")
+  )
+  zip_code_db_new$lat[half_coord] <- NA_real_
+  zip_code_db_new$lng[half_coord] <- NA_real_
+}
+
 # A handful of upstream military rows carry junk coordinates (e.g. 09323 at
 # lat -44). NA them out rather than shipping impossible positions.
-bad_coord <- !is.na(zip_code_db_new$lat) &
+bad_coord <- !is.na(zip_code_db_new$lat) & !is.na(zip_code_db_new$lng) &
   (zip_code_db_new$lat < -15 | zip_code_db_new$lat > 72 |
      zip_code_db_new$lng < -180 | zip_code_db_new$lng > 180)
 if (any(bad_coord)) {

@@ -105,6 +105,12 @@ test_that("get_cd() warns for ZIP codes with no district mapping", {
   expect_warning(get_cd(military_zip), "No congressional district")
 })
 
+test_that("get_cd() distinguishes unknown ZIPs from known-but-unmapped ones", {
+  expect_warning(get_cd("99999"), "not found in zip_code_db")
+  # numeric input drops its leading zero and cannot match
+  expect_warning(get_cd(8731), "not found in zip_code_db")
+})
+
 test_that("zip_data_version() reports the data release", {
   meta <- zip_data_version()
   expect_type(meta, "list")

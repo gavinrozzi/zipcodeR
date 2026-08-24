@@ -15,10 +15,10 @@ save(zip_to_cd, file = file.path("data", "zip_to_cd.rda"))
 
 # Internal metadata: keep the legacy zip_code_db_version object (a Date) for
 # backward compatibility and add the structured zip_data_meta consumed by
-# zip_data_version().
-fips_env <- new.env()
-load(file.path("R", "sysdata.rda"), envir = fips_env)
-fips_codes <- fips_env$fips_codes
+# zip_data_version(). Load-and-re-save EVERY existing sysdata object so
+# nothing is silently dropped (same pattern as data-raw/fips_codes.R).
+sysdata_env <- new.env()
+load(file.path("R", "sysdata.rda"), envir = sysdata_env)
 
 zip_code_db_version <- Sys.Date()
 zip_data_meta <- list(
@@ -35,8 +35,11 @@ zip_data_meta <- list(
   ),
   comprehensive = COMPREHENSIVE_RELEASE
 )
+assign("zip_code_db_version", zip_code_db_version, envir = sysdata_env)
+assign("zip_data_meta", zip_data_meta, envir = sysdata_env)
 save(
-  zip_code_db_version, fips_codes, zip_data_meta,
+  list = ls(sysdata_env, all.names = TRUE),
+  envir = sysdata_env,
   file = file.path("R", "sysdata.rda"), compress = "bzip2"
 )
 

@@ -176,15 +176,15 @@ summary_md <- c(
                         table(candidate$zipcode_type[match(added, candidate$zipcode)], useNA = "ifany")), collapse = ", ")),
   sprintf("  - coordinates refreshed for %d existing ZIPs; ACS attributes refreshed for %d ZIPs",
           coord_changed, pop_changed),
-  sprintf("- `zcta_crosswalk`: %d rows, 2020 ZCTA/tract vintage (was %d rows, 2010)",
+  sprintf("- `zcta_crosswalk`: %d rows, 2020 ZCTA/tract vintage (previously %d rows)",
           nrow(zcta_candidate), nrow(shipped_env$zcta_crosswalk)),
-  sprintf("- `zip_to_cd`: %d rows, 119th-Congress vintage (was %d rows, pre-2020)",
+  sprintf("- `zip_to_cd`: %d rows, 119th-Congress vintage (previously %d rows)",
           nrow(cd_candidate), nrow(shipped_env$zip_to_cd)),
   local({
     s <- readRDS(file.path(cache_dir, "zip_to_cd_stats.rds"))
     sprintf(
-      "  - %d ZCTA-mapped ZIPs + %d city-derived USPS-only ZIPs; %d non-military ZIPs unmapped",
-      s$zcta_mapped, s$city_derived, s$unmapped_nonmilitary
+      "  - %d ZCTA-mapped ZIPs + %d city-derived and %d single-district-state USPS-only ZIPs; %d non-military ZIPs unmapped",
+      s$zcta_mapped, s$city_derived, s$state_derived, s$unmapped_nonmilitary
     )
   }),
   local({

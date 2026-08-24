@@ -12,9 +12,10 @@ zip_distance(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles")
 \item{zipcode_b}{Second vector of ZIP codes}
 
 \item{lonlat}{If TRUE (the default), calculate the great-circle distance
-between the ZIP code centroids using the haversine formula. FALSE computes
-the Euclidean distance between the raw coordinate pairs in degree units
-and is retained only for backward compatibility.}
+between the ZIP code centroids using the haversine formula. FALSE
+(deprecated) computes a planar equirectangular approximation instead;
+note that before the deprecation this mode had a unit bug that made it
+return near-zero values, so no result from it should be relied on.}
 
 \item{units}{Specify which units to return distance calculations in. Choices include meters or miles.}
 }

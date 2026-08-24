@@ -68,9 +68,10 @@ normalize_zip <- function(zipcode) {
 #' @param zipcode_a First vector of ZIP codes
 #' @param zipcode_b Second vector of ZIP codes
 #' @param lonlat If TRUE (the default), calculate the great-circle distance
-#'   between the ZIP code centroids using the haversine formula. FALSE computes
-#'   the Euclidean distance between the raw coordinate pairs in degree units
-#'   and is retained only for backward compatibility.
+#'   between the ZIP code centroids using the haversine formula. FALSE
+#'   (deprecated) computes a planar equirectangular approximation instead;
+#'   note that before the deprecation this mode had a unit bug that made it
+#'   return near-zero values, so no result from it should be relied on.
 #' @param units Specify which units to return distance calculations in. Choices include meters or miles.
 #' @return a data.frame containing a column for each ZIP code and a new column containing the distance between the two columns of ZIP code
 #'
@@ -112,7 +113,17 @@ zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
   if (lonlat) {
     distance <- haversine_distance(lat_a, lng_a, lat_b, lng_b)
   } else {
-    distance <- sqrt((lng_b - lng_a)^2 + (lat_b - lat_a)^2)
+    warning(
+      "zip_distance(lonlat = FALSE) is deprecated. Historical versions had ",
+      "a unit bug that made this mode return near-zero values; it now ",
+      "returns a planar equirectangular approximation in the requested ",
+      "units, and will be removed in a future release."
+    )
+    # equirectangular: scale degree offsets to meters at the mean latitude
+    meters_per_degree <- 6371008.8 * pi / 180
+    dx <- (lng_b - lng_a) * cos((lat_a + lat_b) / 2 * pi / 180)
+    dy <- lat_b - lat_a
+    distance <- sqrt(dx^2 + dy^2) * meters_per_degree
   }
 
   # Convert the distance matrix from meters to miles

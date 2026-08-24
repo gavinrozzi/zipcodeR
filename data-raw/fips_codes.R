@@ -29,7 +29,7 @@ sysdata_env <- new.env()
 load(file.path("R", "sysdata.rda"), envir = sysdata_env)
 assign("fips_codes", fips_codes, envir = sysdata_env)
 save(
-  list = ls(sysdata_env),
+  list = ls(sysdata_env, all.names = TRUE),
   envir = sysdata_env,
   file = file.path("R", "sysdata.rda"),
   compress = "bzip2"

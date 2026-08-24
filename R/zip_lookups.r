@@ -243,14 +243,23 @@ get_tracts <- function(zip_code) {
 #' @importFrom rlang .data
 #' @export
 get_cd <- function(zip_code) {
+  # Convert to character so leading zeroes are preserved
+  zip_code <- as.character(zip_code)
   # Match ZIP codes with congressional districts located within this ZIP
   matched_cds <- zip_to_cd %>%
     dplyr::filter(.data$ZIP == zip_code)
   if (nrow(matched_cds) == 0) {
-    warning(paste(
-      "No congressional district found for ZIP code", zip_code,
-      "- military and some USPS-only ZIP codes have no district mapping"
-    ))
+    if (zip_code %in% zip_code_db$zipcode) {
+      warning(paste(
+        "No congressional district found for ZIP code", zip_code,
+        "- military and some USPS-only ZIP codes have no district mapping"
+      ))
+    } else {
+      warning(paste(
+        "ZIP code", zip_code, "not found in zip_code_db -",
+        "check the input (5-digit character ZIP, leading zeros preserved)"
+      ))
+    }
   }
   # Break out the match from the ZIP to congressional district lookup into state FIPS code and congressional district codes
   district <- stringr::str_sub(matched_cds$CD, -2)
@@ -401,7 +410,6 @@ search_radius <- function(lat, lng, radius = 1) {
       lng_diff <- abs(((zip_code_db$lng - lng + 180) %% 360) - 180)
       keep <- keep & lng_diff <= lng_delta
     }
-    keep[is.na(keep)] <- FALSE
   }
 
   zip_data <- dplyr::tibble(

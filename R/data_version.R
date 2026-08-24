@@ -80,13 +80,14 @@ download_comprehensive_data <- function(force = FALSE) {
       "\nThe download may be corrupted or tampered with; not keeping it."
     )
   }
-  # file.rename() cannot overwrite an existing file on Windows; clear the
-  # destination first and verify the move actually happened
-  if (file.exists(dest)) unlink(dest)
-  moved <- file.rename(tmp, dest) ||
-    (file.copy(tmp, dest, overwrite = TRUE) && file.remove(tmp))
-  if (!moved || !file.exists(dest)) {
-    stop("Failed to move the verified download into place at ", dest)
+  # Prefer an atomic rename; it cannot overwrite an existing file on
+  # Windows, so fall back to an overwriting copy. The old cache is only
+  # replaced, never deleted ahead of a successful move, and leftover tmp
+  # cleanup is handled by on.exit (a failed cleanup is not a failure).
+  if (!file.rename(tmp, dest)) {
+    if (!file.copy(tmp, dest, overwrite = TRUE)) {
+      stop("Failed to move the verified download into place at ", dest)
+    }
   }
   message("zipcodeR: download complete and verified: ", dest)
   invisible(dest)

@@ -71,6 +71,11 @@ test_that("zip_distance supports meters and planar mode arguments", {
   miles <- zip_distance("08731", "08901")
   meters <- zip_distance("08731", "08901", units = "meters")
   expect_equal(miles$distance, round(meters$distance * 0.000621371, 2), tolerance = 0.01)
-  planar <- zip_distance("08731", "08901", lonlat = FALSE)
-  expect_equal(nrow(planar), 1)
+  # lonlat = FALSE is deprecated; it now returns a planar approximation in
+  # real units (historically a unit bug made it return ~0 for every pair)
+  expect_warning(
+    planar <- zip_distance("08731", "08901", lonlat = FALSE),
+    "deprecated"
+  )
+  expect_equal(planar$distance, miles$distance, tolerance = 0.02)
 })

@@ -56,6 +56,12 @@
 
 ## Deprecations
 
+- `zip_distance(lonlat = FALSE)` is deprecated. This mode had a unit bug in
+  every previous release — it computed Euclidean distance in degree units and
+  then applied the meters-to-miles conversion, returning 0.00 for essentially
+  every pair of ZIP codes — so no historical result from it can have been
+  meaningful. Until removal it warns and returns a planar equirectangular
+  approximation in the requested units.
 - `download_zip_data()` is deprecated and now performs no action beyond the
   deprecation warning. It could never refresh the data of an installed
   package (lazy data is baked in at install time), and when run from a
@@ -92,6 +98,10 @@
   due to argument shadowing; it now correctly excludes coordinate-less rows.
 - Fixed a latent error in `reverse_zipcode()`'s no-match path and removed the
   quadratic row-insertion loop.
+- `get_cd()` now warns informatively on a no-match, distinguishing ZIP codes
+  absent from `zip_code_db` (likely typos or numeric input that lost its
+  leading zero) from known ZIP codes that have no district mapping (military
+  and some USPS-only codes).
 
 ## Documentation
 

@@ -38,7 +38,7 @@ Three bundled `.rda` datasets loaded lazily:
 
 ### Source Files (`R/`)
 - `data.r` - Roxygen documentation for the three datasets
-- `zip_lookups.r` - 14 search/lookup functions that filter the datasets
+- `zip_lookups.r` - 12 search/lookup functions that filter the datasets
 - `zip_helper_functions.R` - Utility functions: `normalize_zip()`, `zip_distance()`, `geocode_zip()`
 - `distance.R` - Internal vectorized haversine used by all distance math
 - `data_version.R` - `zip_data_version()` and `download_comprehensive_data()`
@@ -55,7 +55,7 @@ All lookup functions return tibbles and accept vectors for batch operations. The
 ## Testing
 
 Tests are in `tests/testthat/` using testthat v3:
-- `test-01-zip-lookups.R` - Tests for all 14 lookup functions
+- `test-01-zip-lookups.R` - Tests for all 12 lookup functions
 - `test-02-data.R` - Data integrity and regression-ZIP tests
 - `test-03-helper-functions.R` - Utility function tests
 - `test-04-schemas.R` - Return-schema snapshots, input validation, deprecation
