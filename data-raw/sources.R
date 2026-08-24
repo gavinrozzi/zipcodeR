@@ -70,3 +70,12 @@ COMPREHENSIVE_RELEASE <- list(
   asset = "comprehensive_db.sqlite",
   sha256 = "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"
 )
+
+# One-time accepted loss of congressional-district coverage for the 2026.08
+# rebuild: 1,266 USPS-only ZIPs mapped by the old pre-2020 HUD crosswalk have
+# no principled current-vintage derivation (no ZCTA, no covered same-city
+# peer, multi-district state). Their stale district numbers were deliberately
+# NOT carried forward (see NEWS 0.4.0); the planned HUD-USPS stage restores
+# them with current data. Future refreshes must not lose any further coverage
+# - reset this to 0 after the 2026.08 release ships.
+ACCEPTED_CD_COVERAGE_LOSS <- 1266

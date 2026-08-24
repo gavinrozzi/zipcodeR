@@ -10,10 +10,34 @@ candidate <- readRDS(file.path(cache_dir, "zip_code_db_candidate.rds"))
 zcta_candidate <- readRDS(file.path(cache_dir, "zcta_crosswalk_candidate.rds"))
 cd_candidate <- readRDS(file.path(cache_dir, "zip_to_cd_candidate.rds"))
 
+# Baseline = the LAST COMMITTED data files, taken from git - never the
+# working tree, which 06_finalize.R overwrites (a working-tree baseline
+# would compare a rerun candidate against itself and pass every regression
+# check trivially). Override the ref with PIPELINE_BASELINE_REF to compare
+# against another release (e.g. master).
+baseline_ref <- Sys.getenv("PIPELINE_BASELINE_REF", "HEAD")
+load_baseline <- function(name) {
+  tf <- tempfile(fileext = ".rda")
+  status <- suppressWarnings(system2(
+    "git", c("show", shQuote(paste0(baseline_ref, ":data/", name))),
+    stdout = tf, stderr = FALSE
+  ))
+  if (!identical(status, 0L)) {
+    stop(
+      "Cannot read baseline data/", name, " from git ref '", baseline_ref,
+      "'. The validation gate needs the last committed data as its baseline."
+    )
+  }
+  e <- new.env()
+  load(tf, envir = e)
+  unlink(tf)
+  e[[ls(e)[1]]]
+}
+message("validation baseline: git ref '", baseline_ref, "'")
 shipped_env <- new.env()
-load(file.path("data", "zip_code_db.rda"), envir = shipped_env)
-load(file.path("data", "zcta_crosswalk.rda"), envir = shipped_env)
-load(file.path("data", "zip_to_cd.rda"), envir = shipped_env)
+shipped_env$zip_code_db <- load_baseline("zip_code_db.rda")
+shipped_env$zcta_crosswalk <- load_baseline("zcta_crosswalk.rda")
+shipped_env$zip_to_cd <- load_baseline("zip_to_cd.rda")
 shipped <- shipped_env$zip_code_db
 
 failures <- character()
@@ -132,8 +156,11 @@ prev_covered <- setdiff(
 )
 lost_cd <- setdiff(prev_covered, cd_candidate$ZIP)
 check(
-  length(lost_cd) == 0,
-  sprintf("no ZIPs lost congressional-district coverage (%d lost)", length(lost_cd))
+  length(lost_cd) <= ACCEPTED_CD_COVERAGE_LOSS,
+  sprintf(
+    "no ZIPs lost congressional-district coverage beyond the documented acceptance (%d lost, %d accepted)",
+    length(lost_cd), ACCEPTED_CD_COVERAGE_LOSS
+  )
 )
 
 # --- release metadata ------------------------------------------------------

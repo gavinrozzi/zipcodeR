@@ -119,9 +119,11 @@ zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
       "returns a planar equirectangular approximation in the requested ",
       "units, and will be removed in a future release."
     )
-    # equirectangular: scale degree offsets to meters at the mean latitude
+    # equirectangular: scale degree offsets to meters at the mean latitude,
+    # wrapping the longitude difference onto [-180, 180] for antimeridian pairs
     meters_per_degree <- 6371008.8 * pi / 180
-    dx <- (lng_b - lng_a) * cos((lat_a + lat_b) / 2 * pi / 180)
+    dlng <- ((lng_b - lng_a + 180) %% 360) - 180
+    dx <- dlng * cos((lat_a + lat_b) / 2 * pi / 180)
     dy <- lat_b - lat_a
     distance <- sqrt(dx^2 + dy^2) * meters_per_degree
   }

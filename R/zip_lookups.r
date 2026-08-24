@@ -193,13 +193,19 @@ search_fips <- function(state_fips, county_fips) {
     return(result)
   } else {
     # Clean up county FIPS code input by adding leading zeroes to match FIPS code data if not present
-    if (nchar(county_fips < 3)) {
-      difference <- base::abs(nchar(county_fips) - 3)
-      county_fips <- base::paste0(strrep("0", difference), county_fips)
+    county_fips <- as.character(county_fips)
+    if (nchar(county_fips) > 3) {
+      stop("`county_fips` must be a 1-3 digit county FIPS code, got: ", county_fips)
+    }
+    if (nchar(county_fips) < 3) {
+      county_fips <- base::paste0(strrep("0", 3 - nchar(county_fips)), county_fips)
     }
     # Get matching FIPS data for provided state & county FIPS code
     fips_result <- fips_data %>%
       dplyr::filter(.data$state_code == state_fips & .data$county_code == county_fips)
+    if (nrow(fips_result) == 0) {
+      stop("No county found for FIPS code ", state_fips, county_fips)
+    }
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
     result <- zip_code_db %>%
       dplyr::filter(.data$state == fips_result$state[1] & .data$county == fips_result$county[1])
@@ -243,6 +249,14 @@ get_tracts <- function(zip_code) {
 #' @importFrom rlang .data
 #' @export
 get_cd <- function(zip_code) {
+  # get_cd() returns a single list, so it is defined for one ZIP at a time;
+  # recycling a vector against the lookup table would silently mis-match
+  if (length(zip_code) != 1) {
+    stop(
+      "`zip_code` must be a single ZIP code, not a vector of length ",
+      length(zip_code), ". Iterate (e.g. lapply) for multiple ZIP codes."
+    )
+  }
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
   # Match ZIP codes with congressional districts located within this ZIP

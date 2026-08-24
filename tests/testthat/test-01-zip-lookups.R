@@ -357,3 +357,16 @@ test_that("normalize_zip() fixes missing leading zeroes ", {
   result <- normalize_zip("8731")
   expect_equal(result, "08731")
 })
+
+#################
+# search_fips() #
+#################
+
+test_that("search_fips() pads short county codes and rejects long ones", {
+  # the historical nchar(county_fips < 3) misplaced parenthesis made the
+  # padding branch unconditional and let bad input fail silently
+  expect_equal(nrow(search_fips("36", "003")), nrow(search_fips("36", "3")))
+  expect_gt(nrow(search_fips("36", "003")), 0)
+  expect_error(search_fips("36", "0003"), "1-3 digit")
+  expect_error(search_fips("36", "999"), "No county found")
+})

@@ -42,6 +42,9 @@ download_comprehensive_data <- function(force = FALSE) {
     c("curl", "utils"),
     reason = "to download the comprehensive ZIP code database"
   )
+  # Verify SHA256 capability BEFORE any download: discovering its absence
+  # after a ~450 MB transfer would discard the download on every attempt
+  ensure_sha256_available()
   meta <- zip_data_meta$comprehensive
   cache_dir <- tools::R_user_dir("zipcodeR", "data")
   dest <- file.path(cache_dir, meta$asset)
@@ -70,7 +73,22 @@ download_comprehensive_data <- function(force = FALSE) {
   )
   tmp <- paste0(dest, ".download")
   on.exit(unlink(tmp), add = TRUE)
-  utils::download.file(url, tmp, mode = "wb")
+  # R's default download timeout (60s) is far too short for ~450 MB;
+  # raise it for this call only
+  old_timeout <- options(timeout = max(3600, getOption("timeout")))
+  on.exit(options(old_timeout), add = TRUE)
+  tryCatch(
+    utils::download.file(url, tmp, mode = "wb"),
+    error = function(e) {
+      stop(
+        "Download failed: ", conditionMessage(e),
+        "\nIf this is a 404, the '", meta$release_tag, "' data release may ",
+        "not have been published on GitHub yet - see ",
+        "https://github.com/gavinrozzi/zipcodeR/releases",
+        call. = FALSE
+      )
+    }
+  )
 
   got <- file_sha256(tmp)
   if (!identical(got, meta$sha256)) {
@@ -91,6 +109,23 @@ download_comprehensive_data <- function(force = FALSE) {
   }
   message("zipcodeR: download complete and verified: ", dest)
   invisible(dest)
+}
+
+# Stop with an informative error when no SHA256 mechanism exists, so the
+# capability is established before any large download
+#' @noRd
+ensure_sha256_available <- function() {
+  ok <- exists("sha256sum", envir = asNamespace("tools"), inherits = FALSE) ||
+    requireNamespace("openssl", quietly = TRUE) ||
+    any(nzchar(Sys.which(c("shasum", "sha256sum"))))
+  if (!ok) {
+    stop(
+      "No SHA256 tool available to verify the download. Install the ",
+      "'openssl' package (install.packages(\"openssl\")), upgrade to ",
+      "R >= 4.5, or ensure a shasum/sha256sum binary is on the PATH."
+    )
+  }
+  invisible(TRUE)
 }
 
 # SHA256 of a file without adding a package dependency: prefer

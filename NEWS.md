@@ -27,9 +27,13 @@
   from the Census relationship file (Census "ZZ" not-in-any-district
   pseudo-rows excluded); USPS-only ZIPs (P.O. Box/unique codes) are assigned
   the district(s) of their USPS city, or of their state where it has a
-  single district. Military ZIPs and a small remainder of USPS-only codes
-  have no mapping, and `get_cd()` now warns instead of silently returning an
-  empty result for them.
+  single district. Military ZIPs have no mapping (overseas APO/FPO codes
+  have no geographic district), and 1,266 USPS-only codes that the old
+  pre-2020 crosswalk mapped have no principled current-vintage derivation;
+  rather than carry their stale district numbers forward, they ship
+  unmapped and `get_cd()` warns instead of silently returning an empty
+  result. The planned HUD-USPS crosswalk stage will restore them with
+  current data.
 - New `download_comprehensive_data()` fetches the ~450 MB comprehensive
   database (full ACS profiles per ZIP code) from a versioned GitHub data
   release on demand, with SHA256 verification and caching in
@@ -80,10 +84,11 @@
   `tidycensus::fips_codes` is now bundled as internal data
   (see `data-raw/fips_codes.R`).
 - `tidyr` removed from Imports (replaced by base R in `normalize_zip()`).
-- `jsonlite`, `httr`, `curl`, `RSQLite` and `DBI` moved from Imports to
-  Suggests; they are only needed by `download_zip_data()`, which now prompts
-  to install them via `rlang::check_installed()`.
-- Imports is now: `dplyr`, `rlang`, `stringr`, `utils`.
+- `jsonlite`, `curl`, `RSQLite`, `DBI` and `openssl` moved from Imports to
+  Suggests (`httr` is no longer used at all); they are needed only by
+  `download_comprehensive_data()` (curl, optionally openssl) and by the
+  `data-raw/` build pipeline, never by the core lookup functions.
+- Imports is now: `dplyr`, `rlang`, `stringr`, `tools`, `utils`.
 
 ## Performance
 

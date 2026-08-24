@@ -27,8 +27,10 @@ issues:
 
 **Release checklist:** review/merge PR #34 → post the staged `issue_comments/`
 drafts and close the referenced issues → publish the `data-2026.08` draft
-release (activates `download_comprehensive_data()`) → CRAN submission →
-tag `v0.4.0`.
+release (activates `download_comprehensive_data()`; until published the
+function fails with an explanatory error) → CRAN submission → tag `v0.4.0` →
+reset `ACCEPTED_CD_COVERAGE_LOSS` to 0 in `data-raw/sources.R` (the 1,266-ZIP
+one-time acceptance documented there and in NEWS).
 
 ## 0.4.x — patch follow-ups (as needed, small)
 

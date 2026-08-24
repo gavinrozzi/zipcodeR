@@ -78,4 +78,12 @@ test_that("zip_distance supports meters and planar mode arguments", {
     "deprecated"
   )
   expect_equal(planar$distance, miles$distance, tolerance = 0.02)
+  # antimeridian pair (Guam -> Adak): the wrapped longitude difference keeps
+  # the planar approximation in the same ballpark as the great circle
+  gc <- zip_distance("96910", "99546")
+  expect_warning(
+    planar_am <- zip_distance("96910", "99546", lonlat = FALSE),
+    "deprecated"
+  )
+  expect_lt(abs(planar_am$distance - gc$distance) / gc$distance, 0.35)
 })

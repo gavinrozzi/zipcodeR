@@ -111,6 +111,11 @@ test_that("get_cd() distinguishes unknown ZIPs from known-but-unmapped ones", {
   expect_warning(get_cd(8731), "not found in zip_code_db")
 })
 
+test_that("get_cd() rejects vector input with an informative error", {
+  # silent recycling against zip_to_cd would produce wrong positional matches
+  expect_error(get_cd(c("08731", "10001")), "single ZIP code")
+})
+
 test_that("zip_data_version() reports the data release", {
   meta <- zip_data_version()
   expect_type(meta, "list")
