@@ -17,3 +17,4 @@ paper.pdf$
 ^codecov\.yml$
 ^README\.Rmd$
 ^CRAN-SUBMISSION$
+^data-raw$

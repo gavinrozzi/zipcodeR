@@ -7,10 +7,13 @@
 reverse_zipcode(zip_code)
 }
 \arguments{
-\item{zip_code}{A 5-digit U.S. ZIP code or chracter vector with multiple ZIP codes}
+\item{zip_code}{A 5-digit U.S. ZIP code or character vector with multiple ZIP codes}
 }
 \value{
-A tibble containing data for the ZIP code(s)
+A tibble with one row per element of \code{zip_code}, in input order
+(duplicates preserved). ZIP codes with no match in \code{zip_code_db} return
+a row of NA values (with a warning), so the output is always the same length
+as the input and safe to use inside \code{dplyr::mutate()}.
 }
 \description{
 Given a ZIP code, returns columns of metadata about that ZIP code

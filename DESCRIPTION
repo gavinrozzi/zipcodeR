@@ -19,7 +19,6 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     rlang,
     stringr,
-    tidycensus,
     tidyr,
     dplyr,
     jsonlite,
