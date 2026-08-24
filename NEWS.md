@@ -48,6 +48,16 @@
   returns NA-coordinate rows (with a warning) for unmatched ZIP codes instead
   of silently dropping them; it still errors when no input ZIP matches. (#27)
 
+## Deprecations
+
+- `download_zip_data()` is deprecated and now performs no action beyond the
+  deprecation warning. It could never refresh the data of an installed
+  package (lazy data is baked in at install time), and when run from a
+  source checkout it silently overwrote data files. Bundled data is
+  refreshed with package releases through the `data-raw/` pipeline; the
+  large companion database is available via `download_comprehensive_data()`.
+  The function will be removed in a future release.
+
 ## Dependency changes
 
 - `raster` and `tidycensus` have been removed from Imports. Loading zipcodeR

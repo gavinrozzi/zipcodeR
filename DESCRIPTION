@@ -27,7 +27,6 @@ Suggests:
     DBI,
     RSQLite,
     curl,
-    httr,
     jsonlite,
     openssl,
     knitr,

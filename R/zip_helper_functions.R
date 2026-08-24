@@ -79,8 +79,17 @@ normalize_zip <- function(zipcode) {
 #'
 #' @export
 zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
+  units <- match.arg(units, c("miles", "meters"))
   zipcode_a <- as.character(zipcode_a)
   zipcode_b <- as.character(zipcode_b)
+  if (length(zipcode_a) != length(zipcode_b) &&
+    length(zipcode_a) != 1 && length(zipcode_b) != 1) {
+    stop(
+      "`zipcode_a` and `zipcode_b` must have equal lengths ",
+      "(or one of them length 1): got ",
+      length(zipcode_a), " and ", length(zipcode_b)
+    )
+  }
 
   # Look up coordinates for both vectors, preserving input order and
   # duplicates (ZIP codes without coordinates yield NA distances)

@@ -243,23 +243,17 @@ get_tracts <- function(zip_code) {
 #' @importFrom rlang .data
 #' @export
 get_cd <- function(zip_code) {
-  # Census FIPS code table bundled as internal data (see data-raw/fips_codes.R)
-  state_fips <- fips_codes
   # Match ZIP codes with congressional districts located within this ZIP
   matched_cds <- zip_to_cd %>%
     dplyr::filter(.data$ZIP == zip_code)
   # Break out the match from the ZIP to congressional district lookup into state FIPS code and congressional district codes
   district <- stringr::str_sub(matched_cds$CD, -2)
-  state <- stringr::str_sub(matched_cds$CD, 1, 2)
-  # Bind the separated district and state codes together as a dataframe
-  result <- data.frame(cbind(district, state))
-  # Join the lookup result with the bundled FIPS code data for more info
-  joined <- result %>%
-    dplyr::left_join(state_fips, by = c("state" = "state_code"))
-  output <- data.frame(joined$state.y[1], district) %>%
-    dplyr::rename("state" = "joined.state.y.1.")
+  state_code <- stringr::str_sub(matched_cds$CD, 1, 2)
+  # Resolve the state abbreviation from the bundled Census FIPS table
+  # (see data-raw/fips_codes.R)
+  state_abb <- fips_codes$state[match(state_code[1], fips_codes$state_code)]
 
-  return(list(state_fips = joined$state.y[1], district = district))
+  return(list(state_fips = state_abb, district = district))
 }
 #' Get all ZIP codes that fall within a given congressional district
 #'
@@ -368,10 +362,38 @@ geocode_zip <- function(zip_code) {
 #' }
 #' @export
 search_radius <- function(lat, lng, radius = 1) {
+  if (!is.numeric(lat) || length(lat) != 1 || is.na(lat) || abs(lat) > 90) {
+    stop("`lat` must be a single latitude between -90 and 90")
+  }
+  if (!is.numeric(lng) || length(lng) != 1 || is.na(lng) || abs(lng) > 180) {
+    stop("`lng` must be a single longitude between -180 and 180")
+  }
+  if (!is.numeric(radius) || length(radius) != 1 || is.na(radius) || radius <= 0) {
+    stop("`radius` must be a single positive number of miles")
+  }
 
-  # Create an instance of the ZIP code database for calculating distance,
-  # filter to those with lat / lon pairs
-  zip_data <- zip_code_db[!is.na(zip_code_db$lat) & !is.na(zip_code_db$lng), ]
+  # Work on just the three needed columns; the full database carries heavy
+  # list columns that are expensive to subset
+  keep <- !is.na(zip_code_db$lat) & !is.na(zip_code_db$lng)
+
+  # Cheap bounding-box prefilter before the exact haversine pass. Deltas are
+  # inflated 5% so no candidate inside the radius is excluded; near the poles
+  # the longitude window degenerates, so skip the prefilter there.
+  if (abs(lat) < 89) {
+    lat_delta <- radius / 69.0 * 1.05
+    lng_delta <- radius / (69.172 * cos(lat * pi / 180)) * 1.05
+    keep <- keep &
+      !is.na(zip_code_db$lat) &
+      zip_code_db$lat >= lat - lat_delta & zip_code_db$lat <= lat + lat_delta &
+      zip_code_db$lng >= lng - lng_delta & zip_code_db$lng <= lng + lng_delta
+    keep[is.na(keep)] <- FALSE
+  }
+
+  zip_data <- dplyr::tibble(
+    zipcode = zip_code_db$zipcode[keep],
+    lat = zip_code_db$lat[keep],
+    lng = zip_code_db$lng[keep]
+  )
 
   # Calculate the distance between all points and the provided coordinate
   # pair, converting meters to miles
@@ -383,7 +405,6 @@ search_radius <- function(lat, lng, radius = 1) {
     # Filter results to those less than or equal to the search radius
     dplyr::filter(.data$distance <= radius) %>%
     dplyr::select("zipcode", "distance") %>%
-    dplyr::as_tibble() %>%
     dplyr::arrange(.data$distance)
 
   # Warn if there is nothing found

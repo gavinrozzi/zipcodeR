@@ -17,10 +17,7 @@ export(search_state)
 export(search_tz)
 export(zip_data_version)
 export(zip_distance)
-importFrom(dplyr,
-  "%>%",
-  filter
-)
+importFrom(dplyr,"%>%")
 importFrom(rlang,
   .data,
   list2

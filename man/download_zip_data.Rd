@@ -2,18 +2,28 @@
 % Please edit documentation in R/download_data.r
 \name{download_zip_data}
 \alias{download_zip_data}
-\title{Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.}
+\title{Download updated data files needed for library functionality to the package's data directory (deprecated)}
 \usage{
 download_zip_data(force = FALSE)
 }
 \arguments{
-\item{force}{Boolean, if set to TRUE will force overwrite existing data files with new version}
+\item{force}{Ignored (retained for backward compatibility).}
 }
 \value{
-Data files needed for package functionality, stored in data directory of package install
+Invisibly returns NULL; the function performs no action beyond the deprecation warning.
 }
 \description{
-Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.
+\strong{Deprecated.} This function attempts to
+write refreshed data into the installed package directory, which violates
+CRAN policy, fails on read-only libraries, and — because the package uses
+lazy data — never actually changes the data the package loads. It is
+retained for backward compatibility only and will be removed in a future
+release.
+
+Bundled data is now refreshed through the reproducible pipeline in the
+package repository (\verb{data-raw/}, shipped with each release; see
+\code{zip_data_version()}), and the large companion database is available via
+\code{\link[=download_comprehensive_data]{download_comprehensive_data()}}.
 }
 \examples{
 \dontrun{
