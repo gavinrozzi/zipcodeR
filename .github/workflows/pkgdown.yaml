@@ -32,7 +32,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, any::preferably, local::.
+          # the preferably pkgdown template is no longer on CRAN; install from GitHub
+          extra-packages: any::pkgdown, github::amirmasoudabdol/preferably, local::.
           needs: website
 
       - name: Build site
