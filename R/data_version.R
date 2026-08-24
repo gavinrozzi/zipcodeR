@@ -80,7 +80,14 @@ download_comprehensive_data <- function(force = FALSE) {
       "\nThe download may be corrupted or tampered with; not keeping it."
     )
   }
-  file.rename(tmp, dest)
+  # file.rename() cannot overwrite an existing file on Windows; clear the
+  # destination first and verify the move actually happened
+  if (file.exists(dest)) unlink(dest)
+  moved <- file.rename(tmp, dest) ||
+    (file.copy(tmp, dest, overwrite = TRUE) && file.remove(tmp))
+  if (!moved || !file.exists(dest)) {
+    stop("Failed to move the verified download into place at ", dest)
+  }
   message("zipcodeR: download complete and verified: ", dest)
   invisible(dest)
 }
@@ -90,7 +97,7 @@ download_comprehensive_data <- function(force = FALSE) {
 # then to the system shasum/sha256sum binaries.
 #' @noRd
 file_sha256 <- function(path) {
-  if (exists("sha256sum", envir = asNamespace("tools"))) {
+  if (exists("sha256sum", envir = asNamespace("tools"), inherits = FALSE)) {
     return(unname(tools::sha256sum(path)))
   }
   if (requireNamespace("openssl", quietly = TRUE)) {
@@ -103,6 +110,13 @@ file_sha256 <- function(path) {
   if (is.na(bin)) {
     stop("No SHA256 tool available: need R >= 4.5, the openssl package, or a system shasum/sha256sum binary.")
   }
-  args <- if (grepl("shasum$", bin)) c("-a", "256", shQuote(path)) else shQuote(path)
-  strsplit(system2(bin, args, stdout = TRUE), " ")[[1]][1]
+  # shasum (incl. shasum.exe / shasum.bat on Windows) defaults to SHA-1 and
+  # needs the algorithm flag; sha256sum does not
+  is_shasum <- grepl("^shasum", basename(bin), ignore.case = TRUE)
+  args <- if (is_shasum) c("-a", "256", shQuote(path)) else shQuote(path)
+  out <- strsplit(system2(bin, args, stdout = TRUE), " ")[[1]][1]
+  if (!grepl("^[0-9a-f]{64}$", out)) {
+    stop("Unexpected output from ", bin, " while computing SHA256: ", out)
+  }
+  out
 }

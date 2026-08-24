@@ -293,6 +293,35 @@ test_that("search_radius() outputs proper structure data", {
   expect_equal(result, "tbl_df")
 })
 
+test_that("search_radius() handles circles crossing the antimeridian", {
+  # Adak, AK (99546, lng -176.67) is ~163mi from this point at lng +179.5;
+  # a prefilter comparing raw longitudes would drop it
+  result <- search_radius(51.85, 179.5, 300)
+  expect_true("99546" %in% result$zipcode)
+})
+
+test_that("search_radius() prefilter never excludes in-radius ZIPs (matches exhaustive search)", {
+  exhaustive <- function(lat, lng, radius) {
+    keep <- !is.na(zip_code_db$lat) & !is.na(zip_code_db$lng)
+    d <- zipcodeR:::haversine_distance(
+      zip_code_db$lat[keep], zip_code_db$lng[keep], lat, lng
+    ) * 0.000621371
+    sort(zip_code_db$zipcode[keep][d <= radius])
+  }
+  # the two large-radius cases where the original prefilter dropped
+  # higher-latitude candidates, plus an ordinary mid-latitude query
+  for (case in list(
+    c(48.08, -86.95, 2000),
+    c(68.28, -79.13, 2000),
+    c(39.9, -74.3, 25)
+  )) {
+    expect_equal(
+      sort(search_radius(case[1], case[2], case[3])$zipcode),
+      exhaustive(case[1], case[2], case[3])
+    )
+  }
+})
+
 test_that("search_radius() finds the ZIP itself first when its centroid is submitted", {
   centroid <- geocode_zip("08731")
   result <- search_radius(centroid$lat, centroid$lng, 1)

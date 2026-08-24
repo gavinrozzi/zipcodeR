@@ -82,13 +82,20 @@ zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
   units <- match.arg(units, c("miles", "meters"))
   zipcode_a <- as.character(zipcode_a)
   zipcode_b <- as.character(zipcode_b)
-  if (length(zipcode_a) != length(zipcode_b) &&
-    length(zipcode_a) != 1 && length(zipcode_b) != 1) {
-    stop(
-      "`zipcode_a` and `zipcode_b` must have equal lengths ",
-      "(or one of them length 1): got ",
-      length(zipcode_a), " and ", length(zipcode_b)
-    )
+  # Recycle the shorter vector when its length divides the longer one,
+  # matching historical data.frame() recycling; anything else is an error
+  if (length(zipcode_a) != length(zipcode_b)) {
+    n <- max(length(zipcode_a), length(zipcode_b))
+    m <- min(length(zipcode_a), length(zipcode_b))
+    if (m == 0 || n %% m != 0) {
+      stop(
+        "`zipcode_a` and `zipcode_b` must have compatible lengths ",
+        "(equal, or one a multiple of the other): got ",
+        length(zipcode_a), " and ", length(zipcode_b)
+      )
+    }
+    zipcode_a <- rep_len(zipcode_a, n)
+    zipcode_b <- rep_len(zipcode_b, n)
   }
 
   # Look up coordinates for both vectors, preserving input order and

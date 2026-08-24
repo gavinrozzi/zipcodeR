@@ -80,6 +80,10 @@ If you want the data without attaching the package, use
 [uszipcode](https://github.com/MacHu-GWU/uszipcode-project) project's
 database, which aggregates U.S. Census Bureau data (decennial census,
 ACS, gazetteer files) with USPS-derived ZIP code attributes.
-`zcta_crosswalk` comes from the Census Bureau's ZCTA-to-tract
-relationship files, and `zip_to_cd` from HUD-USPS crosswalk data. See
-the help page of each dataset for details and known limitations.
+`zcta_crosswalk` comes from the Census Bureau's 2020 ZCTA-to-tract
+relationship file, and `zip_to_cd` from the Census 119th-Congress
+district-to-ZCTA relationship file (with city-based assignment for
+USPS-only ZIP codes). All bundled data is built by the reproducible
+pipeline in the package repository's `data-raw/` directory —
+`zip_data_version()` reports the loaded data release. See the help page
+of each dataset for details and known limitations.

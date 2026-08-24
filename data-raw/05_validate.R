@@ -3,6 +3,7 @@
 # data-raw/refresh_summary.md describing the diff for the release PR.
 
 suppressMessages(library(dplyr))
+source(file.path("data-raw", "sources.R"))
 cache_dir <- file.path("data-raw", "cache")
 
 candidate <- readRDS(file.path(cache_dir, "zip_code_db_candidate.rds"))
@@ -114,11 +115,41 @@ check(
   identical(names(cd_candidate), names(shipped_env$zip_to_cd)),
   "zip_to_cd schema identical"
 )
-check(all(nchar(cd_candidate$CD) == 4), "zip_to_cd CD codes are 4 characters")
+check(
+  all(grepl("^[0-9]{4}$", cd_candidate$CD)),
+  "zip_to_cd CD codes are 4 digits (no ZZ pseudo-districts)"
+)
 check(
   length(setdiff(zcta_candidate$ZCTA5, cd_candidate$ZIP)) < 500,
   "zip_to_cd covers (nearly) all 2020 ZCTAs"
 )
+# no silent shrinkage of CD coverage: every non-military ZIP that had a
+# district mapping in the shipped release must still have one
+prev_covered <- intersect(shipped_env$zip_to_cd$ZIP, candidate$zipcode)
+prev_covered <- setdiff(
+  prev_covered,
+  candidate$zipcode[candidate$zipcode_type %in% "Military"]
+)
+lost_cd <- setdiff(prev_covered, cd_candidate$ZIP)
+check(
+  length(lost_cd) == 0,
+  sprintf("no ZIPs lost congressional-district coverage (%d lost)", length(lost_cd))
+)
+
+# --- release metadata ------------------------------------------------------
+check(
+  is.list(COMPREHENSIVE_RELEASE) &&
+    grepl("^data-", COMPREHENSIVE_RELEASE$release_tag) &&
+    grepl("^[0-9a-f]{64}$", COMPREHENSIVE_RELEASE$sha256),
+  "COMPREHENSIVE_RELEASE registry is well-formed"
+)
+if (!identical(COMPREHENSIVE_RELEASE$release_tag, paste0("data-", DATA_VERSION))) {
+  message(
+    "[NOTE] comprehensive asset pinned to ", COMPREHENSIVE_RELEASE$release_tag,
+    " (data release is data-", DATA_VERSION,
+    ") - expected unless a new comprehensive asset was published"
+  )
+}
 
 # --- summary for the release PR -------------------------------------------
 added <- setdiff(candidate$zipcode, shipped$zipcode)
@@ -149,6 +180,23 @@ summary_md <- c(
           nrow(zcta_candidate), nrow(shipped_env$zcta_crosswalk)),
   sprintf("- `zip_to_cd`: %d rows, 119th-Congress vintage (was %d rows, pre-2020)",
           nrow(cd_candidate), nrow(shipped_env$zip_to_cd)),
+  local({
+    s <- readRDS(file.path(cache_dir, "zip_to_cd_stats.rds"))
+    sprintf(
+      "  - %d ZCTA-mapped ZIPs + %d city-derived USPS-only ZIPs; %d non-military ZIPs unmapped",
+      s$zcta_mapped, s$city_derived, s$unmapped_nonmilitary
+    )
+  }),
+  local({
+    s <- readRDS(file.path(cache_dir, "zip_code_db_stats.rds"))
+    sprintf(
+      "- state-modal timezone imputed for %d new ZIP(s)%s",
+      length(s$imputed_timezone_zips),
+      if (length(s$imputed_timezone_zips) > 0 && length(s$imputed_timezone_zips) <= 20) {
+        paste0(": ", paste(s$imputed_timezone_zips, collapse = ", "))
+      } else ""
+    )
+  }),
   "",
   sprintf("Validation gate: %s", if (length(failures) == 0) "**all checks passed**" else "**FAILED**")
 )

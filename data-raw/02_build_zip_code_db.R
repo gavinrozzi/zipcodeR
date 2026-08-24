@@ -148,6 +148,16 @@ if (nrow(supplement) > 0) {
 }
 message("supplemental USPS-only ZIPs: ", nrow(sup))
 
+# Timezones for brand-new rows are IMPUTED as the modal timezone of the
+# state (no free authoritative per-ZIP source yet; the ROADMAP's
+# point-in-polygon stage replaces this). Wrong for new ZIPs in the minority
+# zone of split-timezone states - the count is tracked in the refresh summary
+# so reviewers can judge the exposure on every refresh.
+imputed_tz <- c(
+  if (length(missing_zcta) > 0) nz$zipcode[!is.na(nz$timezone)],
+  if (nrow(supplement) > 0) sup$zipcode[!is.na(sup$timezone)]
+)
+
 # --- combine ---------------------------------------------------------------
 additions <- bind_rows(new101, nz, sup)
 additions <- additions[order(additions$zipcode), ]
@@ -203,7 +213,12 @@ zip_code_db_new <- as.data.frame(zip_code_db_new)
 rownames(zip_code_db_new) <- NULL
 
 saveRDS(zip_code_db_new, file.path(cache_dir, "zip_code_db_candidate.rds"))
+saveRDS(
+  list(imputed_timezone_zips = imputed_tz),
+  file.path(cache_dir, "zip_code_db_stats.rds")
+)
 message(
   "zip_code_db candidate: ", nrow(zip_code_db_new), " rows (was ",
-  nrow(base), "; +", nrow(additions), ")"
+  nrow(base), "; +", nrow(additions), "); state-modal timezone imputed for ",
+  length(imputed_tz), " new ZIP(s)"
 )

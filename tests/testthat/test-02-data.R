@@ -80,12 +80,29 @@ test_that("previously missing ZIP codes are present with coordinates (#19, #25, 
 })
 
 test_that("zip_to_cd reflects post-2020 redistricting (#29)", {
-  # 4-char state FIPS + district codes; the 119th-Congress relationship file
+  # 4-digit state FIPS + district codes; the 119th-Congress relationship file
   # assigns 08731 (Ocean County, NJ) to districts 02/04, not the pre-2020 03
-  expect_true(all(nchar(zip_to_cd$CD) == 4))
+  expect_true(all(grepl("^[0-9]{4}$", zip_to_cd$CD)))
   nj_08731 <- zip_to_cd$CD[zip_to_cd$ZIP == "08731"]
   expect_true(all(substr(nj_08731, 1, 2) == "34"))
   expect_false("3403" %in% nj_08731)
+})
+
+test_that("zip_to_cd excludes Census ZZ pseudo-districts", {
+  expect_false(any(grepl("ZZ$", zip_to_cd$CD)))
+})
+
+test_that("zip_to_cd covers USPS-only ZIP codes via city derivation", {
+  # 00501 (Holtsville, NY - a 'unique' IRS ZIP with no ZCTA) lost coverage
+  # when zip_to_cd was first rebuilt from the ZCTA relationship file alone
+  expect_true("00501" %in% zip_to_cd$ZIP)
+  expect_true(all(substr(zip_to_cd$CD[zip_to_cd$ZIP == "00501"], 1, 2) == "36"))
+})
+
+test_that("get_cd() warns for ZIP codes with no district mapping", {
+  # military ZIP codes have no geographic congressional district
+  military_zip <- zip_code_db$zipcode[zip_code_db$zipcode_type %in% "Military"][1]
+  expect_warning(get_cd(military_zip), "No congressional district")
 })
 
 test_that("zip_data_version() reports the data release", {

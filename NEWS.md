@@ -23,7 +23,13 @@
   tract GEOIDs change accordingly.
 - `zip_to_cd` now maps to 119th-Congress districts, fixing the outdated
   pre-2020 crosswalk (#29). Thanks to @awallender, whose PR #30 established
-  the method with the 118th-Congress file.
+  the method with the 118th-Congress file. ZCTA-backed ZIPs come straight
+  from the Census relationship file (Census "ZZ" not-in-any-district
+  pseudo-rows excluded); USPS-only ZIPs (P.O. Box/unique codes) are assigned
+  the district(s) of their USPS city, or of their state where it has a
+  single district. Military ZIPs and a small remainder of USPS-only codes
+  have no mapping, and `get_cd()` now warns instead of silently returning an
+  empty result for them.
 - New `download_comprehensive_data()` fetches the ~450 MB comprehensive
   database (full ACS profiles per ZIP code) from a versioned GitHub data
   release on demand, with SHA256 verification and caching in

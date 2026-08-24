@@ -58,3 +58,15 @@ ACS_VARIABLES <- c(
 
 # Data release identity for this pipeline configuration
 DATA_VERSION <- "2026.08"
+
+# The comprehensive-database release asset that download_comprehensive_data()
+# should fetch. This is pinned EXPLICITLY - not derived from DATA_VERSION -
+# because the comprehensive asset is republished less often than the bundled
+# data refreshes. When (and only when) a new comprehensive asset is uploaded
+# to a data release, update all three fields together; 05_validate.R checks
+# their consistency.
+COMPREHENSIVE_RELEASE <- list(
+  release_tag = "data-2026.08",
+  asset = "comprehensive_db.sqlite",
+  sha256 = "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"
+)

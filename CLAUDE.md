@@ -34,14 +34,20 @@ devtools::load_all()
 Three bundled `.rda` datasets loaded lazily:
 - `zip_code_db` - Main ZIP code database (42,725 rows, 24 columns)
 - `zcta_crosswalk` - ZCTA-to-Census Tract mapping, 2020 vintage (168,212 rows)
-- `zip_to_cd` - ZIP-to-Congressional District mapping, 119th Congress (40,147 rows)
+- `zip_to_cd` - ZIP-to-Congressional District mapping, 119th Congress (54,817 rows)
 
 ### Source Files (`R/`)
 - `data.r` - Roxygen documentation for the three datasets
 - `zip_lookups.r` - 14 search/lookup functions that filter the datasets
 - `zip_helper_functions.R` - Utility functions: `normalize_zip()`, `zip_distance()`, `geocode_zip()`
-- `download_data.r` - `download_zip_data()` to fetch updated data from upstream
+- `distance.R` - Internal vectorized haversine used by all distance math
+- `data_version.R` - `zip_data_version()` and `download_comprehensive_data()`
+- `download_data.r` - `download_zip_data()` (deprecated no-op)
 - `globals.r` - Global variable declarations for NSE compliance
+
+### Data pipeline (`data-raw/`)
+Reproducible build of all bundled data from pinned, checksummed sources; run
+`Rscript data-raw/run_pipeline.R` (needs `CENSUS_API_KEY`). See data-raw/README.md.
 
 ### Function Patterns
 All lookup functions return tibbles and accept vectors for batch operations. They use tidyverse-style programming with dplyr and the `.data` pronoun for NSE.
@@ -50,11 +56,14 @@ All lookup functions return tibbles and accept vectors for batch operations. The
 
 Tests are in `tests/testthat/` using testthat v3:
 - `test-01-zip-lookups.R` - Tests for all 14 lookup functions
-- `test-02-data.R` - Data integrity tests
+- `test-02-data.R` - Data integrity and regression-ZIP tests
 - `test-03-helper-functions.R` - Utility function tests
+- `test-04-schemas.R` - Return-schema snapshots, input validation, deprecation
 
 ## CI/CD
 
 GitHub Actions workflows in `.github/workflows/`:
 - `R-CMD-check.yaml` - Runs `R CMD check` on Windows, macOS, and Ubuntu with multiple R versions
 - `pkgdown.yaml` - Builds and deploys documentation site to GitHub Pages
+- `test-coverage.yaml` - Codecov coverage upload
+- `refresh-data.yaml` - Quarterly/manual data-pipeline refresh, opens a draft PR

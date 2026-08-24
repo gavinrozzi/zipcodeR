@@ -33,11 +33,7 @@ zip_data_meta <- list(
     zcta_crosswalk = "Census 2020 ZCTA-to-tract relationship file",
     zip_to_cd = "Census 119th Congressional District-to-ZCTA relationship file"
   ),
-  comprehensive = list(
-    release_tag = paste0("data-", DATA_VERSION),
-    asset = "comprehensive_db.sqlite",
-    sha256 = "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"
-  )
+  comprehensive = COMPREHENSIVE_RELEASE
 )
 save(
   zip_code_db_version, fips_codes, zip_data_meta,

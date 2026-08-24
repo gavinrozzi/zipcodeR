@@ -22,10 +22,15 @@ stopifnot(
   nrow(fips_codes) > 3000
 )
 
-# sysdata.rda also carries zip_code_db_version; preserve it
-load(file.path("R", "sysdata.rda"))
+# sysdata.rda carries other internal objects (zip_code_db_version,
+# zip_data_meta, ...); load them all and re-save everything so nothing is
+# silently dropped
+sysdata_env <- new.env()
+load(file.path("R", "sysdata.rda"), envir = sysdata_env)
+assign("fips_codes", fips_codes, envir = sysdata_env)
 save(
-  zip_code_db_version, fips_codes,
+  list = ls(sysdata_env),
+  envir = sysdata_env,
   file = file.path("R", "sysdata.rda"),
   compress = "bzip2"
 )

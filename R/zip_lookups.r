@@ -246,6 +246,12 @@ get_cd <- function(zip_code) {
   # Match ZIP codes with congressional districts located within this ZIP
   matched_cds <- zip_to_cd %>%
     dplyr::filter(.data$ZIP == zip_code)
+  if (nrow(matched_cds) == 0) {
+    warning(paste(
+      "No congressional district found for ZIP code", zip_code,
+      "- military and some USPS-only ZIP codes have no district mapping"
+    ))
+  }
   # Break out the match from the ZIP to congressional district lookup into state FIPS code and congressional district codes
   district <- stringr::str_sub(matched_cds$CD, -2)
   state_code <- stringr::str_sub(matched_cds$CD, 1, 2)
@@ -376,16 +382,25 @@ search_radius <- function(lat, lng, radius = 1) {
   # list columns that are expensive to subset
   keep <- !is.na(zip_code_db$lat) & !is.na(zip_code_db$lng)
 
-  # Cheap bounding-box prefilter before the exact haversine pass. Deltas are
-  # inflated 5% so no candidate inside the radius is excluded; near the poles
-  # the longitude window degenerates, so skip the prefilter there.
-  if (abs(lat) < 89) {
-    lat_delta <- radius / 69.0 * 1.05
-    lng_delta <- radius / (69.172 * cos(lat * pi / 180)) * 1.05
+  # Cheap bounding-box prefilter before the exact haversine pass, sized so no
+  # candidate inside the radius can be excluded:
+  # - the latitude window uses 69 statute miles per degree (constant),
+  # - the longitude window is computed at the highest-|latitude| edge of the
+  #   search circle (where meridians are closest together), not at the query
+  #   point, so it is wide enough for every candidate latitude in the window,
+  # - longitude differences are wrapped onto [-180, 180] so circles crossing
+  #   the antimeridian (western Aleutians, Guam) keep their candidates,
+  # - if the circle nears a pole or spans all longitudes, skip the prefilter.
+  lat_delta <- radius / 69.0 * 1.05
+  edge_lat <- min(abs(lat) + lat_delta, 90)
+  if (edge_lat < 89) {
+    lng_delta <- radius / (69.172 * cos(edge_lat * pi / 180)) * 1.05
     keep <- keep &
-      !is.na(zip_code_db$lat) &
-      zip_code_db$lat >= lat - lat_delta & zip_code_db$lat <= lat + lat_delta &
-      zip_code_db$lng >= lng - lng_delta & zip_code_db$lng <= lng + lng_delta
+      zip_code_db$lat >= lat - lat_delta & zip_code_db$lat <= lat + lat_delta
+    if (lng_delta < 180) {
+      lng_diff <- abs(((zip_code_db$lng - lng + 180) %% 360) - 180)
+      keep <- keep & lng_diff <= lng_delta
+    }
     keep[is.na(keep)] <- FALSE
   }
 

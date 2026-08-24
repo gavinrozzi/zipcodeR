@@ -60,6 +60,13 @@ test_that("zip_distance returns NA distance for ZIP codes without coordinates", 
   expect_true(is.na(result$distance))
 })
 
+test_that("zip_distance recycles divisible input lengths like data.frame()", {
+  result <- zip_distance(c("08731", "08734"), c("08901", "08005", "07762", "08731"))
+  expect_equal(nrow(result), 4)
+  expect_equal(result$zipcode_a, c("08731", "08734", "08731", "08734"))
+  expect_error(zip_distance(c("08731", "08734"), c("08901", "08005", "07762")), "length")
+})
+
 test_that("zip_distance supports meters and planar mode arguments", {
   miles <- zip_distance("08731", "08901")
   meters <- zip_distance("08731", "08901", units = "meters")

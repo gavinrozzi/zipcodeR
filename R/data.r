@@ -63,13 +63,17 @@
 "zip_code_db"
 #' ZIP Code to Congressional District Relationship File
 #'
-#' A dataset containing mappings between ZIP codes (as 2020 ZCTAs) and
-#' congressional districts of the 119th Congress, reflecting post-2020-census
+#' A dataset containing mappings between ZIP codes and congressional
+#' districts of the 119th Congress, reflecting post-2020-census
 #' redistricting. ZIP codes spanning multiple districts appear once per
 #' district. Built by \code{data-raw/04_build_zip_to_cd.R} from the Census
-#' relationship file; see \code{zip_data_version()} for the data release.
+#' CD119-to-ZCTA relationship file; USPS-only ZIP codes (P.O. Box/unique
+#' codes without a ZCTA) are assigned the district(s) of their USPS city, or
+#' of their state where it has a single district. Military ZIP codes and a
+#' small remainder of USPS-only codes have no mapping. See
+#' \code{zip_data_version()} for the data release.
 #'
-#' @format A data frame with 40147 rows and 2 variables:
+#' @format A data frame with 54817 rows and 2 variables:
 #' \describe{
 #'   \item{ZIP}{5 digit U.S. ZIP code}
 #'   \item{CD}{Four digit congressional district code (State FIPS code + district number)}
