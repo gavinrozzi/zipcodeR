@@ -68,38 +68,37 @@ normalize_zip <- function(zipcode) {
 #'
 #' @param zipcode_a First vector of ZIP codes
 #' @param zipcode_b Second vector of ZIP codes
-#' @param lonlat lonlat argument to pass to raster::pointDistance() to select method of distance calculation. Default is TRUE to calculate distance over a spherical projection. FALSE will calculate the distance in Euclidean (planar) space.
+#' @param lonlat If TRUE (the default), calculate the great-circle distance
+#'   between the ZIP code centroids using the haversine formula. FALSE computes
+#'   the Euclidean distance between the raw coordinate pairs in degree units
+#'   and is retained only for backward compatibility.
 #' @param units Specify which units to return distance calculations in. Choices include meters or miles.
 #' @return a data.frame containing a column for each ZIP code and a new column containing the distance between the two columns of ZIP code
 #'
 #' @examples
 #' zip_distance("08731", "08901")
 #'
-#' @importFrom raster pointDistance
 #' @export
 zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
   zipcode_a <- as.character(zipcode_a)
   zipcode_b <- as.character(zipcode_b)
 
-  # assemble zipcodes in dataframe
-  zip_data <- data.frame(zipcode_a, zipcode_b)
+  # Look up coordinates for both vectors, preserving input order and
+  # duplicates (ZIP codes without coordinates yield NA distances)
+  matched_a <- match(zipcode_a, zip_code_db$zipcode)
+  matched_b <- match(zipcode_b, zip_code_db$zipcode)
 
-  # create subset of zip_code_db with only zipcode, lat, and lng
-  zip_db_small <- zip_code_db %>%
-    dplyr::select(.data$zipcode, .data$lat, .data$lng) %>%
-    dplyr::filter(.data$lat != "NA" & .data$lng != "NA")
+  lat_a <- zip_code_db$lat[matched_a]
+  lng_a <- zip_code_db$lng[matched_a]
+  lat_b <- zip_code_db$lat[matched_b]
+  lng_b <- zip_code_db$lng[matched_b]
 
-  # join input data with zip_code_db
-  zip_data <- zip_data %>%
-    dplyr::left_join(zip_db_small, by = c('zipcode_a' = 'zipcode')) %>%
-    dplyr::left_join(zip_db_small, by = c('zipcode_b' = 'zipcode'), suffix = c('.a', '.b'))
-
-  # assemble matrices for distance calculation
-  points_a <- cbind(cbind(zip_data$lng.a, zip_data$lat.a))
-  points_b <- cbind(cbind(zip_data$lng.b, zip_data$lat.b))
-
-  # Calculate the distance matrix between both sets of points
-  distance <- raster::pointDistance(points_a, points_b, lonlat = lonlat)
+  # Calculate the distance between both sets of points in meters
+  if (lonlat) {
+    distance <- haversine_distance(lat_a, lng_a, lat_b, lng_b)
+  } else {
+    distance <- sqrt((lng_b - lng_a)^2 + (lat_b - lat_a)^2)
+  }
 
   # Convert the distance matrix from meters to miles
   if (units == "miles") {

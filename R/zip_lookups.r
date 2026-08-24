@@ -283,7 +283,7 @@ search_cd <- function(state_fips_code, congressional_district) {
     stop(paste("No ZIP codes found for congressional district:", congressional_district))
   }
   output <- matched_zips %>%
-    dplyr::select(-.data$CD)
+    dplyr::select(-"CD")
   output$state_fips <- state_fips_code
   output$congressional_district <- congressional_district
   return(dplyr::as_tibble(output))
@@ -367,28 +367,23 @@ geocode_zip <- function(zip_code) {
 #' \dontrun{
 #' search_radius(39.9, -74.3, 10)
 #' }
-#' @importFrom raster pointDistance
 #' @export
 search_radius <- function(lat, lng, radius = 1) {
 
   # Create an instance of the ZIP code database for calculating distance,
   # filter to those with lat / lon pairs
-  zip_data <- zip_code_db %>%
-    dplyr::filter(lat != "NA")
+  zip_data <- zip_code_db[!is.na(zip_code_db$lat) & !is.na(zip_code_db$lng), ]
 
-  # Calculate the distance between all points and the provided coordinate pair
-  for (i in seq_len(nrow(zip_data))) {
-    zip_data$distance[i] <- raster::pointDistance(c(lng, lat), c(zip_data$lng[i], zip_data$lat[i]), lonlat = TRUE)
-  }
-
-  # Convert meters to miles for distance measurement
-  zip_data$distance <- zip_data$distance * 0.000621371
+  # Calculate the distance between all points and the provided coordinate
+  # pair, converting meters to miles
+  zip_data$distance <-
+    haversine_distance(zip_data$lat, zip_data$lng, lat, lng) * 0.000621371
 
   # Get matching ZIP codes within specified search radius
   result <- zip_data %>%
     # Filter results to those less than or equal to the search radius
     dplyr::filter(.data$distance <= radius) %>%
-    dplyr::select(.data$zipcode, .data$distance) %>%
+    dplyr::select("zipcode", "distance") %>%
     dplyr::as_tibble() %>%
     dplyr::arrange(.data$distance)
 

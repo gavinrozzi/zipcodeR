@@ -19,16 +19,18 @@ import(tidycensus)
 importFrom(DBI,dbGetQuery)
 importFrom(RSQLite,dbConnect)
 importFrom(curl,has_internet)
-importFrom(dplyr,"%>%")
-importFrom(dplyr,`%>%`)
-importFrom(dplyr,filter)
-importFrom(dplyr,left_join)
-importFrom(dplyr,pull)
-importFrom(dplyr,tibble)
+importFrom(dplyr,
+  "%>%",
+  filter,
+  left_join,
+  pull,
+  tibble
+)
 importFrom(httr,http_error)
 importFrom(jsonlite,fromJSON)
-importFrom(raster,pointDistance)
-importFrom(rlang,.data)
-importFrom(rlang,list2)
+importFrom(rlang,
+  .data,
+  list2
+)
 importFrom(stringr,str_detect)
 importFrom(tidyr,extract)

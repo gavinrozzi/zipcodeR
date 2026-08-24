@@ -10,7 +10,7 @@
 #' @importFrom DBI dbGetQuery
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr http_error
-#' @importFrom dplyr `%>%`
+#' @importFrom dplyr %>%
 #' @importFrom dplyr filter
 #' @importFrom curl has_internet
 #' @export
