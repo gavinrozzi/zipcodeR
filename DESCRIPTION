@@ -22,7 +22,7 @@ Imports:
     dplyr,
     utils
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.0.0)
 Suggests:
     DBI,
     RSQLite,
