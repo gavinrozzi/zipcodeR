@@ -1,0 +1,66 @@
+# Quarterly + on-demand data refresh. Runs the data-raw/ pipeline, which
+# hard-fails unless the validation gate passes, then opens a PR with the
+# refresh summary. A human reviews and merges; nothing ships automatically.
+#
+# Requirements: repository secret CENSUS_API_KEY (free key from
+# https://api.census.gov/data/key_signup.html).
+#
+# Runner note: this is a single lightweight job (~10 min, ~2 GB disk). To run
+# it on the self-hosted runner instead of hosted minutes, change `runs-on:`
+# to [self-hosted] — the job needs only R >= 4.2, curl, and network access.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 1 2,5,8,11 *' # 06:17 UTC on the 1st of Feb/May/Aug/Nov
+
+name: refresh-data
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh-data:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::dplyr
+            any::DBI
+            any::RSQLite
+            any::jsonlite
+          install-package: false
+
+      - name: Cache pipeline sources
+        uses: actions/cache@v4
+        with:
+          path: data-raw/cache
+          key: data-sources-${{ hashFiles('data-raw/sources.R') }}
+
+      - name: Run data pipeline (includes validation gate)
+        run: Rscript data-raw/run_pipeline.R
+
+      - name: Open data refresh PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: data-refresh
+          commit-message: 'data: scheduled refresh via data-raw pipeline'
+          title: 'Data refresh (validation gate passed)'
+          body-path: data-raw/refresh_summary.md
+          add-paths: |
+            data/
+            R/sysdata.rda
+            data-raw/refresh_summary.md
+          draft: true
