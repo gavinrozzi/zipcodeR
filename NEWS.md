@@ -2,6 +2,37 @@
 
 # zipcodeR 0.4.0
 
+## Data refresh & reproducible pipeline
+
+- The bundled datasets are now built by a fully reproducible pipeline in
+  `data-raw/` (pinned, checksummed sources; a hard validation gate; see
+  `data-raw/README.md`), replacing the previously unscripted snapshot. A new
+  `zip_data_version()` accessor reports exactly which data release is loaded.
+- `zip_code_db` grows from 41,877 to 42,725 ZIP codes: every 2020 Census ZCTA
+  is now present — including the Oregon ZIP 97003 (#25) and the ~2 dozen
+  territory/new-development ZCTAs behind many reports of missing ZIPs (#19) —
+  plus 787 `Military` ZIP codes (a new `zipcode_type` value) and curated
+  USPS-only ZIP codes such as 91230 (#26). No ZIP codes were removed.
+- Coordinates and land/water areas are refreshed from the Census 2024
+  Gazetteer (authoritative 2020 ZCTA internal points, 6-decimal precision;
+  previously 2-decimal geocodes), and demographic attributes from ACS 5-year
+  estimates (vintage 2023). Distance results change accordingly — e.g. the
+  README example pair 08731→08901 is now 43.8 mi (previously 40.75 mi with
+  the coarser 2021 coordinates).
+- `zcta_crosswalk` is rebuilt on the 2020 ZCTA/tract vintage (was 2010);
+  tract GEOIDs change accordingly.
+- `zip_to_cd` now maps to 119th-Congress districts, fixing the outdated
+  pre-2020 crosswalk (#29). Thanks to @awallender, whose PR #30 established
+  the method with the 118th-Congress file.
+- New `download_comprehensive_data()` fetches the ~450 MB comprehensive
+  database (full ACS profiles per ZIP code) from a versioned GitHub data
+  release on demand, with SHA256 verification and caching in
+  `tools::R_user_dir("zipcodeR", "data")`. Requires R >= 4.0 (Depends bumped
+  from 3.5).
+- A `refresh-data` GitHub Actions workflow (manual dispatch + quarterly)
+  reruns the pipeline and opens a draft PR with a diff summary; a human
+  always reviews and merges.
+
 ## Breaking changes / behavior changes
 
 - Distance calculations (`zip_distance()`, `search_radius()`) now use an
