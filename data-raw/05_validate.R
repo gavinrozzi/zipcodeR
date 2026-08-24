@@ -155,11 +155,17 @@ prev_covered <- setdiff(
   candidate$zipcode[candidate$zipcode_type %in% "Military"]
 )
 lost_cd <- setdiff(prev_covered, cd_candidate$ZIP)
+accepted_loss <- if (file.exists(ACCEPTED_CD_COVERAGE_LOSS_FILE)) {
+  readLines(ACCEPTED_CD_COVERAGE_LOSS_FILE)
+} else {
+  character(0)
+}
+unaccepted_lost <- setdiff(lost_cd, accepted_loss)
 check(
-  length(lost_cd) <= ACCEPTED_CD_COVERAGE_LOSS,
+  length(unaccepted_lost) == 0,
   sprintf(
-    "no ZIPs lost congressional-district coverage beyond the documented acceptance (%d lost, %d accepted)",
-    length(lost_cd), ACCEPTED_CD_COVERAGE_LOSS
+    "no ZIPs lost congressional-district coverage outside the documented acceptance list (%d lost, of which %d unaccepted)",
+    length(lost_cd), length(unaccepted_lost)
   )
 )
 

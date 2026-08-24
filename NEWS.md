@@ -34,6 +34,12 @@
   unmapped and `get_cd()` warns instead of silently returning an empty
   result. The planned HUD-USPS crosswalk stage will restore them with
   current data.
+- District-code convention change: non-voting delegate districts (DC,
+  Puerto Rico, and the territories) now carry the Census code `98` instead
+  of the pre-2020 crosswalk's `00` (voting at-large states such as WY/AK/VT
+  keep `00`). `search_cd()` accepts `"00"` and `"98"` as aliases of one
+  another, so existing calls keep working; `get_cd()` returns the stored
+  Census code.
 - New `download_comprehensive_data()` fetches the ~450 MB comprehensive
   database (full ACS profiles per ZIP code) from a versioned GitHub data
   release on demand, with SHA256 verification and caching in
@@ -106,7 +112,21 @@
 - `get_cd()` now warns informatively on a no-match, distinguishing ZIP codes
   absent from `zip_code_db` (likely typos or numeric input that lost its
   leading zero) from known ZIP codes that have no district mapping (military
-  and some USPS-only codes).
+  and some USPS-only codes). It also labels every district with its own
+  state: `state_fips` is now parallel to `district`, fixing silently wrong
+  labels for the 258 ZIP codes whose districts span a state line (e.g.
+  02861 in both RI-01 and MA-04 previously reported both as "MA"). Vector
+  input is rejected with an informative error instead of being silently
+  recycled.
+- `reverse_zipcode(NA)` no longer crashes; a single NA input yields an NA
+  row with a warning, matching the vector behavior.
+- `normalize_zip(100000)` no longer returns the invalid 6-character
+  "100000"; the numeric truncation boundary now matches the character
+  branch.
+- `search_fips()` is consistent on no-match: an unknown state or county
+  FIPS code raises an informative error (previously an unknown state
+  returned an empty result silently), and the state-only branch now returns
+  a tibble like every other search function.
 
 ## Documentation
 

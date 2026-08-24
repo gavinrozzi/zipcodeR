@@ -7,10 +7,15 @@
 get_cd(zip_code)
 }
 \arguments{
-\item{zip_code}{A U.S. ZIP code}
+\item{zip_code}{A single U.S. ZIP code}
 }
 \value{
-a named list of two-digit state code and two digit district code
+a named list with \code{state_fips} (state abbreviations) and
+\code{district} (two-digit district codes). The two vectors are parallel:
+ZIP codes spanning multiple districts return one element per district,
+each labeled with its own state (some ZIP codes cross state lines).
+Non-voting delegate districts (DC and the territories) use the Census
+code \code{"98"}.
 }
 \description{
 Get all congressional districts for a given ZIP code

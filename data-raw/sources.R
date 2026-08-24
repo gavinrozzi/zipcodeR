@@ -34,6 +34,12 @@ PIPELINE_SOURCES <- list(
   geonames_us = list(
     description = "GeoNames U.S. postal codes (place names, admin areas, coordinates)",
     url = "https://download.geonames.org/export/zip/US.zip",
+    # GeoNames regenerates this file in place (near-daily), so its checksum
+    # cannot be enforced without breaking every scheduled refresh. floating =
+    # TRUE makes 01_acquire.R RECORD the downloaded hash (in the acquire log
+    # and refresh summary) instead of failing on mismatch; the hash below is
+    # the one from the 2026.08 build, kept for provenance.
+    floating = TRUE,
     sha256 = "34bf4144bf1231c2da500127bbbf7020920bb4331de403b5d850b77f45a8f509",
     license = "CC BY 4.0 (GeoNames) - attribution required, kept in data docs"
   ),
@@ -56,8 +62,10 @@ ACS_VARIABLES <- c(
   median_household_income = "B19013_001E"
 )
 
-# Data release identity for this pipeline configuration
-DATA_VERSION <- "2026.08"
+# Data release identity. Derived from the build date so scheduled refreshes
+# stamp a new version automatically; override with PIPELINE_DATA_VERSION for
+# a rebuild of an existing release.
+DATA_VERSION <- Sys.getenv("PIPELINE_DATA_VERSION", format(Sys.Date(), "%Y.%m"))
 
 # The comprehensive-database release asset that download_comprehensive_data()
 # should fetch. This is pinned EXPLICITLY - not derived from DATA_VERSION -
@@ -72,10 +80,12 @@ COMPREHENSIVE_RELEASE <- list(
 )
 
 # One-time accepted loss of congressional-district coverage for the 2026.08
-# rebuild: 1,266 USPS-only ZIPs mapped by the old pre-2020 HUD crosswalk have
-# no principled current-vintage derivation (no ZCTA, no covered same-city
-# peer, multi-district state). Their stale district numbers were deliberately
-# NOT carried forward (see NEWS 0.4.0); the planned HUD-USPS stage restores
-# them with current data. Future refreshes must not lose any further coverage
-# - reset this to 0 after the 2026.08 release ships.
-ACCEPTED_CD_COVERAGE_LOSS <- 1266
+# rebuild: the USPS-only ZIPs enumerated in accepted_cd_coverage_loss.txt
+# were mapped by the old pre-2020 HUD crosswalk but have no principled
+# current-vintage derivation (no ZCTA, no covered same-city peer,
+# multi-district state). Their stale district numbers were deliberately NOT
+# carried forward (see NEWS 0.4.0); the planned HUD-USPS stage restores them
+# with current data. The gate accepts losing ONLY the ZIPs on this exact
+# list - any other coverage loss fails - so the acceptance cannot mask a
+# future regression. Empty the file after the 2026.08 release ships.
+ACCEPTED_CD_COVERAGE_LOSS_FILE <- file.path("data-raw", "accepted_cd_coverage_loss.txt")

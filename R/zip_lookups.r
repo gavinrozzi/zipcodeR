@@ -91,7 +91,8 @@ search_county <- function(county_name, state_abb, ...) {
 #' @export
 reverse_zipcode <- function(zip_code) {
   # Sanity check: validate input for single ZIP before doing anything else
-  if (length(zip_code) == 1) {
+  # (NA input is not an error - it yields an NA row, as in the vector case)
+  if (length(zip_code) == 1 && !is.na(zip_code)) {
     zip_char <- nchar(as.character(zip_code))
     if (zip_char != 5) {
       stop(paste("Invalid ZIP code detected, expected 5 digit ZIP code, got", zip_char))
@@ -187,10 +188,13 @@ search_fips <- function(state_fips, county_fips) {
     # Get matching FIPS data for provided state FIPS code
     fips_result <- fips_data %>%
       dplyr::filter(.data$state_code == state_fips)
+    if (nrow(fips_result) == 0) {
+      stop("No state found for FIPS code ", state_fips)
+    }
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
     result <- zip_code_db %>%
       dplyr::filter(.data$state == fips_result$state[1])
-    return(result)
+    return(dplyr::as_tibble(result))
   } else {
     # Clean up county FIPS code input by adding leading zeroes to match FIPS code data if not present
     county_fips <- as.character(county_fips)
@@ -239,8 +243,13 @@ get_tracts <- function(zip_code) {
 }
 #' Get all congressional districts for a given ZIP code
 #'
-#' @param zip_code A U.S. ZIP code
-#' @return a named list of two-digit state code and two digit district code
+#' @param zip_code A single U.S. ZIP code
+#' @return a named list with \code{state_fips} (state abbreviations) and
+#'   \code{district} (two-digit district codes). The two vectors are parallel:
+#'   ZIP codes spanning multiple districts return one element per district,
+#'   each labeled with its own state (some ZIP codes cross state lines).
+#'   Non-voting delegate districts (DC and the territories) use the Census
+#'   code \code{"98"}.
 #'
 #' @examples
 #' get_cd("08731")
@@ -278,9 +287,11 @@ get_cd <- function(zip_code) {
   # Break out the match from the ZIP to congressional district lookup into state FIPS code and congressional district codes
   district <- stringr::str_sub(matched_cds$CD, -2)
   state_code <- stringr::str_sub(matched_cds$CD, 1, 2)
-  # Resolve the state abbreviation from the bundled Census FIPS table
-  # (see data-raw/fips_codes.R)
-  state_abb <- fips_codes$state[match(state_code[1], fips_codes$state_code)]
+  # Resolve state abbreviations from the bundled Census FIPS table (see
+  # data-raw/fips_codes.R). state_fips is parallel to district so that ZIP
+  # codes spanning a state line (e.g. 02861 in both RI-01 and MA-04) label
+  # every district with its own state.
+  state_abb <- fips_codes$state[match(state_code, fips_codes$state_code)]
 
   return(list(state_fips = state_abb, district = district))
 }
@@ -297,10 +308,17 @@ get_cd <- function(zip_code) {
 #' @importFrom rlang .data
 #' @export
 search_cd <- function(state_fips_code, congressional_district) {
-  # Create code from state and congressional district to match lookup table
-  cd_code <- base::paste0(state_fips_code, congressional_district)
+  # "00" (the pre-2020 at-large convention this package used to ship) and
+  # "98" (the Census delegate/resident-commissioner code now in zip_to_cd for
+  # DC and the territories) are accepted as aliases of one another
+  district_codes <- congressional_district
+  if (congressional_district %in% c("00", "98")) {
+    district_codes <- c("00", "98")
+  }
+  # Create codes from state and congressional district to match lookup table
+  cd_code <- base::paste0(state_fips_code, district_codes)
   matched_zips <- zip_to_cd %>%
-    dplyr::filter(.data$CD == cd_code)
+    dplyr::filter(.data$CD %in% cd_code)
   if (nrow(matched_zips) == 0) {
     stop(paste("No ZIP codes found for congressional district:", congressional_district))
   }

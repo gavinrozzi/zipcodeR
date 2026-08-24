@@ -70,8 +70,10 @@
 #' CD119-to-ZCTA relationship file; USPS-only ZIP codes (P.O. Box/unique
 #' codes without a ZCTA) are assigned the district(s) of their USPS city, or
 #' of their state where it has a single district. Military ZIP codes and a
-#' small remainder of USPS-only codes have no mapping. See
-#' \code{zip_data_version()} for the data release.
+#' small remainder of USPS-only codes have no mapping. Non-voting delegate
+#' districts (DC and the territories) carry the Census code \code{98};
+#' voting at-large states carry \code{00}. See \code{zip_data_version()} for
+#' the data release.
 #'
 #' @format A data frame with 54817 rows and 2 variables:
 #' \describe{

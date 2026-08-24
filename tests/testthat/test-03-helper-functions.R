@@ -26,6 +26,12 @@ test_that("normalize_zip handles numeric input with leading zero restoration", {
   )
 })
 
+test_that("normalize_zip numeric boundary matches the character branch", {
+  expect_equal(normalize_zip(100000), "00010")
+  expect_equal(normalize_zip(100000), normalize_zip("100000"))
+  expect_equal(normalize_zip(99999), "99999")
+})
+
 test_that("normalize_zip rejects non-character, non-numeric input", {
   expect_error(normalize_zip(NULL), "input must be character or numeric")
   expect_error(normalize_zip(list()), "input must be character or numeric")

@@ -370,3 +370,35 @@ test_that("search_fips() pads short county codes and rejects long ones", {
   expect_error(search_fips("36", "0003"), "1-3 digit")
   expect_error(search_fips("36", "999"), "No county found")
 })
+
+test_that("search_fips() no-match and return-class behavior is consistent", {
+  expect_error(search_fips("99"), "No state found")
+  expect_s3_class(search_fips("34"), "tbl_df")
+})
+
+test_that("reverse_zipcode() handles a single NA like a vector NA", {
+  result <- suppressWarnings(reverse_zipcode(NA))
+  expect_equal(nrow(result), 1)
+  expect_true(is.na(result$county))
+  expect_warning(reverse_zipcode(NA), "No data found")
+})
+
+test_that("get_cd() labels each district with its own state (cross-state ZIPs)", {
+  # 02861 (Pawtucket, RI) spans RI-01 and MA-04
+  result <- get_cd("02861")
+  expect_equal(length(result$state_fips), length(result$district))
+  expect_setequal(result$state_fips, c("RI", "MA"))
+  expect_equal(result$state_fips[result$district == "01"], "RI")
+  expect_equal(result$state_fips[result$district == "04"], "MA")
+})
+
+test_that("search_cd() accepts 00 and 98 as at-large/delegate aliases", {
+  # DC and territories carry the Census delegate code 98 in the data; the
+  # pre-2020 convention 00 keeps working as an alias
+  via_00 <- search_cd("72", "00")
+  via_98 <- search_cd("72", "98")
+  expect_equal(via_00$ZIP, via_98$ZIP)
+  expect_gt(nrow(via_00), 0)
+  # voting at-large states store 00 natively
+  expect_gt(nrow(search_cd("56", "00")), 0)
+})

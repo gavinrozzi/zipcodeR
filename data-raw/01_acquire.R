@@ -15,14 +15,22 @@ sha256_file <- function(path) {
 
 acquire <- function(src) {
   dest <- file.path(cache_dir, basename(src$url))
-  if (file.exists(dest) && identical(sha256_file(dest), src$sha256)) {
-    message("cached & verified: ", basename(dest))
+  floating <- isTRUE(src$floating)
+  if (file.exists(dest) && (floating || identical(sha256_file(dest), src$sha256))) {
+    message("cached", if (!floating) " & verified", ": ", basename(dest))
     return(dest)
   }
   message("downloading: ", src$url)
   utils::download.file(src$url, dest, mode = "wb", quiet = TRUE)
   got <- sha256_file(dest)
-  if (!identical(got, src$sha256)) {
+  if (floating) {
+    # Publisher regenerates this file in place; record the hash for
+    # provenance instead of enforcing it
+    message(
+      "floating source ", basename(dest), ": sha256 ", got,
+      if (!identical(got, src$sha256)) " (differs from the pinned build hash in sources.R)"
+    )
+  } else if (!identical(got, src$sha256)) {
     stop(
       "Checksum mismatch for ", basename(dest), "\n  expected: ", src$sha256,
       "\n  got:      ", got,

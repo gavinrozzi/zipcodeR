@@ -48,7 +48,7 @@ normalize_zip <- function(zipcode) {
   }
 
   zipcode <- ifelse(
-    zipcode > 100000,
+    zipcode >= 100000,
     floor(zipcode / 10000),
     zipcode
   )
