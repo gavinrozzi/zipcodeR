@@ -181,6 +181,14 @@ search_tz <- function(tz) {
 #' @importFrom rlang .data
 #' @export
 search_fips <- function(state_fips, county_fips) {
+  # Both arguments index a single row of the FIPS table, so they are defined
+  # for one code at a time; a vector would silently recycle against the lookup
+  if (length(state_fips) != 1) {
+    stop(
+      "`state_fips` must be a single state FIPS code, not a vector of length ",
+      length(state_fips), ". Iterate (e.g. lapply) for multiple states."
+    )
+  }
   # Census FIPS code table bundled as internal data (see data-raw/fips_codes.R)
   fips_data <- fips_codes
   # Separate routine if only state_fips code provided
@@ -197,6 +205,13 @@ search_fips <- function(state_fips, county_fips) {
     return(dplyr::as_tibble(result))
   } else {
     # Clean up county FIPS code input by adding leading zeroes to match FIPS code data if not present
+    if (length(county_fips) != 1) {
+      stop(
+        "`county_fips` must be a single county FIPS code, not a vector of ",
+        "length ", length(county_fips),
+        ". Iterate (e.g. lapply) for multiple counties."
+      )
+    }
     county_fips <- as.character(county_fips)
     if (nchar(county_fips) > 3) {
       stop("`county_fips` must be a 1-3 digit county FIPS code, got: ", county_fips)
@@ -308,6 +323,22 @@ get_cd <- function(zip_code) {
 #' @importFrom rlang .data
 #' @export
 search_cd <- function(state_fips_code, congressional_district) {
+  # One district at a time: the arguments are pasted into a single lookup code
+  # and stamped onto the result, so a vector would silently recycle
+  if (length(state_fips_code) != 1) {
+    stop(
+      "`state_fips_code` must be a single state FIPS code, not a vector of ",
+      "length ", length(state_fips_code),
+      ". Iterate (e.g. lapply) for multiple states."
+    )
+  }
+  if (length(congressional_district) != 1) {
+    stop(
+      "`congressional_district` must be a single district code, not a vector ",
+      "of length ", length(congressional_district),
+      ". Iterate (e.g. lapply) for multiple districts."
+    )
+  }
   # "00" (the pre-2020 at-large convention this package used to ship) and
   # "98" (the Census delegate/resident-commissioner code now in zip_to_cd for
   # DC and the territories) are accepted as aliases of one another

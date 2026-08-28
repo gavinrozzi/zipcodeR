@@ -93,3 +93,23 @@ test_that("zip_distance supports meters and planar mode arguments", {
   )
   expect_lt(abs(planar_am$distance - gc$distance) / gc$distance, 0.35)
 })
+
+test_that("every available SHA256 backend returns a plain, comparable hash", {
+  # The hashes are compared with identical(), so a backend that returns an
+  # equal-looking but classed string (openssl's hash objects do) would reject
+  # a correct download as corrupted
+  path <- tempfile()
+  on.exit(unlink(path), add = TRUE)
+  # writeBin, not writeLines: text-mode writes translate the newline on
+  # Windows and would change the hash
+  writeBin(charToRaw("zipcodeR checksum fixture\n"), path)
+  expected <- "b9b1a4801eda57c56674d2f00f853e5fad6060c1bc50b345fa8c578f7d543697"
+
+  expect_identical(file_sha256(path), expected)
+  if (requireNamespace("openssl", quietly = TRUE)) {
+    expect_identical(sha256_openssl(path), expected)
+  }
+  if (any(nzchar(Sys.which(c("shasum", "sha256sum"))))) {
+    expect_identical(sha256_system(path), expected)
+  }
+})

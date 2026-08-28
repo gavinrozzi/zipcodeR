@@ -7,10 +7,42 @@ source(file.path("data-raw", "sources.R"))
 cache_dir <- file.path("data-raw", "cache")
 dir.create(cache_dir, showWarnings = FALSE, recursive = TRUE)
 
+# SHA256 without adding a package dependency, mirroring file_sha256() in
+# R/data_version.R: tools::sha256sum (R >= 4.5), then the openssl package,
+# then a system binary. Minimal Linux images (r-base, Debian/Alpine slim)
+# ship sha256sum but not the shasum Perl script, so neither name can be
+# hardcoded.
 sha256_file <- function(path) {
-  # tools::sha256sum requires R >= 4.5; use openssl-free fallback via system
-  out <- system2("shasum", c("-a", "256", shQuote(path)), stdout = TRUE)
-  strsplit(out, " ")[[1]][1]
+  if (exists("sha256sum", envir = asNamespace("tools"), inherits = FALSE)) {
+    return(unname(tools::sha256sum(path)))
+  }
+  if (requireNamespace("openssl", quietly = TRUE)) {
+    con <- file(path, "rb")
+    on.exit(close(con), add = TRUE)
+    # unclass(): as.character() on an openssl hash keeps its c("hash",
+    # "sha256") class, and a classed string is never identical() to the plain
+    # pinned hash it is compared against
+    return(unclass(as.character(openssl::sha256(con))))
+  }
+  bin <- Sys.which(c("shasum", "sha256sum"))
+  bin <- bin[nzchar(bin)][1]
+  if (is.na(bin)) {
+    stop(
+      "No SHA256 tool available to verify pipeline sources: need R >= 4.5, ",
+      "the openssl package, or a shasum/sha256sum binary on the PATH."
+    )
+  }
+  # shasum defaults to SHA-1 and needs the algorithm flag; sha256sum does not
+  args <- if (grepl("^shasum", basename(bin), ignore.case = TRUE)) {
+    c("-a", "256", shQuote(path))
+  } else {
+    shQuote(path)
+  }
+  out <- strsplit(system2(bin, args, stdout = TRUE), " ")[[1]][1]
+  if (!grepl("^[0-9a-f]{64}$", out)) {
+    stop("Unexpected output from ", bin, " while computing SHA256: ", out)
+  }
+  out
 }
 
 acquire <- function(src) {
@@ -64,7 +96,22 @@ if (!file.exists(acs_cache)) {
     "&for=zip%20code%20tabulation%20area:*&key=", key
   )
   tf <- tempfile(fileext = ".json")
-  utils::download.file(url, tf, quiet = TRUE)
+  # The Census API only accepts the key as a query parameter, and
+  # download.file() echoes the full URL in its error and warning text. Scrub
+  # the key so a failed local run does not print it to the console or a .Rout.
+  redact <- function(x) gsub(key, "<CENSUS_API_KEY>", x, fixed = TRUE)
+  withCallingHandlers(
+    tryCatch(
+      utils::download.file(url, tf, quiet = TRUE),
+      error = function(e) {
+        stop("ACS download failed: ", redact(conditionMessage(e)), call. = FALSE)
+      }
+    ),
+    warning = function(w) {
+      message("ACS download warning: ", redact(conditionMessage(w)))
+      invokeRestart("muffleWarning")
+    }
+  )
   j <- jsonlite::fromJSON(tf)
   acs <- as.data.frame(j[-1, , drop = FALSE], stringsAsFactors = FALSE)
   names(acs) <- c(names(ACS_VARIABLES), "zcta")

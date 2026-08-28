@@ -130,17 +130,33 @@ ensure_sha256_available <- function() {
 
 # SHA256 of a file without adding a package dependency: prefer
 # tools::sha256sum (R >= 4.5), fall back to the openssl package if installed,
-# then to the system shasum/sha256sum binaries.
+# then to the system shasum/sha256sum binaries. Every backend must return a
+# PLAIN character string: the results are compared with identical(), which is
+# FALSE for an equal-looking string carrying attributes.
 #' @noRd
 file_sha256 <- function(path) {
   if (exists("sha256sum", envir = asNamespace("tools"), inherits = FALSE)) {
     return(unname(tools::sha256sum(path)))
   }
   if (requireNamespace("openssl", quietly = TRUE)) {
-    con <- file(path, "rb")
-    on.exit(close(con), add = TRUE)
-    return(as.character(openssl::sha256(con)))
+    return(sha256_openssl(path))
   }
+  sha256_system(path)
+}
+
+#' @noRd
+sha256_openssl <- function(path) {
+  con <- file(path, "rb")
+  on.exit(close(con), add = TRUE)
+  # as.character() on an openssl hash keeps its c("hash", "sha256") class.
+  # Without unclass() the result is never identical() to the expected plain
+  # string, so on R < 4.5 with openssl installed every checksum comparison
+  # would fail - rejecting a correct download as corrupted.
+  unclass(as.character(openssl::sha256(con)))
+}
+
+#' @noRd
+sha256_system <- function(path) {
   bin <- Sys.which(c("shasum", "sha256sum"))
   bin <- bin[nzchar(bin)][1]
   if (is.na(bin)) {

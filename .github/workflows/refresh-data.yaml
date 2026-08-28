@@ -7,7 +7,9 @@
 #
 # Runner note: this is a single lightweight job (~10 min, ~2 GB disk). To run
 # it on the self-hosted runner instead of hosted minutes, change `runs-on:`
-# to [self-hosted] — the job needs only R >= 4.2, curl, and network access.
+# to [self-hosted] — the job needs R >= 4.2, git (the validation gate and the
+# carry-forward base are read from the committed data via `git show`), curl or
+# another download method, and network access.
 
 on:
   workflow_dispatch:
@@ -43,11 +45,27 @@ jobs:
             any::jsonlite
           install-package: false
 
-      - name: Cache pipeline sources
+      - name: Cache pinned pipeline sources
         uses: actions/cache@v4
         with:
           path: data-raw/cache
           key: data-sources-${{ hashFiles('data-raw/sources.R') }}
+
+      # The cache key only changes when a human edits sources.R, and
+      # 01_acquire.R skips any source already present in the cache. Left alone,
+      # a cache hit would make the scheduled refresh reuse stale copies of the
+      # two sources that change WITHOUT a code change - the floating GeoNames
+      # file and the ACS pull - so the cron could never pick up new upstream
+      # data. Drop those two; the checksum-pinned sources stay cached.
+      - name: Drop non-pinned sources from the restored cache
+        run: |
+          Rscript -e 'source("data-raw/sources.R");
+            floating <- Filter(function(s) isTRUE(s$floating), PIPELINE_SOURCES);
+            stale <- c(file.path("data-raw", "cache", basename(vapply(floating, `[[`, "", "url"))),
+                       Sys.glob(file.path("data-raw", "cache", "acs5_*_zcta.csv")));
+            stale <- stale[file.exists(stale)];
+            if (length(stale)) unlink(stale);
+            cat("dropped from cache:", if (length(stale)) stale else "(nothing)", sep = "\n")'
 
       - name: Run data pipeline (includes validation gate)
         run: Rscript data-raw/run_pipeline.R

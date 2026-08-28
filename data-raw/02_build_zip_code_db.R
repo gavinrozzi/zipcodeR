@@ -1,8 +1,11 @@
 # Step 2: build the refreshed zip_code_db.
 #
-# Strategy: "carry-forward + refresh". The shipped database (proven in
-# AUDIT.md to be byte-identical to the uszipcode 0.2.6 snapshot) is the base,
-# guaranteeing no ZIP is ever silently dropped. On top of it:
+# Strategy: "carry-forward + refresh". The last committed zip_code_db is the
+# base, guaranteeing no ZIP is ever silently dropped. For the 0.4.0 build that
+# base is the database AUDIT.md proves byte-identical to the uszipcode 0.2.6
+# snapshot; every later refresh carries forward from the previous data
+# release, so a value in a carry-forward-only column can only be corrected by
+# fixing it in a release rather than by rerunning the pipeline. On top of it:
 #   1. Rows new in upstream 1.0.1 are appended (zipcode_type normalized to the
 #      shipped titleized values; the 1.0.1 MILITARY type appears as "Military").
 #   2. 2020 Census ZCTAs absent from both snapshots are appended, built from
@@ -21,8 +24,26 @@ source(file.path("data-raw", "sources.R"))
 cache_dir <- file.path("data-raw", "cache")
 
 # --- load inputs -----------------------------------------------------------
+# Read the base from git, never the working tree: 06_finalize.R overwrites
+# data/zip_code_db.rda at the end of every run, so a working-tree base would
+# make a rerun carry forward its own output instead of the last release.
+# PIPELINE_BASELINE_REF is the same ref the validation gate uses.
+base_ref <- Sys.getenv("PIPELINE_BASELINE_REF", "HEAD")
+base_tf <- tempfile(fileext = ".rda")
+base_status <- suppressWarnings(system2(
+  "git", c("show", shQuote(paste0(base_ref, ":data/zip_code_db.rda"))),
+  stdout = base_tf, stderr = FALSE
+))
+if (!identical(base_status, 0L)) {
+  stop(
+    "Cannot read the carry-forward base data/zip_code_db.rda from git ref '",
+    base_ref, "'. The pipeline builds on the last committed database."
+  )
+}
+message("carry-forward base: git ref '", base_ref, "'")
 base_env <- new.env()
-load(file.path("data", "zip_code_db.rda"), envir = base_env)
+load(base_tf, envir = base_env)
+unlink(base_tf)
 base <- base_env$zip_code_db
 stopifnot(ncol(base) == 24)
 

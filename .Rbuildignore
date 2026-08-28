@@ -23,3 +23,4 @@ paper.pdf$
 ^issue_comments$
 ^bench$
 ^ROADMAP\.md$
+^vignettes/.*\.html$

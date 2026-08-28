@@ -49,9 +49,15 @@ check <- function(ok, label) {
 }
 
 # --- zip_code_db -----------------------------------------------------------
+# Relative, not an absolute constant: the row count is monotonically
+# non-decreasing by construction (>= shipped, plus the no-silent-drops check
+# below), so a fixed ceiling would eventually fail a legitimate refresh with
+# what reads like a data-corruption alarm.
+row_ceiling <- ceiling(nrow(shipped) * 1.1)
 check(
-  nrow(candidate) >= nrow(shipped) && nrow(candidate) <= 46000,
-  sprintf("row count in sane bounds (%d, was %d)", nrow(candidate), nrow(shipped))
+  nrow(candidate) >= nrow(shipped) && nrow(candidate) <= row_ceiling,
+  sprintf("row count in sane bounds (%d, was %d, ceiling %d)",
+          nrow(candidate), nrow(shipped), row_ceiling)
 )
 dropped <- setdiff(shipped$zipcode, candidate$zipcode)
 check(length(dropped) == 0, sprintf("no silent drops (%d dropped)", length(dropped)))
@@ -194,9 +200,8 @@ coord_changed <- sum(
        abs(candidate$lng[ci] - shipped$lng[si]) > 1e-6)
 )
 pop_changed <- sum(
-  !identical(candidate$population[ci], shipped$population[si]) &
-    (is.na(candidate$population[ci]) != is.na(shipped$population[si]) |
-       coalesce(candidate$population[ci] != shipped$population[si], FALSE))
+  is.na(candidate$population[ci]) != is.na(shipped$population[si]) |
+    coalesce(candidate$population[ci] != shipped$population[si], FALSE)
 )
 
 summary_md <- c(

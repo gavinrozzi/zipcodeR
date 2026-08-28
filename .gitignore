@@ -2,3 +2,4 @@
 .Rhistory
 .DS_Store
 README.knit.md
+vignettes/*.html
