@@ -41,6 +41,12 @@
   explicitly, validate inputs consistently, use modern geodesic behavior,
   keep GEOIDs as character identifiers, and expose authoritative/unmapped
   district status.
+- `reverse_zipcode_ng()` adds the two-digit state FIPS code and full five-digit
+  county FIPS code for the record's predominant county.
+- `raster` and `tidycensus` remain installed legacy dependencies, but are no
+  longer imported when `zipcodeR` starts. They load only when a legacy function
+  actually calls them, avoiding the historical `raster`/`terra` and GDAL/Arrow
+  startup failures without changing legacy results.
 
 ## Versioned data assets
 

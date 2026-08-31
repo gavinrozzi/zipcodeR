@@ -75,7 +75,6 @@ normalize_zip <- function(zipcode) {
 #' @examples
 #' zip_distance("08731", "08901")
 #'
-#' @importFrom raster pointDistance
 #' @export
 zip_distance <- function(zipcode_a, zipcode_b, lonlat = TRUE, units = "miles") {
   zipcode_a <- as.character(zipcode_a)

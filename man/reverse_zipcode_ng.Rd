@@ -12,7 +12,9 @@ reverse_zipcode_ng(data, zip_code)
 \item{zip_code}{Five-digit ZIP code(s).}
 }
 \value{
-One row per input, in input order, with duplicates preserved.
+One row per input, in input order, with duplicates preserved. The
+result adds \code{state_fips} (two digits) and \code{county_fips} (the full
+five-digit county identifier) for the database's predominant county.
 }
 \description{
 Reverse-geocode ZIP codes using an explicit data bundle

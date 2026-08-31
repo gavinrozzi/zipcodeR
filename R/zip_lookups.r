@@ -242,7 +242,6 @@ get_tracts <- function(zip_code) {
 #' get_cd("90210")
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
-#' @import tidycensus
 #' @export
 get_cd <- function(zip_code) {
   # Get state FIPS codes data from tidycensus library
@@ -350,7 +349,6 @@ geocode_zip <- function(zip_code) {
 #' \dontrun{
 #' search_radius(39.9, -74.3, 10)
 #' }
-#' @importFrom raster pointDistance
 #' @export
 search_radius <- function(lat, lng, radius = 1) {
 

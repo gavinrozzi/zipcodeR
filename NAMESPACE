@@ -34,7 +34,6 @@ export(zip_data_provenance)
 export(zip_data_version)
 export(zip_distance)
 export(zip_distance_ng)
-import(tidycensus)
 importFrom(DBI,dbGetQuery)
 importFrom(RSQLite,dbConnect)
 importFrom(curl,has_internet)
@@ -47,7 +46,6 @@ importFrom(dplyr,
 )
 importFrom(httr,http_error)
 importFrom(jsonlite,fromJSON)
-importFrom(raster,pointDistance)
 importFrom(rlang,
   .data,
   list2

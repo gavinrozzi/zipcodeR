@@ -75,6 +75,26 @@ install.packages("zipcodeR")
 If you want the data without attaching the package, use
 `zipcodeR::zip_code_db`.
 
+## How do I get county FIPS codes from a ZIP code?
+
+For a new analysis, use `reverse_zipcode_ng()` with an explicitly selected
+bundle. Its output includes `state_fips` (two digits) and `county_fips` (the
+full five-digit county identifier) for the predominant county recorded for the
+ZIP-level row. Remember that a ZIP can cross county boundaries; this is not a
+point-level jurisdiction assignment.
+
+The unsuffixed `reverse_zipcode()` keeps its historical 0.3.5 column schema so
+an existing script is not changed by a package upgrade.
+
+## Why does zipcodeR still install raster and tidycensus?
+
+They remain installation dependencies because some historical functions need
+them to reproduce exact 0.3.5 results. They are no longer loaded by
+`library(zipcodeR)`: a legacy function loads the needed namespace only when it
+is called, while the recommended `_ng` functions avoid those paths. This keeps
+package startup isolated from the former `raster`/`terra` and GDAL/Arrow load
+failures without changing an old distance calculation.
+
 ## Where does the data come from?
 
 `zip_code_db` derives from the

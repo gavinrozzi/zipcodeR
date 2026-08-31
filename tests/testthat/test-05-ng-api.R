@@ -5,6 +5,8 @@ test_that("next-generation reverse lookup preserves order, duplicates, and misse
     "99999"
   )
   expect_identical(result$zipcode, c("08731", "99999", "08731"))
+  expect_identical(result$state_fips, c("34", NA_character_, "34"))
+  expect_identical(result$county_fips, c("34029", NA_character_, "34029"))
   expect_true(is.na(result$state[[2]]))
   expect_identical(attr(result, "zipcodeR_data_version"), "test-2026.08")
   expect_identical(attr(result, "zipcodeR_bundle_sha256"), paste(rep("a", 64), collapse = ""))

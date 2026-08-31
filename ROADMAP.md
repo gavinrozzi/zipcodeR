@@ -18,7 +18,7 @@ The release is mergeable only after every required gate below passes.
 | Add checksum-verified, explicitly versioned bundle I/O | implemented; registry remains disabled pending publication |
 | Build modern data as an external bundle with provenance and quality sidecars | implemented locally |
 | Pin and archive raw inputs, dependencies, container, and build manifest | implemented locally; two clean rebuilds required for every release |
-| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | pending remote CI |
+| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | passing on pushed commit `81d77cc` |
 | Public `data-2026.08` bundle and comprehensive assets, clean-machine smoke test | blocking; not yet public |
 
 The core package continues to ship the 2021-06-08 legacy data. Refreshed ZCTA,
@@ -63,6 +63,7 @@ compatible changes.
 - Consider removing legacy dependencies or behavior only in a future major
   version with an explicit research-migration policy. Do not silently retcon
   the 0.3.5 contract.
-- Keep heavyweight geospatial dependencies out of the `_ng` runtime path where
-  possible, but never substitute a different scientific algorithm under a
-  legacy name.
+- Keep heavyweight geospatial dependencies out of package startup and the
+  `_ng` runtime path. They may remain installed and load lazily for a legacy
+  call when exact compatibility requires them; never substitute a different
+  scientific algorithm under a legacy name.

@@ -78,7 +78,9 @@ search_county_ng <- function(data, county_name, state_abb, ...) {
 #' Reverse-geocode ZIP codes using an explicit data bundle
 #' @param data A `zipcodeR_data_bundle`.
 #' @param zip_code Five-digit ZIP code(s).
-#' @return One row per input, in input order, with duplicates preserved.
+#' @return One row per input, in input order, with duplicates preserved. The
+#'   result adds `state_fips` (two digits) and `county_fips` (the full
+#'   five-digit county identifier) for the database's predominant county.
 #' @export
 reverse_zipcode_ng <- function(data, zip_code) {
   db <- ng_zip_db(data)
@@ -93,6 +95,15 @@ reverse_zipcode_ng <- function(data, zip_code) {
   }
   result <- db[matched, , drop = FALSE]
   result$zipcode <- zip_code
+  fips_key <- paste(result$state, result$county, sep = "\r")
+  fips_reference_key <- paste(fips_codes$state, fips_codes$county, sep = "\r")
+  fips_match <- match(fips_key, fips_reference_key)
+  result$state_fips <- fips_codes$state_code[fips_match]
+  result$county_fips <- ifelse(
+    is.na(fips_match),
+    NA_character_,
+    paste0(fips_codes$state_code[fips_match], fips_codes$county_code[fips_match])
+  )
   stamp_ng_result(dplyr::as_tibble(result), data)
 }
 

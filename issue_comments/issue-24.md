@@ -1,8 +1,11 @@
-<!-- Draft comment for issue #24 — review before posting. Do not claim the dependency is removed in 0.4.0. -->
+<!-- Draft comment for issue #24 — review before posting. Suggested action: post + close after 0.4.0 ships. -->
 
-The static FIPS table is now vendored, which lets the corrected `_ng` path
-avoid using `tidycensus` for that lookup. However, 0.4.0 retains the legacy
-dependency set because existing functions and `download_zip_data()` are frozen
-to the 0.3.5 runtime contract. This issue should remain open until dependency
-removal can be done under a major-version policy without changing old results
-or conditions.
+The warnings came from eagerly loading the legacy spatial dependency graph,
+not from a ZIP lookup itself. In 0.4.0, `library(zipcodeR)` no longer loads
+`tidycensus`, `sf`, `raster`, `terra`, or their GDAL bindings. The legacy
+packages remain installed dependencies for compatibility and are loaded only
+when a legacy function that actually needs one is called. The `_ng` FIPS path
+uses the vendored static FIPS table and does not invoke `tidycensus`.
+
+This isolates package startup from a system GDAL/Arrow mismatch while keeping
+legacy calls and installation requirements reproducible.

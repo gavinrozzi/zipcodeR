@@ -23,4 +23,5 @@ paper.pdf$
 ^issue_comments$
 ^bench$
 ^ROADMAP\.md$
+^ISSUE-RESOLUTION\.md$
 ^vignettes/.*\.html$
