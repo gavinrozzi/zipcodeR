@@ -4,9 +4,9 @@
 #' spherical (haversine) distance in meters using the mean Earth radius
 #' of 6,371,008.8 m. Distances involving NA coordinates return NA.
 #'
-#' Note: versions of zipcodeR prior to the removal of the raster
-#' dependency computed WGS84 geodesic distances; haversine results can
-#' differ from those by up to ~0.5%.
+#' This helper is used only by the explicit `_ng` API. Legacy functions retain
+#' their WGS84 geodesic calculation through `raster::pointDistance()` because
+#' haversine results are not scientifically identical.
 #'
 #' @param lat_a,lng_a coordinates of the first point(s), decimal degrees
 #' @param lat_b,lng_b coordinates of the second point(s), decimal degrees

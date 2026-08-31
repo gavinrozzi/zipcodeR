@@ -1,69 +1,76 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides repository guidance for coding agents.
 
-## Package Overview
+## Package contract
 
-zipcodeR is an R package that simplifies working with U.S. ZIP codes. It provides an offline database of 42,725 ZIP codes with 24 attributes each (rebuildable via the data-raw/ pipeline), plus functions for geographic search, distance calculations, and Census data integration.
+zipcodeR provides offline U.S. ZIP-code lookups and basic spatial analysis.
+The existing exported API is a frozen research-reproducibility contract: legacy
+functions, conditions, ordering, side effects, and the three bundled datasets
+must remain exactly compatible with zipcodeR 0.3.5.
 
-## Development Commands
+Corrected behavior and refreshed data are opt-in through the `_ng` functions.
+Every data-dependent `_ng` function takes an explicit, validated data bundle as
+its first argument. Never add an implicit "latest" version, automatic download,
+global option, or fallback to the bundled legacy data.
+
+## Development commands
 
 ```bash
-# Run all tests
 devtools::test()
-
-# Run a single test file
-testthat::test_file("tests/testthat/test-01-zip-lookups.R")
-
-# Check package (as CRAN would)
-devtools::check()
-
-# Build documentation from roxygen comments
+Rscript tools/compatibility-check.R --baseline-ref=origin/master
+Rscript bench/search_radius_bench.R
+devtools::check(args = "--as-cran")
 devtools::document()
-
-# Install package locally for testing
-devtools::install()
-
-# Load package during development (without installing)
-devtools::load_all()
 ```
 
 ## Architecture
 
-### Data Layer (`data/`)
-Three bundled `.rda` datasets loaded lazily:
-- `zip_code_db` - Main ZIP code database (42,725 rows, 24 columns)
-- `zcta_crosswalk` - ZCTA-to-Census Tract mapping, 2020 vintage (168,212 rows)
-- `zip_to_cd` - ZIP-to-Congressional District mapping, 119th Congress (54,817 rows)
+### Frozen legacy data (`data/`)
 
-### Source Files (`R/`)
-- `data.r` - Roxygen documentation for the three datasets
-- `zip_lookups.r` - 12 search/lookup functions that filter the datasets
-- `zip_helper_functions.R` - Utility functions: `normalize_zip()`, `zip_distance()`, `geocode_zip()`
-- `distance.R` - Internal vectorized haversine used by all distance math
-- `data_version.R` - `zip_data_version()` and `download_comprehensive_data()`
-- `download_data.r` - `download_zip_data()` (deprecated no-op)
-- `globals.r` - Global variable declarations for NSE compliance
+- `zip_code_db`: 41,877 rows and 24 columns, data date 2021-06-08.
+- `zcta_crosswalk`: 148,897 legacy ZCTA-to-tract relationships.
+- `zip_to_cd`: 45,914 legacy ZIP-to-district relationships.
 
-### Data pipeline (`data-raw/`)
-Reproducible build of all bundled data from pinned, checksummed sources; run
-`Rscript data-raw/run_pipeline.R` (needs `CENSUS_API_KEY`). See data-raw/README.md.
+These objects must remain `identical()` to the 0.3.5 objects. Modern data is
+never written into `data/`.
 
-### Function Patterns
-All lookup functions return tibbles and accept vectors for batch operations. They use tidyverse-style programming with dplyr and the `.data` pronoun for NSE.
+### R code (`R/`)
 
-## Testing
+- `zip_lookups.r`, `zip_helper_functions.R`, and `download_data.r` implement
+  the frozen legacy contract. Legacy distance calculations intentionally retain
+  `raster::pointDistance()` WGS84 behavior.
+- `ng_functions.R` implements corrected lookups and modern haversine distance
+  calculations against an explicit bundle.
+- `data_bundle.R` validates, reads, downloads, and reports metadata for pinned
+  data bundles.
+- `data_version.R` contains the legacy metadata and comprehensive-asset API.
+- `distance.R` is an internal helper used only by the `_ng` path.
 
-Tests are in `tests/testthat/` using testthat v3:
-- `test-01-zip-lookups.R` - Tests for all 12 lookup functions
-- `test-02-data.R` - Data integrity and regression-ZIP tests
-- `test-03-helper-functions.R` - Utility function tests
-- `test-04-schemas.R` - Return-schema snapshots, input validation, deprecation
+`download_zip_data()` intentionally retains its 0.3.5 observable behavior.
+Discourage it in documentation only during this compatibility release.
 
-## CI/CD
+### External data pipeline (`data-raw/`)
 
-GitHub Actions workflows in `.github/workflows/`:
-- `R-CMD-check.yaml` - Runs `R CMD check` on Windows, macOS, and Ubuntu with multiple R versions
-- `pkgdown.yaml` - Builds and deploys documentation site to GitHub Pages
-- `test-coverage.yaml` - Codecov coverage upload
-- `refresh-data.yaml` - Quarterly/manual data-pipeline refresh, opens a draft PR
+The pipeline creates versioned data-only release assets, not package datasets.
+Deterministic rebuilds require `PIPELINE_MODE=rebuild`, an explicit
+`PIPELINE_DATA_VERSION`, and an explicit `PIPELINE_BUILD_TIMESTAMP`. Exact raw
+responses, source checksums, the dependency lock, and the build container are
+archived with each release. `refresh_sources.R` proposes new source pins but
+does not build or publish anything.
+
+## Tests and release gates
+
+- `tools/compatibility-check.R` installs the baseline and candidate into
+  isolated libraries and compares datasets, results, conditions, and formals.
+- `tests/testthat/test-04-data-bundles.R` covers integrity and download failure
+  cases.
+- `tests/testthat/test-05-ng-api.R` covers the corrected API contract.
+- `.github/workflows/R-CMD-check.yaml` runs compatibility and normal package
+  checks on Windows, macOS, Ubuntu release/devel/oldrel.
+- `.github/workflows/refresh-data.yaml` is manual. It can refresh source
+  proposals or run a two-pass deterministic rebuild, but never publishes.
+
+Do not claim a data version is available or enable its downloader until its
+release and checksum-verified asset are public and smoke-tested from a clean
+machine.

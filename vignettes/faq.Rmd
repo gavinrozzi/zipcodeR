@@ -31,10 +31,11 @@ libraries, spatial packages, and web APIs all expect this convention.
 
 Two common reasons:
 
-1. **Data vintage.** The bundled database is a snapshot; ZIP codes
-   introduced after the snapshot date will be absent until the next data
-   refresh. Check `zip_code_db` directly to see whether a code is
-   present.
+1. **Data vintage.** The bundled database is the frozen 0.3.5 snapshot, so ZIP
+   codes introduced after its date are intentionally absent. For new analyses,
+   choose a modern bundle and use `reverse_zipcode_ng()` or another `_ng`
+   function. Check `zip_data_version()` (or `zip_data_version(bundle)`) to
+   identify the selected contract.
 2. **ZIP codes are not ZCTAs.** USPS ZIP codes are collections of
    delivery routes and points, not areas. The Census Bureau's ZIP Code
    Tabulation Areas (ZCTAs) approximate most — but not all — ZIP codes.
@@ -80,10 +81,24 @@ If you want the data without attaching the package, use
 [uszipcode](https://github.com/MacHu-GWU/uszipcode-project) project's
 database, which aggregates U.S. Census Bureau data (decennial census,
 ACS, gazetteer files) with USPS-derived ZIP code attributes.
-`zcta_crosswalk` comes from the Census Bureau's 2020 ZCTA-to-tract
-relationship file, and `zip_to_cd` from the Census 119th-Congress
-district-to-ZCTA relationship file (with city-based assignment for
-USPS-only ZIP codes). All bundled data is built by the reproducible
-pipeline in the package repository's `data-raw/` directory —
-`zip_data_version()` reports the loaded data release. See the help page
-of each dataset for details and known limitations.
+The three bundled datasets are the exact snapshots distributed by zipcodeR
+0.3.5: the 2021 uszipcode-derived ZIP database, the Census 2010
+ZCTA-to-tract relationship, and the pre-2020 HUD-USPS ZIP-to-district
+relationship. They are intentionally frozen so a legacy call cannot be
+retconned by a package upgrade. `zip_data_version()` reports this contract.
+
+Newer Census relationships and refreshed attributes are distributed
+as separate, checksum-pinned data bundles. They are used only when a bundle is
+passed explicitly to an `_ng` function. The bundle's manifest and
+reproducibility archive contain the source vintages, raw source hashes,
+licenses, pipeline commit, dependency lock, validation report, and quality
+sidecars. No USPS-only ZIP receives a city-derived proxy centroid or a
+city-wide inferred congressional district.
+
+## Which API should a new project use?
+
+Use `_ng` functions with a named data bundle for new analyses. This is the
+forward-looking interface and makes the choice of newer data visible in the R
+code. It does not silently track future releases: keep the exact version and
+SHA recorded with the project. Keep using unsuffixed functions for existing
+scripts or when reproducing historical zipcodeR results.

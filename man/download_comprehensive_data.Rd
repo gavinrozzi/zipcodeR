@@ -17,12 +17,13 @@ with DBI/RSQLite, e.g.
 \description{
 The bundled \code{zip_code_db} is the lightweight ("simple") dataset. A
 much larger companion database with detailed ACS demographic profiles per
-ZIP code (the "comprehensive" database, ~450 MB SQLite) is published as an
-asset of the zipcodeR data releases on GitHub rather than shipped in the
-package.
+ZIP code (the "comprehensive" database, ~450 MB SQLite) is intended to be
+published as an asset of a zipcodeR data release rather than shipped in the
+package. The downloader is disabled until that asset is public and its URL
+and checksum have passed a clean-machine smoke test.
 }
 \details{
-This function downloads that database once, verifies its SHA256 checksum,
+Once enabled, this function downloads that database, verifies its SHA256 checksum,
 and caches it under \code{tools::R_user_dir("zipcodeR", "data")}; later
 calls return the cached path immediately. It never downloads without being
 called explicitly. For offline use, copy the file to that directory

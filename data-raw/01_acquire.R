@@ -47,22 +47,14 @@ sha256_file <- function(path) {
 
 acquire <- function(src) {
   dest <- file.path(cache_dir, basename(src$url))
-  floating <- isTRUE(src$floating)
-  if (file.exists(dest) && (floating || identical(sha256_file(dest), src$sha256))) {
-    message("cached", if (!floating) " & verified", ": ", basename(dest))
+  if (file.exists(dest) && identical(sha256_file(dest), src$sha256)) {
+    message("cached & verified: ", basename(dest))
     return(dest)
   }
   message("downloading: ", src$url)
   utils::download.file(src$url, dest, mode = "wb", quiet = TRUE)
   got <- sha256_file(dest)
-  if (floating) {
-    # Publisher regenerates this file in place; record the hash for
-    # provenance instead of enforcing it
-    message(
-      "floating source ", basename(dest), ": sha256 ", got,
-      if (!identical(got, src$sha256)) " (differs from the pinned build hash in sources.R)"
-    )
-  } else if (!identical(got, src$sha256)) {
+  if (!identical(got, src$sha256)) {
     stop(
       "Checksum mismatch for ", basename(dest), "\n  expected: ", src$sha256,
       "\n  got:      ", got,
@@ -79,9 +71,13 @@ paths <- lapply(PIPELINE_SOURCES, acquire)
 utils::unzip(paths$gazetteer_zcta, exdir = cache_dir, overwrite = TRUE)
 utils::unzip(paths$geonames_us, exdir = cache_dir, overwrite = TRUE)
 
-# ACS pull (API source; requires CENSUS_API_KEY)
+# ACS response archive (API source; requires CENSUS_API_KEY only when the
+# pinned raw response is not already present). The raw JSON is the source of
+# record. The CSV consumed by later stages is deterministically derived from
+# it and separately checksummed.
+acs_raw <- file.path(cache_dir, sprintf("acs5_%d_zcta.json", ACS_VINTAGE))
 acs_cache <- file.path(cache_dir, sprintf("acs5_%d_zcta.csv", ACS_VINTAGE))
-if (!file.exists(acs_cache)) {
+if (!file.exists(acs_raw)) {
   key <- Sys.getenv("CENSUS_API_KEY")
   if (!nzchar(key)) {
     stop(
@@ -95,14 +91,13 @@ if (!file.exists(acs_cache)) {
     ACS_ENDPOINT, "?get=", paste(ACS_VARIABLES, collapse = ","),
     "&for=zip%20code%20tabulation%20area:*&key=", key
   )
-  tf <- tempfile(fileext = ".json")
   # The Census API only accepts the key as a query parameter, and
   # download.file() echoes the full URL in its error and warning text. Scrub
   # the key so a failed local run does not print it to the console or a .Rout.
   redact <- function(x) gsub(key, "<CENSUS_API_KEY>", x, fixed = TRUE)
   withCallingHandlers(
     tryCatch(
-      utils::download.file(url, tf, quiet = TRUE),
+      utils::download.file(url, acs_raw, mode = "wb", quiet = TRUE),
       error = function(e) {
         stop("ACS download failed: ", redact(conditionMessage(e)), call. = FALSE)
       }
@@ -112,15 +107,32 @@ if (!file.exists(acs_cache)) {
       invokeRestart("muffleWarning")
     }
   )
-  j <- jsonlite::fromJSON(tf)
-  acs <- as.data.frame(j[-1, , drop = FALSE], stringsAsFactors = FALSE)
-  names(acs) <- c(names(ACS_VARIABLES), "zcta")
-  for (v in names(ACS_VARIABLES)) {
-    x <- suppressWarnings(as.numeric(acs[[v]]))
-    x[!is.na(x) & x < 0] <- NA # ACS sentinel values (-666666666 etc.)
-    acs[[v]] <- x
-  }
-  utils::write.csv(acs, acs_cache, row.names = FALSE)
+}
+acs_raw_hash <- sha256_file(acs_raw)
+if (!identical(acs_raw_hash, ACS_RESPONSE_SHA256)) {
+  stop(
+    "Raw ACS response checksum mismatch. A source refresh must use a new ",
+    "explicit data version and update ACS_RESPONSE_SHA256 after review.\n",
+    "  expected: ", ACS_RESPONSE_SHA256, "\n  got:      ", acs_raw_hash
+  )
+}
+
+j <- jsonlite::fromJSON(acs_raw)
+acs <- as.data.frame(j[-1, , drop = FALSE], stringsAsFactors = FALSE)
+names(acs) <- c(names(ACS_VARIABLES), "zcta")
+for (v in names(ACS_VARIABLES)) {
+  x <- suppressWarnings(as.numeric(acs[[v]]))
+  x[!is.na(x) & x < 0] <- NA # ACS sentinel values (-666666666 etc.)
+  acs[[v]] <- x
+}
+utils::write.csv(acs, acs_cache, row.names = FALSE)
+acs_hash <- sha256_file(acs_cache)
+if (!identical(acs_hash, ACS_DERIVED_SHA256)) {
+  stop(
+    "Derived ACS CSV checksum mismatch. The transformation or R serialization ",
+    "environment changed.\n  expected: ", ACS_DERIVED_SHA256,
+    "\n  got:      ", acs_hash
+  )
 }
 
 message("acquire: done (", length(paths), " static sources + ACS)")

@@ -1,11 +1,8 @@
-<!-- Draft comment for issue #24 — review before posting. Suggested action: post + close when 0.4.0 ships. -->
+<!-- Draft comment for issue #24 — review before posting. Do not claim the dependency is removed in 0.4.0. -->
 
-The `libarrow.so.800` warnings came from `sf`'s GDAL initialization (your distro's
-GDAL was built against a different arrow version) — and zipcodeR only touched that
-chain because it imported `tidycensus` (which depends on `sf`) just to read its static
-FIPS code table.
-
-As of 0.4.0 that table is bundled directly in zipcodeR and the `tidycensus`/`sf`
-dependency is gone, along with `raster`/`sp`. Loading zipcodeR no longer initializes
-GDAL at all, so these warnings can no longer appear via zipcodeR regardless of the
-system arrow/GDAL pairing.
+The static FIPS table is now vendored, which lets the corrected `_ng` path
+avoid using `tidycensus` for that lookup. However, 0.4.0 retains the legacy
+dependency set because existing functions and `download_zip_data()` are frozen
+to the 0.3.5 runtime contract. This issue should remain open until dependency
+removal can be done under a major-version policy without changing old results
+or conditions.

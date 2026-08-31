@@ -76,9 +76,11 @@ check(
   "zipcode_type values within the documented set"
 )
 
-# regression ZIPs from #25 / #26 / #19 must be present WITH coordinates
+# Regression ZCTAs from #25 / #26 / #19 must be present with authoritative
+# coordinates. USPS-only candidates such as 91230 are tested as quarantined
+# below rather than being assigned a city proxy point.
 regression_zips <- c(
-  "97003", "91230",
+  "97003",
   "00802", "00820", "00830", "00840", "00850", "00851", # USVI
   "96799", # American Samoa
   "96910", "96913", "96915", "96916", "96917", "96928", "96929", # Guam
@@ -90,6 +92,19 @@ check(!anyNA(ri), "all regression ZIPs (#19/#25/#26) present")
 check(
   !anyNA(candidate$lat[ri]) && !anyNA(candidate$lng[ri]),
   "all regression ZIPs have coordinates"
+)
+quarantine <- readRDS(file.path(cache_dir, "quarantined_zip_candidates.rds"))
+quarantined_zips <- unique(c(
+  quarantine$upstream_1_0_1$zipcode,
+  quarantine$supplemental$zipcode
+))
+check(
+  all(c("91230", "88888", "72643") %in% quarantined_zips),
+  "uncorroborated/proxy ZIP candidates 91230, 88888, and 72643 are quarantined"
+)
+check(
+  !any(c("91230", "88888", "72643") %in% candidate$zipcode),
+  "quarantined ZIP candidates are absent from the published candidate"
 )
 
 # known-good distance spot checks (the #20 examples), via the package's own
@@ -139,6 +154,11 @@ check(
   all(nchar(zcta_candidate$TRACT) == 6),
   "zcta_crosswalk TRACT codes are 6 characters"
 )
+check(
+  is.character(zcta_candidate$GEOID) &&
+    all(grepl("^[0-9]{11}$", zcta_candidate$GEOID)),
+  "zcta_crosswalk GEOID values are 11-character identifiers"
+)
 
 # --- zip_to_cd -------------------------------------------------------------
 check(
@@ -153,26 +173,14 @@ check(
   length(setdiff(zcta_candidate$ZCTA5, cd_candidate$ZIP)) < 500,
   "zip_to_cd covers (nearly) all 2020 ZCTAs"
 )
-# no silent shrinkage of CD coverage: every non-military ZIP that had a
-# district mapping in the shipped release must still have one
+# The next-generation crosswalk is authoritative-only. Coverage differences
+# versus the pre-2020 HUD-USPS product are reported, not papered over with
+# city/state inference.
 prev_covered <- intersect(shipped_env$zip_to_cd$ZIP, candidate$zipcode)
-prev_covered <- setdiff(
-  prev_covered,
-  candidate$zipcode[candidate$zipcode_type %in% "Military"]
-)
 lost_cd <- setdiff(prev_covered, cd_candidate$ZIP)
-accepted_loss <- if (file.exists(ACCEPTED_CD_COVERAGE_LOSS_FILE)) {
-  readLines(ACCEPTED_CD_COVERAGE_LOSS_FILE)
-} else {
-  character(0)
-}
-unaccepted_lost <- setdiff(lost_cd, accepted_loss)
-check(
-  length(unaccepted_lost) == 0,
-  sprintf(
-    "no ZIPs lost congressional-district coverage outside the documented acceptance list (%d lost, of which %d unaccepted)",
-    length(lost_cd), length(unaccepted_lost)
-  )
+message(
+  "[NOTE] ", length(lost_cd),
+  " legacy ZIP-to-CD mappings are absent from the authoritative ZCTA crosswalk"
 )
 
 # --- release metadata ------------------------------------------------------
@@ -221,10 +229,11 @@ summary_md <- c(
   local({
     s <- readRDS(file.path(cache_dir, "zip_to_cd_stats.rds"))
     sprintf(
-      "  - %d ZCTA-mapped ZIPs + %d city-derived and %d single-district-state USPS-only ZIPs; %d non-military ZIPs unmapped",
-      s$zcta_mapped, s$city_derived, s$state_derived, s$unmapped_nonmilitary
+      "  - %d authoritative ZCTA-mapped ZIPs; %d ZIPs intentionally unmapped; no city/state-derived assignments",
+      s$zcta_mapped, s$unmapped
     )
   }),
+  sprintf("  - %d pre-2020 legacy mappings not carried into the authoritative-only crosswalk", length(lost_cd)),
   local({
     s <- readRDS(file.path(cache_dir, "zip_code_db_stats.rds"))
     sprintf(
@@ -236,11 +245,11 @@ summary_md <- c(
     )
   }),
   "",
-  sprintf("Validation gate: %s", if (length(failures) == 0) "**all checks passed**" else "**FAILED**")
+  sprintf("Candidate data validation gate: %s", if (length(failures) == 0) "**passed**" else "**FAILED**")
 )
 writeLines(summary_md, file.path("data-raw", "refresh_summary.md"))
 
 if (length(failures) > 0) {
   stop("Validation gate FAILED:\n  - ", paste(failures, collapse = "\n  - "))
 }
-message("validation gate: all checks passed")
+message("candidate data validation gate: passed")

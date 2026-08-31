@@ -5,29 +5,25 @@
 \alias{zip_to_cd}
 \title{ZIP Code to Congressional District Relationship File}
 \format{
-A data frame with 54817 rows and 2 variables:
+A data frame with 45914 rows and 2 variables:
 \describe{
 \item{ZIP}{5 digit U.S. ZIP code}
 \item{CD}{Four digit congressional district code (State FIPS code + district number)}
 }
 }
 \source{
-\url{https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.html}
+\url{https://www.huduser.gov/portal/datasets/usps_crosswalk.html}
 }
 \usage{
 zip_to_cd
 }
 \description{
-A dataset containing mappings between ZIP codes and congressional
-districts of the 119th Congress, reflecting post-2020-census
-redistricting. ZIP codes spanning multiple districts appear once per
-district. Built by \code{data-raw/04_build_zip_to_cd.R} from the Census
-CD119-to-ZCTA relationship file; USPS-only ZIP codes (P.O. Box/unique
-codes without a ZCTA) are assigned the district(s) of their USPS city, or
-of their state where it has a single district. Military ZIP codes and a
-small remainder of USPS-only codes have no mapping. Non-voting delegate
-districts (DC and the territories) carry the Census code \code{98};
-voting at-large states carry \code{00}. See \code{zip_data_version()} for
-the data release.
+A dataset containing mappings between ZIP codes and congressional districts
+}
+\details{
+This is the exact pre-2020 HUD-USPS-derived mapping shipped in zipcodeR
+0.3.5. It is frozen for legacy reproducibility and should not be interpreted
+as a current redistricting vintage. Current authoritative ZCTA relationships
+are available in explicit data bundles.
 }
 \keyword{datasets}

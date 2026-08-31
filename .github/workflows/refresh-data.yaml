@@ -1,84 +1,80 @@
-# Quarterly + on-demand data refresh. Runs the data-raw/ pipeline, which
-# hard-fails unless the validation gate passes, then opens a PR with the
-# refresh summary. A human reviews and merges; nothing ships automatically.
-#
-# Requirements: repository secret CENSUS_API_KEY (free key from
-# https://api.census.gov/data/key_signup.html).
-#
-# Runner note: this is a single lightweight job (~10 min, ~2 GB disk). To run
-# it on the self-hosted runner instead of hosted minutes, change `runs-on:`
-# to [self-hosted] — the job needs R >= 4.2, git (the validation gate and the
-# carry-forward base are read from the committed data via `git show`), curl or
-# another download method, and network access.
+name: data-assets
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '17 6 1 2,5,8,11 *' # 06:17 UTC on the 1st of Feb/May/Aug/Nov
-
-name: refresh-data
+    inputs:
+      mode:
+        description: Inspect upstream sources or rebuild an already-pinned release
+        required: true
+        type: choice
+        options: [refresh, rebuild]
+      data_version:
+        description: Explicit immutable data version (for example 2026.08)
+        required: true
+        type: string
+      build_timestamp:
+        description: Explicit ISO-8601 build timestamp
+        required: true
+        type: string
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 jobs:
-  refresh-data:
+  data-assets:
     runs-on: ubuntu-latest
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
+      PIPELINE_DATA_VERSION: ${{ inputs.data_version }}
+      PIPELINE_PROPOSED_VERSION: ${{ inputs.data_version }}
+      PIPELINE_BUILD_TIMESTAMP: ${{ inputs.build_timestamp }}
+      PIPELINE_BASELINE_REF: master
+      PIPELINE_MODE: ${{ inputs.mode }}
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: r-lib/actions/setup-r@v2
         with:
+          r-version: '4.6.1'
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            any::dplyr
-            any::DBI
-            any::RSQLite
-            any::jsonlite
-          install-package: false
-
-      - name: Cache pinned pipeline sources
-        uses: actions/cache@v4
-        with:
-          path: data-raw/cache
-          key: data-sources-${{ hashFiles('data-raw/sources.R') }}
-
-      # The cache key only changes when a human edits sources.R, and
-      # 01_acquire.R skips any source already present in the cache. Left alone,
-      # a cache hit would make the scheduled refresh reuse stale copies of the
-      # two sources that change WITHOUT a code change - the floating GeoNames
-      # file and the ACS pull - so the cron could never pick up new upstream
-      # data. Drop those two; the checksum-pinned sources stay cached.
-      - name: Drop non-pinned sources from the restored cache
+      - name: Restore the pinned pipeline library
         run: |
-          Rscript -e 'source("data-raw/sources.R");
-            floating <- Filter(function(s) isTRUE(s$floating), PIPELINE_SOURCES);
-            stale <- c(file.path("data-raw", "cache", basename(vapply(floating, `[[`, "", "url"))),
-                       Sys.glob(file.path("data-raw", "cache", "acs5_*_zcta.csv")));
-            stale <- stale[file.exists(stale)];
-            if (length(stale)) unlink(stale);
-            cat("dropped from cache:", if (length(stale)) stale else "(nothing)", sep = "\n")'
+          echo "762ec8acc2d2ccbe5a217859c846c2de83254e3948112b437dde7a0ad5b15999  data-raw/vendor/pak_0.11.1.tar.gz" | sha256sum --check
+          R CMD INSTALL data-raw/vendor/pak_0.11.1.tar.gz
+          Rscript -e 'pak::lockfile_install("data-raw/pkg.lock")'
 
-      - name: Run data pipeline (includes validation gate)
-        run: Rscript data-raw/run_pipeline.R
+      - name: Inspect upstream source bytes
+        if: inputs.mode == 'refresh'
+        run: Rscript data-raw/refresh_sources.R
 
-      - name: Open data refresh PR
-        uses: peter-evans/create-pull-request@v6
+      - name: Upload source-refresh proposal for human review
+        if: inputs.mode == 'refresh'
+        uses: actions/upload-artifact@v4
         with:
-          branch: data-refresh
-          commit-message: 'data: scheduled refresh via data-raw pipeline'
-          title: 'Data refresh (validation gate passed)'
-          body-path: data-raw/refresh_summary.md
-          add-paths: |
-            data/
-            R/sysdata.rda
-            data-raw/refresh_summary.md
-          draft: true
+          name: source-refresh-${{ inputs.data_version }}
+          path: data-raw/refresh-candidate/${{ inputs.data_version }}/
+          if-no-files-found: error
+
+      - name: Deterministic rebuild, pass one
+        if: inputs.mode == 'rebuild'
+        run: |
+          Rscript data-raw/run_pipeline.R
+          sha256sum data-raw/release/zipcodeR-data-${{ inputs.data_version }}.rds > /tmp/first.sha256
+
+      - name: Deterministic rebuild, pass two
+        if: inputs.mode == 'rebuild'
+        run: |
+          Rscript data-raw/run_pipeline.R
+          sha256sum --check /tmp/first.sha256
+
+      - name: Upload unpublished release candidates
+        if: inputs.mode == 'rebuild'
+        uses: actions/upload-artifact@v4
+        with:
+          name: zipcodeR-data-${{ inputs.data_version }}-unpublished
+          path: data-raw/release/
+          if-no-files-found: error

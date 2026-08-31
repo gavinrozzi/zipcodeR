@@ -1,11 +1,8 @@
-<!-- Draft comment for issue #21 — review before posting. Suggested action: post + close when 0.4.0 ships. -->
+<!-- Draft comment for issue #21 — review before posting. Leave open for a future major-version dependency policy. -->
 
-Closing the loop on this one: the load failure was a class-registration collision
-between stale `raster`/`terra` binaries (`coerce` methods for Raster/SpatRaster),
-which zipcodeR was exposed to only because it imported `raster` for two distance
-calculations.
-
-As of 0.4.0, zipcodeR no longer imports `raster` (or any package in the sp/terra/GDAL
-chain) — distance math is an internal haversine implementation — so this failure mode
-can no longer occur through zipcodeR. If you hit it in other contexts, reinstalling
-`raster` and `terra` together usually resolves the stale-binary mismatch.
+The stale `raster`/`terra` class-registration failure is real, but removing
+`raster` from 0.4.0 would also change legacy scientific distance results.
+The compatibility release therefore retains the dependency and exact WGS84
+behavior. The new `_ng` distance path does not use `raster`, but that does
+not remove the package-level legacy dependency. A full removal needs a future
+major-version migration policy rather than a silent result change.

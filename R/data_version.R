@@ -1,28 +1,13 @@
-#' Report the version of the bundled ZIP code data
-#'
-#' zipcodeR versions its data releases separately from its code releases.
-#' This accessor reports exactly which data build is loaded, so users can
-#' cite it and bug reports can pin the vintage.
-#'
-#' @return A named list with the data release version, build date, row count
-#'   of \code{zip_code_db}, and the primary sources (with vintages) that
-#'   produced each dataset.
-#' @examples
-#' zip_data_version()
-#' @export
-zip_data_version <- function() {
-  zip_data_meta
-}
-
 #' Download the comprehensive ZIP code database
 #'
 #' The bundled \code{zip_code_db} is the lightweight ("simple") dataset. A
 #' much larger companion database with detailed ACS demographic profiles per
-#' ZIP code (the "comprehensive" database, ~450 MB SQLite) is published as an
-#' asset of the zipcodeR data releases on GitHub rather than shipped in the
-#' package.
+#' ZIP code (the "comprehensive" database, ~450 MB SQLite) is intended to be
+#' published as an asset of a zipcodeR data release rather than shipped in the
+#' package. The downloader is disabled until that asset is public and its URL
+#' and checksum have passed a clean-machine smoke test.
 #'
-#' This function downloads that database once, verifies its SHA256 checksum,
+#' Once enabled, this function downloads that database, verifies its SHA256 checksum,
 #' and caches it under \code{tools::R_user_dir("zipcodeR", "data")}; later
 #' calls return the cached path immediately. It never downloads without being
 #' called explicitly. For offline use, copy the file to that directory
@@ -38,15 +23,18 @@ zip_data_version <- function() {
 #' }
 #' @export
 download_comprehensive_data <- function(force = FALSE) {
-  rlang::check_installed(
-    c("curl", "utils"),
-    reason = "to download the comprehensive ZIP code database"
-  )
+  meta <- comprehensive_data_registry()
+  if (!isTRUE(meta$published)) {
+    stop(
+      "The comprehensive data asset is not public yet. This function is ",
+      "disabled until the registered release has been published and verified.",
+      call. = FALSE
+    )
+  }
   # Verify SHA256 capability BEFORE any download: discovering its absence
   # after a ~450 MB transfer would discard the download on every attempt
   ensure_sha256_available()
-  meta <- zip_data_meta$comprehensive
-  cache_dir <- tools::R_user_dir("zipcodeR", "data")
+  cache_dir <- zipcodeR_user_data_dir()
   dest <- file.path(cache_dir, meta$asset)
 
   if (file.exists(dest) && !force) {
@@ -71,7 +59,7 @@ download_comprehensive_data <- function(force = FALSE) {
     meta$release_tag, " data release.\nThis is a one-time download cached in ",
     cache_dir
   )
-  tmp <- paste0(dest, ".download")
+  tmp <- tempfile(paste0(meta$asset, "-"), tmpdir = cache_dir)
   on.exit(unlink(tmp), add = TRUE)
   # R's default download timeout (60s) is far too short for ~450 MB;
   # raise it for this call only
@@ -111,13 +99,25 @@ download_comprehensive_data <- function(force = FALSE) {
   invisible(dest)
 }
 
+# Updated only after a public-release smoke test succeeds. Keeping the draft
+# asset disabled prevents a documented function from attempting a known 404.
+#' @noRd
+comprehensive_data_registry <- function() {
+  list(
+    published = FALSE,
+    release_tag = "data-2026.08",
+    asset = "comprehensive_db.sqlite",
+    sha256 = "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"
+  )
+}
+
 # Stop with an informative error when no SHA256 mechanism exists, so the
 # capability is established before any large download
 #' @noRd
 ensure_sha256_available <- function() {
   ok <- exists("sha256sum", envir = asNamespace("tools"), inherits = FALSE) ||
     requireNamespace("openssl", quietly = TRUE) ||
-    any(nzchar(Sys.which(c("shasum", "sha256sum"))))
+    length(sha256_system_binary()) == 1L
   if (!ok) {
     stop(
       "No SHA256 tool available to verify the download. Install the ",
@@ -157,18 +157,48 @@ sha256_openssl <- function(path) {
 
 #' @noRd
 sha256_system <- function(path) {
-  bin <- Sys.which(c("shasum", "sha256sum"))
-  bin <- bin[nzchar(bin)][1]
-  if (is.na(bin)) {
+  bin <- sha256_system_binary()
+  if (!length(bin)) {
     stop("No SHA256 tool available: need R >= 4.5, the openssl package, or a system shasum/sha256sum binary.")
   }
   # shasum (incl. shasum.exe / shasum.bat on Windows) defaults to SHA-1 and
   # needs the algorithm flag; sha256sum does not
   is_shasum <- grepl("^shasum", basename(bin), ignore.case = TRUE)
-  args <- if (is_shasum) c("-a", "256", shQuote(path)) else shQuote(path)
-  out <- strsplit(system2(bin, args, stdout = TRUE), " ")[[1]][1]
+  native_path <- normalizePath(
+    path,
+    winslash = if (.Platform$OS.type == "windows") "\\" else "/",
+    mustWork = TRUE
+  )
+  args <- if (is_shasum) c("-a", "256", shQuote(native_path)) else shQuote(native_path)
+  out <- suppressWarnings(system2(bin, args, stdout = TRUE, stderr = TRUE))
+  status <- attr(out, "status")
+  if (!is.null(status) && status != 0L) {
+    stop(
+      "SHA256 command failed with status ", status, ": ",
+      paste(out, collapse = "\n"),
+      call. = FALSE
+    )
+  }
+  if (!length(out)) {
+    stop("SHA256 command produced no output: ", bin, call. = FALSE)
+  }
+  out <- strsplit(out[[1]], "[[:space:]]+")[[1]][1]
   if (!grepl("^[0-9a-f]{64}$", out)) {
     stop("Unexpected output from ", bin, " while computing SHA256: ", out)
   }
   out
+}
+
+# Strawberry Perl exposes shasum.bat on Windows, but invoking that wrapper via
+# system2() is not portable and caused the package's Windows check failure.
+# R >= 4.5 and openssl remain cross-platform; system fallback on Windows is
+# used only for a real sha256sum executable.
+#' @noRd
+sha256_system_binary <- function(os_type = .Platform$OS.type,
+                                 bins = Sys.which(c("sha256sum", "shasum"))) {
+  bins <- unname(bins[nzchar(bins)])
+  if (identical(os_type, "windows")) {
+    bins <- bins[!grepl("\\.(bat|cmd)$", bins, ignore.case = TRUE)]
+  }
+  if (!length(bins)) character(0) else bins[[1]]
 }

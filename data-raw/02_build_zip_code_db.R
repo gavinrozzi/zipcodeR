@@ -6,11 +6,13 @@
 # snapshot; every later refresh carries forward from the previous data
 # release, so a value in a carry-forward-only column can only be corrected by
 # fixing it in a release rather than by rerunning the pipeline. On top of it:
-#   1. Rows new in upstream 1.0.1 are appended (zipcode_type normalized to the
-#      shipped titleized values; the 1.0.1 MILITARY type appears as "Military").
+#   1. Rows new in upstream 1.0.1 are appended only when independently
+#      corroborated by the pinned Census ZCTA Gazetteer. Uncorroborated
+#      USPS-only and placeholder rows are quarantined, not published.
 #   2. 2020 Census ZCTAs absent from both snapshots are appended, built from
 #      the Gazetteer + county relationship file + GeoNames place names.
-#   3. Curated supplemental USPS-only ZIPs (data-raw/supplemental_zips.csv).
+#   3. Curated supplemental USPS-only ZIPs are retained as review evidence but
+#      are not published without an authoritative source.
 #   4. For every row whose ZIP is a 2020 ZCTA: coordinates and land/water area
 #      are refreshed from the Census Gazetteer, and the five ACS attributes
 #      are refreshed from the pinned ACS 5-year vintage.
@@ -99,13 +101,18 @@ titleize_type <- c(
 )
 
 # --- 1. rows new in upstream 1.0.1 ----------------------------------------
-new101 <- upstream101[!upstream101$zipcode %in% base$zipcode, , drop = FALSE]
+new101_all <- upstream101[!upstream101$zipcode %in% base$zipcode, , drop = FALSE]
+new101 <- new101_all[new101_all$zipcode %in% gaz$GEOID, , drop = FALSE]
+quarantined101 <- new101_all[!new101_all$zipcode %in% gaz$GEOID, , drop = FALSE]
 new101$zipcode_type <- unname(titleize_type[new101$zipcode_type])
 # 1.0.1 uses 0.0 for unknown coordinates; normalize to NA
 new101$lat[new101$lat == 0 & new101$lng == 0] <- NA_real_
 new101$lng[is.na(new101$lat)] <- NA_real_
 new101 <- new101[, names(base)]
-message("rows new in upstream 1.0.1: ", nrow(new101))
+message(
+  "rows new in upstream 1.0.1 corroborated as Census ZCTAs: ", nrow(new101),
+  "; quarantined non-ZCTA rows: ", nrow(quarantined101)
+)
 
 # --- 2. 2020 ZCTAs missing from both snapshots ----------------------------
 known <- c(base$zipcode, new101$zipcode)
@@ -154,20 +161,10 @@ if (length(missing_zcta) > 0) {
 }
 
 # --- 3. curated supplemental USPS-only ZIPs -------------------------------
+# These rows are review leads, not authoritative data. In particular, a point
+# chosen from a ZIP's city must not be published as that ZIP's centroid.
 supplement <- supplement[!supplement$zipcode %in% c(known, nz$zipcode), , drop = FALSE]
-sup <- empty_rows(nrow(supplement))
-if (nrow(supplement) > 0) {
-  sup$zipcode <- supplement$zipcode
-  sup$zipcode_type <- supplement$zipcode_type
-  sup$major_city <- supplement$major_city
-  sup$state <- supplement$state
-  sup$county <- supplement$county
-  sup$lat <- as.numeric(supplement$lat)
-  sup$lng <- as.numeric(supplement$lng)
-  sup$post_office_city <- paste0(supplement$major_city, ", ", supplement$state)
-  sup$timezone <- tz_by_state$timezone[match(sup$state, tz_by_state$state)]
-}
-message("supplemental USPS-only ZIPs: ", nrow(sup))
+message("supplemental USPS-only ZIPs quarantined: ", nrow(supplement))
 
 # Timezones for brand-new rows are IMPUTED as the modal timezone of the
 # state (no free authoritative per-ZIP source yet; the ROADMAP's
@@ -175,12 +172,11 @@ message("supplemental USPS-only ZIPs: ", nrow(sup))
 # zone of split-timezone states - the count is tracked in the refresh summary
 # so reviewers can judge the exposure on every refresh.
 imputed_tz <- c(
-  nz$zipcode[!is.na(nz$timezone)],
-  sup$zipcode[!is.na(sup$timezone)]
+  nz$zipcode[!is.na(nz$timezone)]
 )
 
 # --- combine ---------------------------------------------------------------
-additions <- bind_rows(new101, nz, sup)
+additions <- bind_rows(new101, nz)
 additions <- additions[order(additions$zipcode), ]
 zip_code_db_new <- bind_rows(base, additions)
 
@@ -191,6 +187,14 @@ zip_code_db_new$lat[is_zcta_row] <- gaz$INTPTLAT[zi[is_zcta_row]]
 zip_code_db_new$lng[is_zcta_row] <- gaz$INTPTLONG[zi[is_zcta_row]]
 zip_code_db_new$land_area_in_sqmi[is_zcta_row] <- gaz$ALAND_SQMI[zi[is_zcta_row]]
 zip_code_db_new$water_area_in_sqmi[is_zcta_row] <- gaz$AWATER_SQMI[zi[is_zcta_row]]
+
+# A coordinate from the legacy third-party database is not an authoritative
+# centroid for a USPS-only ZIP. Modern bundles therefore publish coordinates
+# only for Census-backed ZCTAs; every unavailable record receives a quality
+# reason in 06_finalize.R.
+non_zcta_row <- !is_zcta_row
+zip_code_db_new$lat[non_zcta_row] <- NA_real_
+zip_code_db_new$lng[non_zcta_row] <- NA_real_
 
 ai <- match(zip_code_db_new$zipcode, acs$zcta)
 ar <- !is.na(ai)
@@ -247,8 +251,17 @@ rownames(zip_code_db_new) <- NULL
 
 saveRDS(zip_code_db_new, file.path(cache_dir, "zip_code_db_candidate.rds"))
 saveRDS(
-  list(imputed_timezone_zips = imputed_tz),
+  list(
+    imputed_timezone_zips = imputed_tz,
+    quarantined_upstream_zips = quarantined101$zipcode,
+    quarantined_supplemental_zips = supplement$zipcode,
+    coordinate_unavailable_zips = zip_code_db_new$zipcode[non_zcta_row]
+  ),
   file.path(cache_dir, "zip_code_db_stats.rds")
+)
+saveRDS(
+  list(upstream_1_0_1 = quarantined101, supplemental = supplement),
+  file.path(cache_dir, "quarantined_zip_candidates.rds")
 )
 message(
   "zip_code_db candidate: ", nrow(zip_code_db_new), " rows (was ",

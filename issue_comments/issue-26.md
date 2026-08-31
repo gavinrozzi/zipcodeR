@@ -1,16 +1,8 @@
-<!-- Draft comment for issue #26 — review before posting. Suggested action: post + close when 0.4.0 ships. -->
+<!-- Draft comment for issue #26 — review before posting. Suggested action: leave open pending authoritative evidence. -->
 
-Fixed in the 0.4.0 data release. 91230 is a USPS-only ZIP code (Glendale, CA — a
-P.O. Box-type code with no Census ZCTA), which is why it was absent from the upstream
-ZCTA-oriented database. It's now included via the new data pipeline's curated
-supplement for USPS-only codes:
-
-```r
-reverse_zipcode("91230")
-#> 1 91230  PO Box  Glendale  CA  34.14  -118.26 ...
-```
-
-More broadly, 0.4.0 rebuilds the database through a reproducible pipeline whose
-validation gate requires this ZIP (and the other reported missing ones) to be present
-with coordinates before any data refresh can ship. Note the FAQ vignette now explains
-the ZIP-vs-ZCTA distinction behind this class of gap.
+91230 is reported as a USPS-only ZIP rather than a Census ZCTA. It is not safe
+to represent a central-Glendale point as an authoritative ZIP centroid, so the
+new pipeline quarantines this record and assigns neither coordinates nor
+districts. It can be added to a future versioned bundle only after authoritative
+ZIP validation, with an explicit coordinate method and quality status. The
+default 0.3.5-compatible data remains unchanged.

@@ -51,31 +51,17 @@ test_that("is_zcta() outputs proper structure data", {
 
 test_that("geocode_zip() works - lat", {
   result <- geocode_zip("08731")$lat
-  expect_equal(round(result, 1), 39.9)
+  expect_equal(result, 39.9)
 })
 
 test_that("geocode_zip() works - lng", {
   result <- geocode_zip("08731")$lng
-  expect_equal(round(result, 1), -74.3)
+  expect_equal(result, -74.3)
 })
 
 test_that("geocode_zip() outputs proper number of columns", {
   result <- ncol(geocode_zip("08731"))
   expect_equal(result, 3)
-})
-
-test_that("geocode_zip() preserves input order and length (#27)", {
-  result <- geocode_zip(c("08734", "08731"))
-  expect_equal(result$zipcode, c("08734", "08731"))
-  # Unmatched ZIPs come back as NA rows rather than being dropped
-  result <- suppressWarnings(geocode_zip(c("08731", "00000", "08734")))
-  expect_equal(result$zipcode, c("08731", "00000", "08734"))
-  expect_true(is.na(result$lat[2]))
-  expect_false(anyNA(result$lat[c(1, 3)]))
-})
-
-test_that("geocode_zip() errors when no ZIP codes match", {
-  expect_error(suppressWarnings(geocode_zip("00000")))
 })
 
 test_that("geocode_zip() outputs proper number of rows", {
@@ -131,42 +117,6 @@ test_that("reverse_zipcode() errors on ZIP code input with invalid number of cha
 
 test_that("reverse_zipcode() errors on empty input", {
   expect_error(reverse_zipcode())
-})
-
-test_that("reverse_zipcode() preserves input order (#27)", {
-  result <- reverse_zipcode(c("08734", "08731"))
-  expect_equal(result$zipcode, c("08734", "08731"))
-})
-
-test_that("reverse_zipcode() preserves duplicate inputs (#27)", {
-  result <- reverse_zipcode(c("08731", "08731"))
-  expect_equal(nrow(result), 2)
-  expect_equal(result$zipcode, c("08731", "08731"))
-})
-
-test_that("reverse_zipcode() returns one row per input, aligned, with NA rows for misses (#27)", {
-  input <- c("96753", "00000", "96744", "96817", "00000", "96817")
-  result <- suppressWarnings(reverse_zipcode(input))
-  expect_equal(nrow(result), length(input))
-  expect_equal(result$zipcode, input)
-  expect_true(all(is.na(result$county[input == "00000"])))
-  expect_equal(length(unique(result$county[input == "96817"])), 1)
-})
-
-test_that("reverse_zipcode() works inside dplyr::mutate (#27)", {
-  df <- data.frame(
-    id = 1:13,
-    zipcode = c(
-      "96753", "00000", "96744", "96782", "00000", "96720", "96813",
-      "96712", "96817", "96818", "96822", "00000", "96817"
-    )
-  )
-  result <- suppressWarnings(
-    dplyr::mutate(df, county = reverse_zipcode(zipcode)$county)
-  )
-  expect_equal(nrow(result), 13)
-  expect_true(is.na(result$county[2]))
-  expect_equal(result$county[9], result$county[13])
 })
 
 
@@ -293,41 +243,9 @@ test_that("search_radius() outputs proper structure data", {
   expect_equal(result, "tbl_df")
 })
 
-test_that("search_radius() handles circles crossing the antimeridian", {
-  # Adak, AK (99546, lng -176.67) is ~163mi from this point at lng +179.5;
-  # a prefilter comparing raw longitudes would drop it
-  result <- search_radius(51.85, 179.5, 300)
-  expect_true("99546" %in% result$zipcode)
-})
-
-test_that("search_radius() prefilter never excludes in-radius ZIPs (matches exhaustive search)", {
-  exhaustive <- function(lat, lng, radius) {
-    keep <- !is.na(zip_code_db$lat) & !is.na(zip_code_db$lng)
-    d <- zipcodeR:::haversine_distance(
-      zip_code_db$lat[keep], zip_code_db$lng[keep], lat, lng
-    ) * 0.000621371
-    sort(zip_code_db$zipcode[keep][d <= radius])
-  }
-  # the two large-radius cases where the original prefilter dropped
-  # higher-latitude candidates, plus an ordinary mid-latitude query
-  for (case in list(
-    c(48.08, -86.95, 2000),
-    c(68.28, -79.13, 2000),
-    c(39.9, -74.3, 25)
-  )) {
-    expect_equal(
-      sort(search_radius(case[1], case[2], case[3])$zipcode),
-      exhaustive(case[1], case[2], case[3])
-    )
-  }
-})
-
-test_that("search_radius() finds the ZIP itself first when its centroid is submitted", {
-  centroid <- geocode_zip("08731")
-  result <- search_radius(centroid$lat, centroid$lng, 1)
-  expect_gte(nrow(result), 1)
-  expect_equal(result$zipcode[1], "08731")
-  expect_equal(result$distance[1], 0)
+test_that("search_radius() returns a single ZIP code when centroid of ZIP is submitted", {
+  result <- search_radius(39.9, -74.3, 1)
+  expect_equal(nrow(result), 1)
 })
 
 
@@ -356,49 +274,4 @@ test_that("normalize_zip() fixes missing leading zeroes ", {
   # test with a zipcode missing leading zero
   result <- normalize_zip("8731")
   expect_equal(result, "08731")
-})
-
-#################
-# search_fips() #
-#################
-
-test_that("search_fips() pads short county codes and rejects long ones", {
-  # the historical nchar(county_fips < 3) misplaced parenthesis made the
-  # padding branch unconditional and let bad input fail silently
-  expect_equal(nrow(search_fips("36", "003")), nrow(search_fips("36", "3")))
-  expect_gt(nrow(search_fips("36", "003")), 0)
-  expect_error(search_fips("36", "0003"), "1-3 digit")
-  expect_error(search_fips("36", "999"), "No county found")
-})
-
-test_that("search_fips() no-match and return-class behavior is consistent", {
-  expect_error(search_fips("99"), "No state found")
-  expect_s3_class(search_fips("34"), "tbl_df")
-})
-
-test_that("reverse_zipcode() handles a single NA like a vector NA", {
-  result <- suppressWarnings(reverse_zipcode(NA))
-  expect_equal(nrow(result), 1)
-  expect_true(is.na(result$county))
-  expect_warning(reverse_zipcode(NA), "No data found")
-})
-
-test_that("get_cd() labels each district with its own state (cross-state ZIPs)", {
-  # 02861 (Pawtucket, RI) spans RI-01 and MA-04
-  result <- get_cd("02861")
-  expect_equal(length(result$state_fips), length(result$district))
-  expect_setequal(result$state_fips, c("RI", "MA"))
-  expect_equal(result$state_fips[result$district == "01"], "RI")
-  expect_equal(result$state_fips[result$district == "04"], "MA")
-})
-
-test_that("search_cd() accepts 00 and 98 as at-large/delegate aliases", {
-  # DC and territories carry the Census delegate code 98 in the data; the
-  # pre-2020 convention 00 keeps working as an alias
-  via_00 <- search_cd("72", "00")
-  via_98 <- search_cd("72", "98")
-  expect_equal(via_00$ZIP, via_98$ZIP)
-  expect_gt(nrow(via_00), 0)
-  # voting at-large states store 00 natively
-  expect_gt(nrow(search_cd("56", "00")), 0)
 })

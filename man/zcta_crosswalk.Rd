@@ -3,13 +3,13 @@
 \docType{data}
 \name{zcta_crosswalk}
 \alias{zcta_crosswalk}
-\title{ZCTA to Census Tract (2020) Crosswalk}
+\title{ZCTA to Census Tract (2010) Crosswalk}
 \format{
-A data frame with 168212 rows and 3 variables:
+A data frame with 148897 rows and 3 variables:
 \describe{
-\item{ZCTA5}{2020 ZIP Code Tabulation Area}
-\item{TRACT}{2020 Census Tract Code}
-\item{GEOID}{Concatenation of 2020 State, County, and Tract}
+\item{ZCTA5}{2010 ZIP Code Tabulation Area}
+\item{TRACT}{2010 Census Tract Code}
+\item{GEOID}{Concatenation of 2010 State, County, and Tract}
 }
 }
 \source{
@@ -19,6 +19,11 @@ A data frame with 168212 rows and 3 variables:
 zcta_crosswalk
 }
 \description{
-A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official relationship file. Built by \code{data-raw/03_build_zcta_crosswalk.R}; see \code{zip_data_version()} for the data release.
+A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.
+}
+\details{
+This is the exact dataset distributed by zipcodeR 0.3.5. It is intentionally
+frozen so legacy calls remain reproducible; newer versioned relationships
+are available only through an explicit data bundle and the \verb{_ng} API.
 }
 \keyword{datasets}

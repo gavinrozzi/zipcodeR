@@ -1,5 +1,13 @@
 # zipcodeR Phase 0 Audit
 
+> **Historical discovery document.** This audit predates differential testing
+> against the installed 0.3.5 package. That later testing showed that replacing
+> datasets, distance algorithms, conditions, and side effects would break the
+> research-reproducibility contract. Recommendations below such as removing
+> `raster`, changing distance math, or refreshing bundled data are therefore
+> superseded for the 0.4.0 legacy API. They may inform the explicit `_ng` API or
+> a future major release only; see `ROADMAP.md` and `NEWS.md` for current policy.
+
 **Date:** 2026-08-24 · **Branch:** `modernization-2026` · **Package version audited:** 0.3.5 (master @ 48ed689)
 
 This document records the discovery phase of the modernization effort: the current state of

@@ -1,9 +1,19 @@
 # Orchestrator for the zipcodeR data pipeline. Run from the package root:
 #
-#   Rscript data-raw/run_pipeline.R
+#   PIPELINE_MODE=rebuild PIPELINE_DATA_VERSION=2026.08 \
+#     PIPELINE_BUILD_TIMESTAMP=2026-08-24T00:00:00Z \
+#     Rscript data-raw/run_pipeline.R
 #
-# Requires: CENSUS_API_KEY in the environment (free registration at
-# https://api.census.gov/data/key_signup.html). See data-raw/README.md.
+# See data-raw/README.md. CENSUS_API_KEY is needed only when the archived raw
+# ACS response is absent.
+
+if (!identical(Sys.getenv("PIPELINE_MODE"), "rebuild")) {
+  stop(
+    "run_pipeline.R only performs deterministic rebuilds. Set ",
+    "PIPELINE_MODE=rebuild, or run data-raw/refresh_sources.R to inspect ",
+    "upstream sources for a future version."
+  )
+}
 
 steps <- c(
   "01_acquire.R",
@@ -17,4 +27,4 @@ for (step in steps) {
   message("== ", step, " ==")
   source(file.path("data-raw", step))
 }
-message("pipeline complete. Review data-raw/refresh_summary.md and the git diff.")
+message("pipeline complete. Review data-raw/refresh_summary.md and data-raw/release/.")

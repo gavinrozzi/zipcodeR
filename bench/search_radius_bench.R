@@ -1,31 +1,22 @@
-# Benchmark for search_radius() (issue #33).
+# Benchmark for the reproducibility-safe search_radius() optimization.
 # Run from the package root: Rscript bench/search_radius_bench.R
-#
-# Compares three implementations against the bundled zip_code_db:
-#   loop       - the pre-0.4.0 implementation (per-row distance calls)
-#   vectorized - one haversine pass over all ~34k coordinate rows
-#   boxed      - 0.4.0+: bounding-box prefilter, then haversine on candidates
 
 suppressMessages(devtools::load_all(quiet = TRUE))
-hav <- zipcodeR:::haversine_distance
+`%>%` <- dplyr::`%>%`
 
-zip_data_all <- zip_code_db[!is.na(zip_code_db$lat) & !is.na(zip_code_db$lng), ]
-
-loop_impl <- function(lat, lng, radius = 1) {
-  zip_data <- zip_data_all
-  zip_data$distance <- NA_real_
+legacy_loop <- function(lat, lng, radius = 1) {
+  zip_data <- zip_code_db %>% dplyr::filter(lat != "NA")
   for (i in seq_len(nrow(zip_data))) {
-    zip_data$distance[i] <- hav(zip_data$lat[i], zip_data$lng[i], lat, lng) * 0.000621371
+    zip_data$distance[i] <- raster::pointDistance(
+      c(lng, lat), c(zip_data$lng[i], zip_data$lat[i]), lonlat = TRUE
+    )
   }
-  zip_data <- zip_data[zip_data$distance <= radius, c("zipcode", "distance")]
-  zip_data[order(zip_data$distance), ]
-}
-
-vectorized_impl <- function(lat, lng, radius = 1) {
-  zip_data <- zip_data_all
-  zip_data$distance <- hav(zip_data$lat, zip_data$lng, lat, lng) * 0.000621371
-  zip_data <- zip_data[zip_data$distance <= radius, c("zipcode", "distance")]
-  zip_data[order(zip_data$distance), ]
+  zip_data$distance <- zip_data$distance * 0.000621371
+  zip_data %>%
+    dplyr::filter(.data$distance <= radius) %>%
+    dplyr::select(.data$zipcode, .data$distance) %>%
+    dplyr::as_tibble() %>%
+    dplyr::arrange(.data$distance)
 }
 
 cases <- list(
@@ -34,19 +25,18 @@ cases <- list(
   rural_50mi = list(lat = 44.5, lng = -110.0, radius = 50)
 )
 
-for (nm in names(cases)) {
-  cs <- cases[[nm]]
-  # correctness: boxed must return the same set as the full vectorized pass
-  full <- vectorized_impl(cs$lat, cs$lng, cs$radius)
-  boxed <- search_radius(cs$lat, cs$lng, cs$radius)
-  stopifnot(identical(sort(full$zipcode), sort(boxed$zipcode)))
+for (name in names(cases)) {
+  case <- cases[[name]]
+  legacy <- legacy_loop(case$lat, case$lng, case$radius)
+  optimized <- search_radius(case$lat, case$lng, case$radius)
+  stopifnot(identical(legacy, optimized))
 
-  res <- bench::mark(
-    loop = loop_impl(cs$lat, cs$lng, cs$radius),
-    vectorized = vectorized_impl(cs$lat, cs$lng, cs$radius),
-    boxed = search_radius(cs$lat, cs$lng, cs$radius),
-    check = FALSE, min_iterations = 5
+  result <- bench::mark(
+    legacy_loop = legacy_loop(case$lat, case$lng, case$radius),
+    vectorized_wgs84 = search_radius(case$lat, case$lng, case$radius),
+    check = TRUE,
+    min_iterations = 3
   )
-  cat("\n==", nm, sprintf("(%d ZIPs in radius)\n", nrow(boxed)))
-  print(res[, c("expression", "median", "itr/sec", "mem_alloc")])
+  cat("\n==", name, sprintf("(%d ZIPs in radius)\n", nrow(optimized)))
+  print(result[, c("expression", "median", "itr/sec", "mem_alloc")])
 }

@@ -3,8 +3,8 @@
 # Every static source is pinned by URL and SHA256. When a source publisher
 # updates a file in place (Census relationship files are stable; Gazetteer and
 # GeoNames get new vintages), update the URL/sha256 here and record the change
-# in the data release notes. API sources (Census ACS) cannot be checksummed;
-# their vintage is pinned via the endpoint year.
+# in the data release notes. The exact Census ACS response is also archived
+# and checksummed; its endpoint, variables, geography, and vintage are pinned.
 
 PIPELINE_SOURCES <- list(
   zcta_tract_rel = list(
@@ -34,12 +34,9 @@ PIPELINE_SOURCES <- list(
   geonames_us = list(
     description = "GeoNames U.S. postal codes (place names, admin areas, coordinates)",
     url = "https://download.geonames.org/export/zip/US.zip",
-    # GeoNames regenerates this file in place (near-daily), so its checksum
-    # cannot be enforced without breaking every scheduled refresh. floating =
-    # TRUE makes 01_acquire.R RECORD the downloaded hash (in the acquire log
-    # and refresh summary) instead of failing on mismatch; the hash below is
-    # the one from the 2026.08 build, kept for provenance.
-    floating = TRUE,
+    # GeoNames regenerates this URL in place. Published releases therefore pin
+    # and archive the exact downloaded bytes; a refresh requires a deliberate
+    # checksum update and creates a new data version.
     sha256 = "34bf4144bf1231c2da500127bbbf7020920bb4331de403b5d850b77f45a8f509",
     license = "CC BY 4.0 (GeoNames) - attribution required, kept in data docs"
   ),
@@ -51,9 +48,13 @@ PIPELINE_SOURCES <- list(
   )
 )
 
-# API-based sources (no checksum possible; vintage pinned by endpoint)
+# The ACS request is archived and checksummed just like a static source. The
+# endpoint and vintage document how a maintainer creates a deliberately new
+# archive; deterministic rebuilds consume the archived bytes.
 ACS_VINTAGE <- 2023 # ACS 5-year estimates, 2019-2023
 ACS_ENDPOINT <- sprintf("https://api.census.gov/data/%d/acs/acs5", ACS_VINTAGE)
+ACS_RESPONSE_SHA256 <- "e3abe3892e69d907d179a01f1c605372425cedaab59defba5e337770467db50c"
+ACS_DERIVED_SHA256 <- "93579acf61ca194170990f720b1fbdc7e1d0d0dbf7696fa502e83633bd02deb4"
 ACS_VARIABLES <- c(
   population = "B01003_001E",
   housing_units = "B25001_001E",
@@ -62,10 +63,16 @@ ACS_VARIABLES <- c(
   median_household_income = "B19013_001E"
 )
 
-# Data release identity. Derived from the build date so scheduled refreshes
-# stamp a new version automatically; override with PIPELINE_DATA_VERSION for
-# a rebuild of an existing release.
-DATA_VERSION <- Sys.getenv("PIPELINE_DATA_VERSION", format(Sys.Date(), "%Y.%m"))
+# A published data identity is always explicit. Dates and aliases such as
+# "latest" are deliberately rejected because the same research script must
+# resolve to the same bytes indefinitely.
+DATA_VERSION <- Sys.getenv("PIPELINE_DATA_VERSION")
+if (!nzchar(DATA_VERSION)) {
+  stop("PIPELINE_DATA_VERSION must be set to an explicit version such as 2026.08.")
+}
+if (DATA_VERSION %in% c("latest", "current", "stable")) {
+  stop("PIPELINE_DATA_VERSION must be immutable, not an alias such as 'latest'.")
+}
 
 # The comprehensive-database release asset that download_comprehensive_data()
 # should fetch. This is pinned EXPLICITLY - not derived from DATA_VERSION -
@@ -78,14 +85,3 @@ COMPREHENSIVE_RELEASE <- list(
   asset = "comprehensive_db.sqlite",
   sha256 = "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"
 )
-
-# One-time accepted loss of congressional-district coverage for the 2026.08
-# rebuild: the USPS-only ZIPs enumerated in accepted_cd_coverage_loss.txt
-# were mapped by the old pre-2020 HUD crosswalk but have no principled
-# current-vintage derivation (no ZCTA, no covered same-city peer,
-# multi-district state). Their stale district numbers were deliberately NOT
-# carried forward (see NEWS 0.4.0); the planned HUD-USPS stage restores them
-# with current data. The gate accepts losing ONLY the ZIPs on this exact
-# list - any other coverage loss fails - so the acceptance cannot mask a
-# future regression. Empty the file after the 2026.08 release ships.
-ACCEPTED_CD_COVERAGE_LOSS_FILE <- file.path("data-raw", "accepted_cd_coverage_loss.txt")

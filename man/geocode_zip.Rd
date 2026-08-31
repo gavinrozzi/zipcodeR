@@ -2,24 +2,18 @@
 % Please edit documentation in R/zip_lookups.r
 \name{geocode_zip}
 \alias{geocode_zip}
-\title{Returns the lat / lon pair of the centroid of a given ZIP code}
+\title{Returns that lat / lon pair of the centroid of a given ZIP code}
 \usage{
 geocode_zip(zip_code)
 }
 \arguments{
-\item{zip_code}{A 5-digit U.S. ZIP code or character vector with multiple ZIP codes}
+\item{zip_code}{A 5-digit U.S. ZIP code}
 }
 \value{
-A tibble of coordinates with one row per element of \code{zip_code},
-in input order (duplicates preserved). ZIP codes with no match return a row
-of NA coordinates (with a warning); an error is raised only when no input
-ZIP code matches at all.
+tibble of lat lon coordinates
 }
 \description{
-Note on sign convention: longitudes in the United States are negative
-because the U.S. lies in the western hemisphere (west of the prime
-meridian). This is the standard convention, not an error; do not flip
-the sign of \code{lng}.
+Returns that lat / lon pair of the centroid of a given ZIP code
 }
 \examples{
 geocode_zip("07762")

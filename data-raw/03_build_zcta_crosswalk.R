@@ -1,6 +1,7 @@
 # Step 3: build the refreshed zcta_crosswalk (2020 ZCTA <-> 2020 tract) in
-# the exact schema of the shipped dataset: tibble(ZCTA5 chr, TRACT chr(6),
-# GEOID numeric(11-digit state+county+tract)).
+# the modern bundle schema: tibble(ZCTA5 chr, TRACT chr(6), GEOID chr(11)).
+# GEOIDs are identifiers, not quantities; character storage prevents leading
+# zero loss and floating-point formatting in research exports.
 
 suppressMessages(library(dplyr))
 cache_dir <- file.path("data-raw", "cache")
@@ -16,7 +17,7 @@ zcta_crosswalk_new <- rel %>%
   transmute(
     ZCTA5 = .data$GEOID_ZCTA5_20,
     TRACT = substr(.data$GEOID_TRACT_20, 6, 11),
-    GEOID = as.numeric(.data$GEOID_TRACT_20)
+    GEOID = .data$GEOID_TRACT_20
   ) %>%
   distinct() %>%
   arrange(.data$ZCTA5, .data$GEOID) %>%

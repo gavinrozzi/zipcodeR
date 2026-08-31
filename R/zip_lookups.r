@@ -76,11 +76,8 @@ search_county <- function(county_name, state_abb, ...) {
 #' Given a ZIP code, returns columns of metadata about that ZIP code
 #'
 #'
-#' @param zip_code A 5-digit U.S. ZIP code or character vector with multiple ZIP codes
-#' @return A tibble with one row per element of \code{zip_code}, in input order
-#'   (duplicates preserved). ZIP codes with no match in \code{zip_code_db} return
-#'   a row of NA values (with a warning), so the output is always the same length
-#'   as the input and safe to use inside \code{dplyr::mutate()}.
+#' @param zip_code A 5-digit U.S. ZIP code or chracter vector with multiple ZIP codes
+#' @return A tibble containing data for the ZIP code(s)
 #'
 #' @examples
 #' reverse_zipcode("90210")
@@ -91,8 +88,7 @@ search_county <- function(county_name, state_abb, ...) {
 #' @export
 reverse_zipcode <- function(zip_code) {
   # Sanity check: validate input for single ZIP before doing anything else
-  # (NA input is not an error - it yields an NA row, as in the vector case)
-  if (length(zip_code) == 1 && !is.na(zip_code)) {
+  if (length(zip_code) == 1) {
     zip_char <- nchar(as.character(zip_code))
     if (zip_char != 5) {
       stop(paste("Invalid ZIP code detected, expected 5 digit ZIP code, got", zip_char))
@@ -101,19 +97,23 @@ reverse_zipcode <- function(zip_code) {
 
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
+  # Get matching ZIP code record for
+  zip_code_data <- zip_code_db %>%
+    dplyr::filter(.data$zipcode %in% zip_code)
 
-  # Match each input against the database, preserving input order and
-  # duplicates so the result always has one row per input element
-  matched <- match(zip_code, zip_code_db$zipcode)
-
-  for (missing_zip in unique(zip_code[is.na(matched)])) {
-    warning(paste("No data found for ZIP code", missing_zip))
+  # Iterate over input and insert NA rows for those with no match
+  for (i in seq_along(zip_code)) {
+    if (zip_code[i] %in% zip_code_db$zipcode == FALSE) {
+      warning(paste("No data found for ZIP code", zip_code[i]))
+      zip_code_data <- zip_code_data %>%
+        dplyr::add_row(zipcode = zip_code[i], .before = i)
+    }
   }
 
-  zip_code_data <- zip_code_db[matched, , drop = FALSE]
-  # Unmatched inputs become NA rows; keep the queried ZIP in the zipcode column
-  zip_code_data$zipcode <- zip_code
-
+  # Throw an error if nothing found
+  if (nrow(zip_code_data) == 0) {
+    stop(paste("No data found for provided ZIP code", .data$zip_code, ",", .data$state))
+  }
   return(dplyr::as_tibble(zip_code_data))
 }
 #' Search ZIP codes for a given city within a state
@@ -181,50 +181,26 @@ search_tz <- function(tz) {
 #' @importFrom rlang .data
 #' @export
 search_fips <- function(state_fips, county_fips) {
-  # Both arguments index a single row of the FIPS table, so they are defined
-  # for one code at a time; a vector would silently recycle against the lookup
-  if (length(state_fips) != 1) {
-    stop(
-      "`state_fips` must be a single state FIPS code, not a vector of length ",
-      length(state_fips), ". Iterate (e.g. lapply) for multiple states."
-    )
-  }
-  # Census FIPS code table bundled as internal data (see data-raw/fips_codes.R)
-  fips_data <- fips_codes
+  # Get FIPS code data from tidycensus
+  fips_data <- tidycensus::fips_codes
   # Separate routine if only state_fips code provided
   if (missing(county_fips)) {
     # Get matching FIPS data for provided state FIPS code
     fips_result <- fips_data %>%
       dplyr::filter(.data$state_code == state_fips)
-    if (nrow(fips_result) == 0) {
-      stop("No state found for FIPS code ", state_fips)
-    }
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
     result <- zip_code_db %>%
       dplyr::filter(.data$state == fips_result$state[1])
-    return(dplyr::as_tibble(result))
+    return(result)
   } else {
     # Clean up county FIPS code input by adding leading zeroes to match FIPS code data if not present
-    if (length(county_fips) != 1) {
-      stop(
-        "`county_fips` must be a single county FIPS code, not a vector of ",
-        "length ", length(county_fips),
-        ". Iterate (e.g. lapply) for multiple counties."
-      )
-    }
-    county_fips <- as.character(county_fips)
-    if (nchar(county_fips) > 3) {
-      stop("`county_fips` must be a 1-3 digit county FIPS code, got: ", county_fips)
-    }
-    if (nchar(county_fips) < 3) {
-      county_fips <- base::paste0(strrep("0", 3 - nchar(county_fips)), county_fips)
+    if (nchar(county_fips < 3)) {
+      difference <- base::abs(nchar(county_fips) - 3)
+      county_fips <- base::paste0(strrep("0", difference), county_fips)
     }
     # Get matching FIPS data for provided state & county FIPS code
     fips_result <- fips_data %>%
       dplyr::filter(.data$state_code == state_fips & .data$county_code == county_fips)
-    if (nrow(fips_result) == 0) {
-      stop("No county found for FIPS code ", state_fips, county_fips)
-    }
     # Compare ZIP code database against provided state FIPS code, store matching ZIP code entries
     result <- zip_code_db %>%
       dplyr::filter(.data$state == fips_result$state[1] & .data$county == fips_result$county[1])
@@ -258,57 +234,34 @@ get_tracts <- function(zip_code) {
 }
 #' Get all congressional districts for a given ZIP code
 #'
-#' @param zip_code A single U.S. ZIP code
-#' @return a named list with \code{state_fips} (state abbreviations) and
-#'   \code{district} (two-digit district codes). The two vectors are parallel:
-#'   ZIP codes spanning multiple districts return one element per district,
-#'   each labeled with its own state (some ZIP codes cross state lines).
-#'   Non-voting delegate districts (DC and the territories) use the Census
-#'   code \code{"98"}.
+#' @param zip_code A U.S. ZIP code
+#' @return a named list of two-digit state code and two digit district code
 #'
 #' @examples
 #' get_cd("08731")
 #' get_cd("90210")
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
+#' @import tidycensus
 #' @export
 get_cd <- function(zip_code) {
-  # get_cd() returns a single list, so it is defined for one ZIP at a time;
-  # recycling a vector against the lookup table would silently mis-match
-  if (length(zip_code) != 1) {
-    stop(
-      "`zip_code` must be a single ZIP code, not a vector of length ",
-      length(zip_code), ". Iterate (e.g. lapply) for multiple ZIP codes."
-    )
-  }
-  # Convert to character so leading zeroes are preserved
-  zip_code <- as.character(zip_code)
+  # Get state FIPS codes data from tidycensus library
+  state_fips <- tidycensus::fips_codes
   # Match ZIP codes with congressional districts located within this ZIP
   matched_cds <- zip_to_cd %>%
     dplyr::filter(.data$ZIP == zip_code)
-  if (nrow(matched_cds) == 0) {
-    if (zip_code %in% zip_code_db$zipcode) {
-      warning(paste(
-        "No congressional district found for ZIP code", zip_code,
-        "- military and some USPS-only ZIP codes have no district mapping"
-      ))
-    } else {
-      warning(paste(
-        "ZIP code", zip_code, "not found in zip_code_db -",
-        "check the input (5-digit character ZIP, leading zeros preserved)"
-      ))
-    }
-  }
   # Break out the match from the ZIP to congressional district lookup into state FIPS code and congressional district codes
   district <- stringr::str_sub(matched_cds$CD, -2)
-  state_code <- stringr::str_sub(matched_cds$CD, 1, 2)
-  # Resolve state abbreviations from the bundled Census FIPS table (see
-  # data-raw/fips_codes.R). state_fips is parallel to district so that ZIP
-  # codes spanning a state line (e.g. 02861 in both RI-01 and MA-04) label
-  # every district with its own state.
-  state_abb <- fips_codes$state[match(state_code, fips_codes$state_code)]
+  state <- stringr::str_sub(matched_cds$CD, 1, 2)
+  # Bind the separated district and state codes together as a dataframe
+  result <- data.frame(cbind(district, state))
+  # Join the lookup result with tidycensus FIPS code data for more info
+  joined <- result %>%
+    dplyr::left_join(state_fips, by = c("state" = "state_code"))
+  output <- data.frame(joined$state.y[1], district) %>%
+    dplyr::rename("state" = "joined.state.y.1.")
 
-  return(list(state_fips = state_abb, district = district))
+  return(list(state_fips = joined$state.y[1], district = district))
 }
 #' Get all ZIP codes that fall within a given congressional district
 #'
@@ -323,38 +276,15 @@ get_cd <- function(zip_code) {
 #' @importFrom rlang .data
 #' @export
 search_cd <- function(state_fips_code, congressional_district) {
-  # One district at a time: the arguments are pasted into a single lookup code
-  # and stamped onto the result, so a vector would silently recycle
-  if (length(state_fips_code) != 1) {
-    stop(
-      "`state_fips_code` must be a single state FIPS code, not a vector of ",
-      "length ", length(state_fips_code),
-      ". Iterate (e.g. lapply) for multiple states."
-    )
-  }
-  if (length(congressional_district) != 1) {
-    stop(
-      "`congressional_district` must be a single district code, not a vector ",
-      "of length ", length(congressional_district),
-      ". Iterate (e.g. lapply) for multiple districts."
-    )
-  }
-  # "00" (the pre-2020 at-large convention this package used to ship) and
-  # "98" (the Census delegate/resident-commissioner code now in zip_to_cd for
-  # DC and the territories) are accepted as aliases of one another
-  district_codes <- congressional_district
-  if (congressional_district %in% c("00", "98")) {
-    district_codes <- c("00", "98")
-  }
-  # Create codes from state and congressional district to match lookup table
-  cd_code <- base::paste0(state_fips_code, district_codes)
+  # Create code from state and congressional district to match lookup table
+  cd_code <- base::paste0(state_fips_code, congressional_district)
   matched_zips <- zip_to_cd %>%
-    dplyr::filter(.data$CD %in% cd_code)
+    dplyr::filter(.data$CD == cd_code)
   if (nrow(matched_zips) == 0) {
     stop(paste("No ZIP codes found for congressional district:", congressional_district))
   }
   output <- matched_zips %>%
-    dplyr::select(-"CD")
+    dplyr::select(-.data$CD)
   output$state_fips <- state_fips_code
   output$congressional_district <- congressional_district
   return(dplyr::as_tibble(output))
@@ -379,18 +309,11 @@ is_zcta <- function(zip_code) {
   return(result)
 }
 
-#' Returns the lat / lon pair of the centroid of a given ZIP code
+#' Returns that lat / lon pair of the centroid of a given ZIP code
 #'
-#' Note on sign convention: longitudes in the United States are negative
-#' because the U.S. lies in the western hemisphere (west of the prime
-#' meridian). This is the standard convention, not an error; do not flip
-#' the sign of \code{lng}.
 #'
-#' @param zip_code A 5-digit U.S. ZIP code or character vector with multiple ZIP codes
-#' @return A tibble of coordinates with one row per element of \code{zip_code},
-#'   in input order (duplicates preserved). ZIP codes with no match return a row
-#'   of NA coordinates (with a warning); an error is raised only when no input
-#'   ZIP code matches at all.
+#' @param zip_code A 5-digit U.S. ZIP code
+#' @return tibble of lat lon coordinates
 #'
 #' @examples
 #' geocode_zip("07762")
@@ -403,26 +326,15 @@ geocode_zip <- function(zip_code) {
   # Convert to character so leading zeroes are preserved
   zip_code <- as.character(zip_code)
 
-  # Match against the database, preserving input order and duplicates
-  matched <- match(zip_code, zip_code_db$zipcode)
+  # Get matching ZIP code record for
+  result <- zip_code_db %>%
+    dplyr::filter(.data$zipcode %in% zip_code) %>%
+    dplyr::select(.data$zipcode, .data$lat, .data$lng) %>%
+    dplyr::as_tibble()
 
-  if (all(is.na(matched))) {
-    stop(paste("No results found for ZIP code", paste(zip_code, collapse = ", ")))
+  if (nrow(result) == 0) {
+    stop(paste("No results found for ZIP code", zip_code))
   }
-
-  if (anyNA(matched)) {
-    warning(paste(
-      "No results found for ZIP code(s):",
-      paste(unique(zip_code[is.na(matched)]), collapse = ", ")
-    ))
-  }
-
-  # Unmatched inputs come back as NA rows rather than being dropped
-  result <- dplyr::tibble(
-    zipcode = zip_code,
-    lat = zip_code_db$lat[matched],
-    lng = zip_code_db$lng[matched]
-  )
 
   return(result)
 }
@@ -438,59 +350,65 @@ geocode_zip <- function(zip_code) {
 #' \dontrun{
 #' search_radius(39.9, -74.3, 10)
 #' }
+#' @importFrom raster pointDistance
 #' @export
 search_radius <- function(lat, lng, radius = 1) {
-  if (!is.numeric(lat) || length(lat) != 1 || is.na(lat) || abs(lat) > 90) {
-    stop("`lat` must be a single latitude between -90 and 90")
-  }
-  if (!is.numeric(lng) || length(lng) != 1 || is.na(lng) || abs(lng) > 180) {
-    stop("`lng` must be a single longitude between -180 and 180")
-  }
-  if (!is.numeric(radius) || length(radius) != 1 || is.na(radius) || radius <= 0) {
-    stop("`radius` must be a single positive number of miles")
-  }
 
-  # Work on just the three needed columns; the full database carries heavy
-  # list columns that are expensive to subset
-  keep <- !is.na(zip_code_db$lat) & !is.na(zip_code_db$lng)
+  # Create an instance of the ZIP code database for calculating distance,
+  # filter to those with lat / lon pairs
+  zip_data <- zip_code_db %>%
+    dplyr::filter(lat != "NA")
 
-  # Cheap bounding-box prefilter before the exact haversine pass, sized so no
-  # candidate inside the radius can be excluded:
-  # - the latitude window uses 69 statute miles per degree (constant),
-  # - the longitude window is computed at the highest-|latitude| edge of the
-  #   search circle (where meridians are closest together), not at the query
-  #   point, so it is wide enough for every candidate latitude in the window,
-  # - longitude differences are wrapped onto [-180, 180] so circles crossing
-  #   the antimeridian (western Aleutians, Guam) keep their candidates,
-  # - if the circle nears a pole or spans all longitudes, skip the prefilter.
-  lat_delta <- radius / 69.0 * 1.05
-  edge_lat <- min(abs(lat) + lat_delta, 90)
-  if (edge_lat < 89) {
-    lng_delta <- radius / (69.172 * cos(edge_lat * pi / 180)) * 1.05
-    keep <- keep &
-      zip_code_db$lat >= lat - lat_delta & zip_code_db$lat <= lat + lat_delta
-    if (lng_delta < 180) {
-      lng_diff <- abs(((zip_code_db$lng - lng + 180) %% 360) - 180)
-      keep <- keep & lng_diff <= lng_delta
+  # For ordinary scalar queries, discard points that cannot possibly be in
+  # the result before calling the unchanged WGS84 calculation. Sixty statute
+  # miles per degree is deliberately broader than the WGS84 minimum, and the
+  # longitude test uses the most poleward edge of the latitude band. This is
+  # therefore a conservative prefilter, not a distance approximation.
+  # Unusual/invalid inputs bypass it so their historical conditions remain
+  # byte-for-byte comparable with 0.3.5.
+  ordinary_query <- is.numeric(lat) && length(lat) == 1L && !is.na(lat) &&
+    is.finite(lat) && abs(lat) <= 90 &&
+    is.numeric(lng) && length(lng) == 1L && !is.na(lng) &&
+    is.finite(lng) && abs(lng) <= 180 &&
+    is.numeric(radius) && length(radius) == 1L && !is.na(radius) &&
+    is.finite(radius) && radius >= 0
+  if (ordinary_query) {
+    lat_delta <- radius / 60
+    keep <- zip_data$lat >= lat - lat_delta & zip_data$lat <= lat + lat_delta
+    edge_lat <- abs(lat) + lat_delta
+    if (edge_lat < 89) {
+      lng_delta <- radius / (60 * cos(edge_lat * pi / 180))
+      if (lng_delta < 180) {
+        lng_difference <- abs(((zip_data$lng - lng + 180) %% 360) - 180)
+        keep <- keep & lng_difference <= lng_delta
+      }
     }
+    zip_data <- zip_data[keep, , drop = FALSE]
   }
 
-  zip_data <- dplyr::tibble(
-    zipcode = zip_code_db$zipcode[keep],
-    lat = zip_code_db$lat[keep],
-    lng = zip_code_db$lng[keep]
-  )
+  # Calculate the same pairwise WGS84 geodesic distances as the historical
+  # row-by-row implementation, but in one vectorized raster call. Repeating
+  # the query point keeps pointDistance() in pairwise mode and preserves the
+  # exact legacy algorithm, values, row order, and NA handling.
+  if (nrow(zip_data)) {
+    query_points <- matrix(c(lng, lat), nrow = nrow(zip_data), ncol = 2, byrow = TRUE)
+    zip_points <- cbind(zip_data$lng, zip_data$lat)
+    zip_data$distance <- raster::pointDistance(
+      query_points, zip_points, lonlat = TRUE
+    )
+  } else {
+    zip_data$distance <- numeric(0)
+  }
 
-  # Calculate the distance between all points and the provided coordinate
-  # pair, converting meters to miles
-  zip_data$distance <-
-    haversine_distance(zip_data$lat, zip_data$lng, lat, lng) * 0.000621371
+  # Convert meters to miles for distance measurement
+  zip_data$distance <- zip_data$distance * 0.000621371
 
   # Get matching ZIP codes within specified search radius
   result <- zip_data %>%
     # Filter results to those less than or equal to the search radius
     dplyr::filter(.data$distance <= radius) %>%
-    dplyr::select("zipcode", "distance") %>%
+    dplyr::select(.data$zipcode, .data$distance) %>%
+    dplyr::as_tibble() %>%
     dplyr::arrange(.data$distance)
 
   # Warn if there is nothing found

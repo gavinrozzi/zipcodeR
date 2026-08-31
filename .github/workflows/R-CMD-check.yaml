@@ -31,6 +31,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -44,6 +46,11 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+
+      - name: Exact zipcodeR 0.3.5 differential gate
+        env:
+          ZIPCODER_BASELINE_REF: origin/master
+        run: Rscript tools/compatibility-check.R
 
       - uses: r-lib/actions/check-r-package@v2
         with:

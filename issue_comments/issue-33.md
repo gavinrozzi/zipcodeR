@@ -1,16 +1,12 @@
-<!-- Draft comment for issue #33 — review before posting. Suggested action: post now; close after the Phase 3 benchmark lands (or close at 0.4.0 if satisfied). -->
+<!-- Draft comment for issue #33 — review before posting. Suggested action: close after CI confirms exact parity. -->
 
-Thanks for the analysis and the proposed fix — you were exactly right that the
-per-row loop was the problem.
+The per-row distance loop has been replaced by one vectorized
+`raster::pointDistance()` call, with a conservative bounding-box prefilter for
+ordinary valid scalar inputs. This retains the exact legacy WGS84 algorithm,
+membership, ordering, distances, and invalid-input conditions while reducing
+representative calls from about one second to roughly 10–15 ms locally.
 
-As of 0.4.0, `search_radius()` computes all ~42k distances in a single vectorized
-call using an internal haversine implementation (the `raster` dependency is gone
-entirely), taking a typical query from multiple seconds to ~10 ms on my machine —
-in line with the ~40× speedup you measured, plus the constant-factor win from
-dropping the `raster` dispatch overhead. Your fix also surfaced a latent bug: the
-`filter(lat != "NA")` line was a no-op due to argument shadowing, and the NA
-filtering now actually happens.
-
-A bounding-box prefilter (cheap lat/lng window before the haversine pass) and a
-formal benchmark script are planned as a follow-up. Leaving this open until those
-land — but the pathological slowness is fixed in 0.4.0.
+The benchmark asserts `identical()` results before reporting speed, and the
+isolated 0.3.5 compatibility harness covers radius boundaries and antimeridian
+cases. The legacy dependency remains because replacing the algorithm with
+haversine would change scientific results.
