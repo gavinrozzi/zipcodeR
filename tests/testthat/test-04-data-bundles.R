@@ -173,6 +173,34 @@ test_that("Windows SHA selection excludes batch wrappers", {
   )
 })
 
-test_that("draft comprehensive asset fails before any network access", {
-  expect_error(download_comprehensive_data(), "not public yet")
+test_that("published registries pin the independently verified assets", {
+  bundle_meta <- zipcodeR:::registered_zip_data_bundle("2026.08")
+  expect_identical(
+    bundle_meta$sha256,
+    "9059026c159a4d1311ad9c61ba5193a6123299503efb5d867b8303c9d23627e4"
+  )
+  expect_match(bundle_meta$url, "/data-2026.08/zipcodeR-data-2026.08\\.rds$")
+
+  comprehensive_meta <- zipcodeR:::comprehensive_data_registry()
+  expect_true(comprehensive_meta$published)
+  expect_identical(
+    comprehensive_meta$sha256,
+    "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"
+  )
+
+  cache <- tempfile("comprehensive-cache-")
+  dir.create(cache)
+  cached_file <- file.path(cache, comprehensive_meta$asset)
+  writeBin(as.raw(1), cached_file)
+  testthat::local_mocked_bindings(
+    zipcodeR_user_data_dir = function() cache,
+    file_sha256 = function(path) comprehensive_meta$sha256,
+    ensure_sha256_available = function() invisible(TRUE),
+    .package = "zipcodeR"
+  )
+  expect_message(
+    result <- download_comprehensive_data(),
+    "using cached comprehensive database"
+  )
+  expect_identical(result, cached_file)
 })

@@ -96,10 +96,9 @@ zip_data_version()
 #> [1] "Exact zipcodeR 0.3.5 defaults"
 ```
 
-Start a new project by downloading an exact registered bundle version
-(after that data release is public), or reading a checksum-pinned file
-for an offline workflow, then pass the bundle explicitly to `_ng`
-functions:
+Start a new project by downloading the exact registered bundle version,
+or reading a checksum-pinned file for an offline workflow, then pass the
+bundle explicitly to `_ng` functions:
 
 ``` r
 bundle <- download_zip_data_bundle("2026.08")

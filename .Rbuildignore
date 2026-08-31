@@ -16,6 +16,7 @@ paper.pdf$
 ^\.github$
 ^codecov\.yml$
 ^README\.Rmd$
+^README\.html$
 ^CRAN-SUBMISSION$
 ^data-raw$
 ^AUDIT\.md$

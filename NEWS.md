@@ -64,10 +64,10 @@
 - Upstream inspection and deterministic rebuilds are separate workflow modes.
   The workflow uploads unpublished candidates for review and never chooses a
   version or publishes automatically.
-- Bundle download registries remain disabled until their assets are public and
-  have passed clean-machine URL and checksum smoke tests. Likewise,
-  `download_comprehensive_data()` fails before network access while its
-  currently referenced release is still a draft.
+- The immutable `data-2026.08` bundle, manifest, deterministic reproducibility
+  archive, and comprehensive SQLite asset are public. Their release URLs and
+  checksums, representative `_ng` calls, manifest schema, and SQLite integrity
+  were independently smoke-tested before enabling the registries.
 
 ## Tests, documentation, and infrastructure
 

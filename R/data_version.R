@@ -2,12 +2,12 @@
 #'
 #' The bundled \code{zip_code_db} is the lightweight ("simple") dataset. A
 #' much larger companion database with detailed ACS demographic profiles per
-#' ZIP code (the "comprehensive" database, ~450 MB SQLite) is intended to be
-#' published as an asset of a zipcodeR data release rather than shipped in the
-#' package. The downloader is disabled until that asset is public and its URL
-#' and checksum have passed a clean-machine smoke test.
+#' ZIP code (the "comprehensive" database, ~450 MB SQLite) is published as a
+#' checksum-pinned asset of a zipcodeR data release rather than shipped in the
+#' package. Its public URL, checksum, and SQLite integrity have passed a
+#' clean-machine smoke test.
 #'
-#' Once enabled, this function downloads that database, verifies its SHA256 checksum,
+#' This function downloads that database, verifies its SHA256 checksum,
 #' and caches it under \code{tools::R_user_dir("zipcodeR", "data")}; later
 #' calls return the cached path immediately. It never downloads without being
 #' called explicitly. For offline use, copy the file to that directory
@@ -26,8 +26,8 @@ download_comprehensive_data <- function(force = FALSE) {
   meta <- comprehensive_data_registry()
   if (!isTRUE(meta$published)) {
     stop(
-      "The comprehensive data asset is not public yet. This function is ",
-      "disabled until the registered release has been published and verified.",
+      "The comprehensive data asset is not registered for public download. ",
+      "Use only a release whose URL and checksum have been verified.",
       call. = FALSE
     )
   }
@@ -99,12 +99,11 @@ download_comprehensive_data <- function(force = FALSE) {
   invisible(dest)
 }
 
-# Updated only after a public-release smoke test succeeds. Keeping the draft
-# asset disabled prevents a documented function from attempting a known 404.
+# Updated only after a public-release smoke test succeeds.
 #' @noRd
 comprehensive_data_registry <- function() {
   list(
-    published = FALSE,
+    published = TRUE,
     release_tag = "data-2026.08",
     asset = "comprehensive_db.sqlite",
     sha256 = "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"

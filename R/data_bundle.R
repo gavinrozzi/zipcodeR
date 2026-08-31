@@ -166,7 +166,17 @@ registered_zip_data_bundle <- function(version) {
 # asset has been downloaded and independently checksum-verified.
 #' @noRd
 zip_data_bundle_registry <- function() {
-  list()
+  list(
+    "2026.08" = list(
+      version = "2026.08",
+      asset = "zipcodeR-data-2026.08.rds",
+      url = paste0(
+        "https://github.com/gavinrozzi/zipcodeR/releases/download/",
+        "data-2026.08/zipcodeR-data-2026.08.rds"
+      ),
+      sha256 = "9059026c159a4d1311ad9c61ba5193a6123299503efb5d867b8303c9d23627e4"
+    )
+  )
 }
 
 #' @noRd
