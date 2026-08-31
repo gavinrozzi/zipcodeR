@@ -18,7 +18,7 @@ The release is mergeable only after every required gate below passes.
 | Add checksum-verified, explicitly versioned bundle I/O | implemented; verified `2026.08` registry enabled |
 | Build modern data as an external bundle with provenance and quality sidecars | implemented locally |
 | Pin and archive raw inputs, dependencies, container, and build manifest | implemented; two clean `2026.08` rebuilds matched all artifact hashes |
-| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | passing on pushed commit `81d77cc` |
+| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | passing on the registry-enabled PR head |
 | Public `data-2026.08` bundle and comprehensive assets, clean-machine smoke test | complete |
 
 The core package continues to ship the 2021-06-08 legacy data. Refreshed ZCTA,

@@ -39,5 +39,6 @@ The issue-level code is complete only when all of the following are true:
 Gates 3 and 4 passed for release `data-2026.08`: two clean builds matched bundle
 SHA `9059026c...`, manifest SHA `5628977c...`, and archive SHA `8b22ab07...`;
 all four public assets, including the comprehensive database, passed download
-and integrity checks. Gate 5 remains pending until CI passes on the registry
-commit.
+and integrity checks. Gate 5 also passed: the explicit `2026.08` registry was
+enabled only after those checks, and the full required platform, coverage, and
+documentation matrix is green on the registry-enabled PR head.
