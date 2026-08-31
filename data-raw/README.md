@@ -90,8 +90,8 @@ data release through the reproducibility archive instead.
 An asset is not publishable until all of these are true:
 
 1. the working tree and recorded pipeline commit are clean and reviewed;
-2. two clean pinned-environment rebuilds produce the same bundle and canonical
-   output hashes;
+2. two clean pinned-environment rebuilds produce the same bundle, manifest,
+   reproducibility archive, and canonical output hashes;
 3. package compatibility, `_ng`, integrity, and platform checks pass;
 4. the release is public rather than draft, and every public URL and checksum
    succeeds from a clean machine.

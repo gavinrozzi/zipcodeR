@@ -42,8 +42,8 @@ compatible changes.
 1. Run the isolated 0.3.5 differential harness on every required CI platform.
 2. Run normal vignette-building `R CMD check --as-cran` on Windows, macOS, and
    Ubuntu release/devel/oldrel.
-3. Build the data bundle twice in a clean pinned container and compare canonical
-   content and asset hashes.
+3. Build the data release twice in a clean pinned container and compare the
+   bundle, manifest, reproducibility archive, canonical content, and hashes.
 4. Commit the pipeline state used by the manifest so `working_tree_dirty` is
    false and `pipeline_commit` names the release commit.
 5. Publish the simple bundle, manifest, reproducibility archive, and

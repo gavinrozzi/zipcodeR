@@ -271,7 +271,39 @@ repro_files <- unique(repro_files[file.exists(repro_files)])
 repro_path <- file.path(
   release_dir, sprintf("zipcodeR-reproducibility-%s.tar.gz", DATA_VERSION)
 )
-utils::tar(repro_path, files = repro_files, compression = "gzip", tar = "internal")
+
+# Archive from a staging tree with a fixed timestamp and mode. Several files
+# above are deterministically regenerated on every pass; archiving their live
+# filesystem mtimes would make the reproducibility archive itself change even
+# when every byte of its content is identical.
+repro_stage <- tempfile("zipcodeR-repro-")
+dir.create(repro_stage)
+for (source in repro_files) {
+  destination <- file.path(repro_stage, source)
+  dir.create(dirname(destination), recursive = TRUE, showWarnings = FALSE)
+  if (!file.copy(source, destination, overwrite = TRUE, copy.mode = FALSE,
+                 copy.date = FALSE)) {
+    stop("Failed to stage reproducibility input: ", source)
+  }
+  Sys.chmod(destination, mode = "0644")
+}
+archive_time <- as.POSIXct(build_timestamp, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+if (is.na(archive_time)) stop("PIPELINE_BUILD_TIMESTAMP is not valid ISO-8601 UTC.")
+staged_files <- file.path(repro_stage, repro_files)
+invisible(lapply(staged_files, Sys.setFileTime, time = archive_time))
+repro_path_absolute <- file.path(normalizePath(release_dir), basename(repro_path))
+write_reproducibility_archive <- function() {
+  old_working_directory <- setwd(repro_stage)
+  on.exit(setwd(old_working_directory), add = TRUE)
+  utils::tar(
+    repro_path_absolute,
+    files = repro_files,
+    compression = "gzip",
+    tar = "internal"
+  )
+}
+write_reproducibility_archive()
+unlink(repro_stage, recursive = TRUE)
 
 message("bundle: ", asset_path, " (sha256 ", asset_sha256, ")")
 message("manifest: ", manifest_path)

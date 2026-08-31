@@ -29,7 +29,8 @@ The issue-level code is complete only when all of the following are true:
 1. isolated 0.3.5 differential tests pass on all required CI platforms;
 2. normal vignette-building checks pass on Windows, macOS, Ubuntu release,
    devel, and oldrel;
-3. a clean commit builds the modern bundle twice with identical hashes;
+3. a clean commit builds the modern bundle, manifest, and reproducibility
+   archive twice with identical hashes;
 4. the bundle, manifest, reproducibility archive, and comprehensive database
    are public at immutable URLs and pass clean-machine checksum/schema calls;
 5. the verified bundle checksum is enabled in the package registry and CI is

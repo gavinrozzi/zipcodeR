@@ -63,7 +63,11 @@ jobs:
         if: inputs.mode == 'rebuild'
         run: |
           Rscript data-raw/run_pipeline.R
-          sha256sum data-raw/release/zipcodeR-data-${{ inputs.data_version }}.rds > /tmp/first.sha256
+          sha256sum \
+            data-raw/release/zipcodeR-data-${{ inputs.data_version }}.rds \
+            data-raw/release/manifest-${{ inputs.data_version }}.json \
+            data-raw/release/zipcodeR-reproducibility-${{ inputs.data_version }}.tar.gz \
+            > /tmp/first.sha256
 
       - name: Deterministic rebuild, pass two
         if: inputs.mode == 'rebuild'
