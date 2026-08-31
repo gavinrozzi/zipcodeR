@@ -1,84 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/geographic.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/zipcodeR.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/download_zip_data.html</loc>
-  </url>
-  <url>
-    <loc>/reference/geocode_zip.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_cd.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_tracts.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/is_zcta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/normalize_zip.html</loc>
-  </url>
-  <url>
-    <loc>/reference/reverse_zipcode.html</loc>
-  </url>
-  <url>
-    <loc>/reference/search_cd.html</loc>
-  </url>
-  <url>
-    <loc>/reference/search_city.html</loc>
-  </url>
-  <url>
-    <loc>/reference/search_county.html</loc>
-  </url>
-  <url>
-    <loc>/reference/search_fips.html</loc>
-  </url>
-  <url>
-    <loc>/reference/search_radius.html</loc>
-  </url>
-  <url>
-    <loc>/reference/search_state.html</loc>
-  </url>
-  <url>
-    <loc>/reference/search_tz.html</loc>
-  </url>
-  <url>
-    <loc>/reference/zcta_crosswalk.html</loc>
-  </url>
-  <url>
-    <loc>/reference/zip_code_db.html</loc>
-  </url>
-  <url>
-    <loc>/reference/zip_distance.html</loc>
-  </url>
-  <url>
-    <loc>/reference/zip_to_cd.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/AUDIT.html</loc></url>
+<url><loc>/CLAUDE.html</loc></url>
+<url><loc>/ISSUE-RESOLUTION.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/ROADMAP.html</loc></url>
+<url><loc>/articles/data-vintages.html</loc></url>
+<url><loc>/articles/faq.html</loc></url>
+<url><loc>/articles/geographic.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/zipcodeR.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/download_comprehensive_data.html</loc></url>
+<url><loc>/reference/download_zip_data.html</loc></url>
+<url><loc>/reference/download_zip_data_bundle.html</loc></url>
+<url><loc>/reference/geocode_zip.html</loc></url>
+<url><loc>/reference/geocode_zip_ng.html</loc></url>
+<url><loc>/reference/get_cd.html</loc></url>
+<url><loc>/reference/get_cd_ng.html</loc></url>
+<url><loc>/reference/get_tracts.html</loc></url>
+<url><loc>/reference/get_tracts_ng.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/is_zcta.html</loc></url>
+<url><loc>/reference/is_zcta_ng.html</loc></url>
+<url><loc>/reference/normalize_zip.html</loc></url>
+<url><loc>/reference/normalize_zip_ng.html</loc></url>
+<url><loc>/reference/read_zip_data_bundle.html</loc></url>
+<url><loc>/reference/reverse_zipcode.html</loc></url>
+<url><loc>/reference/reverse_zipcode_ng.html</loc></url>
+<url><loc>/reference/search_cd.html</loc></url>
+<url><loc>/reference/search_cd_ng.html</loc></url>
+<url><loc>/reference/search_city.html</loc></url>
+<url><loc>/reference/search_city_ng.html</loc></url>
+<url><loc>/reference/search_county.html</loc></url>
+<url><loc>/reference/search_county_ng.html</loc></url>
+<url><loc>/reference/search_fips.html</loc></url>
+<url><loc>/reference/search_fips_ng.html</loc></url>
+<url><loc>/reference/search_radius.html</loc></url>
+<url><loc>/reference/search_radius_ng.html</loc></url>
+<url><loc>/reference/search_state.html</loc></url>
+<url><loc>/reference/search_state_ng.html</loc></url>
+<url><loc>/reference/search_tz.html</loc></url>
+<url><loc>/reference/search_tz_ng.html</loc></url>
+<url><loc>/reference/zcta_crosswalk.html</loc></url>
+<url><loc>/reference/zip_code_db.html</loc></url>
+<url><loc>/reference/zip_data_provenance.html</loc></url>
+<url><loc>/reference/zip_data_version.html</loc></url>
+<url><loc>/reference/zip_distance.html</loc></url>
+<url><loc>/reference/zip_distance_ng.html</loc></url>
+<url><loc>/reference/zip_to_cd.html</loc></url>
+<url><loc>/reference/zipcodeR-package.html</loc></url>
 </urlset>
+
