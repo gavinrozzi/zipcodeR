@@ -79,7 +79,7 @@ LEGACY_INTERNAL_FILES <- list(
 
 # Refresh mode must not reuse an already-published identity. Add a version
 # only after its public assets have been independently checksum-verified.
-PUBLISHED_DATA_VERSIONS <- c("2026.08")
+PUBLISHED_DATA_VERSIONS <- c("2026.08", "2026.09")
 
 # The ACS request is archived and checksummed just like a static source. The
 # endpoint and vintage document how a maintainer creates a deliberately new

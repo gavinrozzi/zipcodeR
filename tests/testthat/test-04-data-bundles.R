@@ -174,6 +174,16 @@ test_that("Windows SHA selection excludes batch wrappers", {
 })
 
 test_that("published registries pin the independently verified assets", {
+  current_bundle_meta <- zipcodeR:::registered_zip_data_bundle("2026.09")
+  expect_identical(
+    current_bundle_meta$sha256,
+    "0805a5be5fe826c4c8e3a3bab65f2d311671f96a2e1aa2c84d8571b0b9f3bd23"
+  )
+  expect_match(
+    current_bundle_meta$url,
+    "/data-2026.09/zipcodeR-data-2026.09\\.rds$"
+  )
+
   bundle_meta <- zipcodeR:::registered_zip_data_bundle("2026.08")
   expect_identical(
     bundle_meta$sha256,

@@ -101,10 +101,10 @@ or reading a checksum-pinned file for an offline workflow, then pass the
 bundle explicitly to `_ng` functions:
 
 ``` r
-bundle <- download_zip_data_bundle("2026.08")
+bundle <- download_zip_data_bundle("2026.09")
 # Offline alternative:
 # bundle <- read_zip_data_bundle(
-#   "zipcodeR-data-2026.08.rds",
+#   "zipcodeR-data-2026.09.rds",
 #   sha256 = "SHA256_FROM_THE_RELEASE_MANIFEST"
 # )
 
@@ -146,7 +146,7 @@ abstract = {The United States Postal Service (USPS) assigns unique identifiers f
 
 ``` r
 library(zipcodeR)
-bundle <- download_zip_data_bundle("2026.08")
+bundle <- download_zip_data_bundle("2026.09")
 
 search_state_ng(bundle, "NJ")
 zip_distance_ng(bundle, "08901", "08731")

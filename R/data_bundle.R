@@ -44,7 +44,7 @@ read_zip_data_bundle <- function(path, sha256 = NULL) {
 #' caches it in the user's data directory. The function never resolves aliases
 #' such as `"latest"`, and no lookup function downloads data implicitly.
 #'
-#' @param version Exact registered data version, for example `"2026.08"`.
+#' @param version Exact registered data version, for example `"2026.09"`.
 #' @param force Re-download and replace a verified cached copy.
 #' @return A validated `zipcodeR_data_bundle`.
 #' @export
@@ -167,6 +167,15 @@ registered_zip_data_bundle <- function(version) {
 #' @noRd
 zip_data_bundle_registry <- function() {
   list(
+    "2026.09" = list(
+      version = "2026.09",
+      asset = "zipcodeR-data-2026.09.rds",
+      url = paste0(
+        "https://github.com/gavinrozzi/zipcodeR/releases/download/",
+        "data-2026.09/zipcodeR-data-2026.09.rds"
+      ),
+      sha256 = "0805a5be5fe826c4c8e3a3bab65f2d311671f96a2e1aa2c84d8571b0b9f3bd23"
+    ),
     "2026.08" = list(
       version = "2026.08",
       asset = "zipcodeR-data-2026.08.rds",

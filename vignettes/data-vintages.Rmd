@@ -51,7 +51,7 @@ canonical output hashes.
 After a version has been published and registered, download it explicitly:
 
 ```{r, eval = FALSE}
-bundle <- download_zip_data_bundle("2026.08")
+bundle <- download_zip_data_bundle("2026.09")
 ```
 
 For offline or archival work, keep the RDS file with the project and verify the
@@ -59,7 +59,7 @@ manifest checksum while reading it:
 
 ```{r, eval = FALSE}
 bundle <- read_zip_data_bundle(
-  "data/zipcodeR-data-2026.08.rds",
+  "data/zipcodeR-data-2026.09.rds",
   sha256 = "SHA256_FROM_THE_RELEASE_MANIFEST"
 )
 ```

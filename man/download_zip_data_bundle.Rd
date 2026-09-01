@@ -7,7 +7,7 @@
 download_zip_data_bundle(version, force = FALSE)
 }
 \arguments{
-\item{version}{Exact registered data version, for example \code{"2026.08"}.}
+\item{version}{Exact registered data version, for example \code{"2026.09"}.}
 
 \item{force}{Re-download and replace a verified cached copy.}
 }

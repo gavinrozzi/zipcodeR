@@ -64,10 +64,12 @@
 - Upstream inspection and deterministic rebuilds are separate workflow modes.
   The workflow uploads unpublished candidates for review and never chooses a
   version or publishes automatically.
-- The immutable `data-2026.08` bundle, manifest, deterministic reproducibility
-  archive, and comprehensive SQLite asset are public. Their release URLs and
-  checksums, representative `_ng` calls, manifest schema, and SQLite integrity
-  were independently smoke-tested before enabling the registries.
+- The immutable `data-2026.09` bundle, manifest, and standalone reproducibility
+  archive are public and are the recommended pinned inputs for new `_ng`
+  analyses. They use the same reviewed source vintages as `data-2026.08`, but
+  add the frozen legacy inputs, exact pipeline commit, and Linux amd64 platform
+  to the verified build contract. The comprehensive SQLite asset remains
+  explicitly pinned to `data-2026.08`; no implicit substitution occurs.
 
 ## Tests, documentation, and infrastructure
 

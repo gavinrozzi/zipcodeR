@@ -36,9 +36,10 @@ The issue-level code is complete only when all of the following are true:
 5. the verified bundle checksum is enabled in the package registry and CI is
    rerun on that registry commit.
 
-Gates 3 and 4 passed for release `data-2026.08`: two clean builds matched bundle
-SHA `9059026c...`, manifest SHA `5628977c...`, and archive SHA `8b22ab07...`;
-all four public assets, including the comprehensive database, passed download
-and integrity checks. Gate 5 also passed: the explicit `2026.08` registry was
-enabled only after those checks, and the full required platform, coverage, and
-documentation matrix is green on the registry-enabled PR head.
+Gates 3 and 4 passed for release `data-2026.09`: two clean pinned Linux amd64
+builds matched bundle SHA `0805a5be...`, manifest SHA `e3e630ef...`, and archive
+SHA `71d4ec19...`; all three public assets passed an independent download and
+integrity check. The comprehensive database remains explicitly pinned to the
+independently verified `data-2026.08` asset. Gate 5's registry and local/Act
+checks pass; the hosted cross-platform matrix remains required before CRAN
+submission.

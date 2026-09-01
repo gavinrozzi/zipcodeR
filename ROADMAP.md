@@ -15,11 +15,11 @@ The release is mergeable only after every required gate below passes.
 | Speed up legacy `search_radius()` without changing its WGS84 results | implemented; exact benchmark parity required |
 | Vendor the exact FIPS table without changing legacy FIPS/CD results | implemented |
 | Add explicit `_ng` functions for corrected behavior and modern data | implemented |
-| Add checksum-verified, explicitly versioned bundle I/O | implemented; verified `2026.08` registry enabled |
+| Add checksum-verified, explicitly versioned bundle I/O | implemented; verified `2026.09` registry enabled |
 | Build modern data as an external bundle with provenance and quality sidecars | implemented locally |
-| Pin and archive raw inputs, dependencies, container, and build manifest | implemented; two clean `2026.08` rebuilds matched all artifact hashes |
-| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | passing on the registry-enabled PR head |
-| Public `data-2026.08` bundle and comprehensive assets, clean-machine smoke test | complete |
+| Pin and archive raw inputs, dependencies, container, platform, and build manifest | implemented; two clean Linux amd64 `2026.09` rebuilds matched all artifact hashes |
+| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | local package and Act gates pass; hosted platform matrix remains required before CRAN submission |
+| Public modern bundle/repro archive and comprehensive asset, clean-machine smoke test | `data-2026.09` bundle/repro and `data-2026.08` comprehensive complete |
 
 The core package continues to ship the 2021-06-08 legacy data. Refreshed ZCTA,
 tract, and 119th-Congress relationships are available only through an explicit
