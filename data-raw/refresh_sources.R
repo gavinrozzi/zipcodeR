@@ -134,16 +134,56 @@ members <- c(
   file.path("data-raw", basename(proposal_path))
 )
 staged_paths <- file.path(stage, members)
-invisible(lapply(staged_paths, Sys.setFileTime, time = archive_time))
+time_results <- vapply(
+  staged_paths,
+  Sys.setFileTime,
+  logical(1),
+  time = archive_time
+)
+staged_times <- file.info(staged_paths)$mtime
+if (!all(time_results) || anyNA(staged_times) ||
+    any(abs(as.numeric(staged_times) - as.numeric(archive_time)) > 1)) {
+  stop(
+    "PIPELINE_BUILD_TIMESTAMP cannot be represented consistently on this ",
+    "filesystem; refusing to create a malformed source archive."
+  )
+}
 invisible(lapply(staged_paths, Sys.chmod, mode = "0644"))
 archive_path <- file.path(
   normalizePath(out_dir),
   sprintf("zipcodeR-sources-%s.tar.gz", proposed_version)
 )
-old_working_directory <- setwd(stage)
-on.exit(setwd(old_working_directory), add = TRUE)
-utils::tar(archive_path, files = members, compression = "gzip", tar = "internal")
-setwd(old_working_directory)
+write_source_archive <- function() {
+  old_working_directory <- setwd(stage)
+  on.exit(setwd(old_working_directory), add = TRUE)
+  utils::tar(
+    archive_path,
+    files = members,
+    compression = "gzip",
+    tar = "internal"
+  )
+}
+write_source_archive()
+
+# Refuse an archive that is repeatable but unusable. Exercise the same default
+# extractor used by restore_rebuild_inputs.R, then compare every extracted
+# member with the staged byte stream before reporting a candidate checksum.
+archive_members <- utils::untar(archive_path, list = TRUE)
+if (length(archive_members) != length(members) ||
+    !setequal(archive_members, members)) {
+  stop("Source-refresh archive member verification failed.")
+}
+verify_stage <- tempfile("zipcodeR-source-verify-")
+dir.create(verify_stage)
+on.exit(unlink(verify_stage, recursive = TRUE), add = TRUE)
+utils::untar(archive_path, exdir = verify_stage)
+for (member in members) {
+  original_sha <- sha256_file(file.path(stage, member))
+  extracted_sha <- sha256_file(file.path(verify_stage, member))
+  if (!identical(original_sha, extracted_sha)) {
+    stop("Source-refresh archive content verification failed for: ", member)
+  }
+}
 archive_sha <- sha256_file(archive_path)
 writeLines(
   paste(archive_sha, basename(archive_path)),

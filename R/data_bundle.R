@@ -457,7 +457,14 @@ legacy_zip_code_db_columns <- function() {
 #' @noRd
 zipcodeR_user_data_dir <- function(r_version = getRversion()) {
   if (r_version >= "4.0.0") {
-    return(tools::R_user_dir("zipcodeR", "data"))
+    # Resolve dynamically so the package remains checkable on R 3.5, where
+    # this version-gated R >= 4.0 API is not yet exported by tools.
+    r_user_dir <- get(
+      "R_user_dir",
+      envir = asNamespace("tools"),
+      inherits = FALSE
+    )
+    return(r_user_dir("zipcodeR", "data"))
   }
   file.path(tempdir(), "zipcodeR-data")
 }

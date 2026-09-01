@@ -30,8 +30,7 @@ Imports:
     httr,
     curl,
     RSQLite,
-    DBI,
-    tools
+    DBI
 Depends:
     R (>= 3.5.0)
 Suggests:
@@ -40,7 +39,7 @@ Suggests:
     rmarkdown,
     markdown,
     readr,
-    testthat (>= 3.1.5),
+    testthat (>= 3.0.0),
     covr,
     tibble
 VignetteBuilder: knitr, rmarkdown

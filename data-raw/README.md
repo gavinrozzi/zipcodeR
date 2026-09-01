@@ -13,6 +13,10 @@ version. Before running it, update prospective URLs and vintages in
 It downloads candidate source bytes and writes `proposed-sources.json` plus a
 deterministic `zipcodeR-sources-VERSION.tar.gz`; it does not change pins,
 build data, or publish. A Census API key is optional and increases API limits.
+The refresh refuses timestamps that the host filesystem cannot represent and
+lists, extracts, and checksum-verifies every member of the candidate archive
+before reporting its SHA256. This prevents a nominally deterministic but
+unreadable archive from advancing to review.
 
 ```sh
 PIPELINE_MODE=refresh \

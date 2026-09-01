@@ -138,7 +138,14 @@ ensure_sha256_available <- function() {
 #' @noRd
 file_sha256 <- function(path) {
   if (exists("sha256sum", envir = asNamespace("tools"), inherits = FALSE)) {
-    return(unname(tools::sha256sum(path)))
+    # Resolve dynamically so R 3.5's static checker does not treat this
+    # version-gated R >= 4.5 API as an unexported object.
+    sha256sum <- get(
+      "sha256sum",
+      envir = asNamespace("tools"),
+      inherits = FALSE
+    )
+    return(unname(sha256sum(path)))
   }
   if (requireNamespace("openssl", quietly = TRUE)) {
     return(sha256_openssl(path))

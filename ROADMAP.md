@@ -11,14 +11,14 @@ The release is mergeable only after every required gate below passes.
 | Item | Status |
 |---|---|
 | Restore the three exact 0.3.5 datasets and `Depends: R (>= 3.5.0)` | implemented |
-| Preserve exact legacy values, ordering, warnings, errors, and side effects | implemented; differential harness required in CI |
-| Speed up legacy `search_radius()` without changing its WGS84 results | implemented; exact benchmark parity required |
+| Preserve exact legacy values, ordering, warnings, errors, and side effects | implemented; isolated differential harness passes locally and under Act |
+| Speed up legacy `search_radius()` without changing its WGS84 results | implemented; exact parity passes before 81--110x measured speedups |
 | Vendor the exact FIPS table without changing legacy FIPS/CD results | implemented |
 | Add explicit `_ng` functions for corrected behavior and modern data | implemented |
 | Add checksum-verified, explicitly versioned bundle I/O | implemented; verified `2026.09` registry enabled |
-| Build modern data as an external bundle with provenance and quality sidecars | implemented locally |
+| Build modern data as an external bundle with provenance and quality sidecars | public `data-2026.09` assets verified from a clean directory |
 | Pin and archive raw inputs, dependencies, container, platform, and build manifest | implemented; two clean Linux amd64 `2026.09` rebuilds matched all artifact hashes |
-| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | local package and Act gates pass; hosted platform matrix remains required before CRAN submission |
+| Normal Windows, macOS, and Ubuntu release/devel/oldrel checks | local macOS plus Act Ubuntu release/devel/oldrel pass; hosted native Windows/macOS and win-builder remain external gates recorded in `AUDIT.md` |
 | Public modern bundle/repro archive and comprehensive asset, clean-machine smoke test | `data-2026.09` bundle/repro and `data-2026.08` comprehensive complete |
 
 The core package continues to ship the 2021-06-08 legacy data. Refreshed ZCTA,

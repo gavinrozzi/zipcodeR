@@ -64,6 +64,9 @@
 - Upstream inspection and deterministic rebuilds are separate workflow modes.
   The workflow uploads unpublished candidates for review and never chooses a
   version or publishes automatically.
+- Refresh candidates are accepted only after their requested timestamp is
+  representable and every source-archive member can be listed, extracted, and
+  checksum-matched to the staged input.
 - The immutable `data-2026.09` bundle, manifest, and standalone reproducibility
   archive are public and are the recommended pinned inputs for new `_ng`
   analyses. They use the same reviewed source vintages as `data-2026.08`, but

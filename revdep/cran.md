@@ -1,7 +1,9 @@
-## revdepcheck results
+## Reverse-dependency check results
 
-We checked 0 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked the one reverse dependency currently listed by CRAN:
+`geospatialsuite` 0.2.0 (Reverse Suggests).
 
- * We saw 0 new problems
- * We failed to check 0 packages
-
+- New problems: 0
+- Failed checks: 0
+- `R CMD check --no-manual`: Status OK
+- Targeted zipcodeR geocoding integration: exact legacy-result match
