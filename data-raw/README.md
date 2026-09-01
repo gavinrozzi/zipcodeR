@@ -43,9 +43,10 @@ Rscript data-raw/run_pipeline.R
 ```
 
 There is no `latest` alias and no release identity derived from the current
-date. The pipeline commit is also an explicit input; outside a git checkout,
-set `PIPELINE_WORKING_TREE_DIRTY=false` after verifying the archive. Rebuild
-mode never downloads from an upstream data publisher. The raw
+date. The pipeline commit is also an explicit input and must match
+`git rev-parse HEAD` in a checkout; outside a git checkout, set
+`PIPELINE_WORKING_TREE_DIRTY=false` after verifying the archive. Rebuild mode
+never downloads from an upstream data publisher. The raw
 ACS JSON response and its deterministically derived CSV are both checksummed
 and archived. Published version identities cannot be reused.
 

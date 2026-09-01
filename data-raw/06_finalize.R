@@ -44,6 +44,14 @@ pipeline_commit <- tolower(Sys.getenv("PIPELINE_COMMIT"))
 if (!grepl("^[0-9a-f]{40}$", pipeline_commit)) {
   stop("PIPELINE_COMMIT must be the explicit 40-character pipeline git commit.")
 }
+checkout_commit <- git_output(c("rev-parse", "HEAD"))
+if (!is.na(checkout_commit) && !identical(tolower(checkout_commit), pipeline_commit)) {
+  stop(
+    "PIPELINE_COMMIT does not match the checked-out pipeline revision.",
+    "\n  declared: ", pipeline_commit,
+    "\n  checkout: ", tolower(checkout_commit)
+  )
+}
 git_status <- git_output(c("status", "--porcelain"))
 if (!is.na(git_status)) {
   working_tree_dirty <- nzchar(git_status)
