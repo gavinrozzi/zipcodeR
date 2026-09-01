@@ -242,7 +242,6 @@ get_tracts <- function(zip_code) {
 #' get_cd("90210")
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
-#' @import tidycensus
 #' @export
 get_cd <- function(zip_code) {
   # Get state FIPS codes data from tidycensus library
@@ -350,7 +349,6 @@ geocode_zip <- function(zip_code) {
 #' \dontrun{
 #' search_radius(39.9, -74.3, 10)
 #' }
-#' @importFrom raster pointDistance
 #' @export
 search_radius <- function(lat, lng, radius = 1) {
 
@@ -359,9 +357,45 @@ search_radius <- function(lat, lng, radius = 1) {
   zip_data <- zip_code_db %>%
     dplyr::filter(lat != "NA")
 
-  # Calculate the distance between all points and the provided coordinate pair
-  for (i in seq_len(nrow(zip_data))) {
-    zip_data$distance[i] <- raster::pointDistance(c(lng, lat), c(zip_data$lng[i], zip_data$lat[i]), lonlat = TRUE)
+  # For ordinary scalar queries, discard points that cannot possibly be in
+  # the result before calling the unchanged WGS84 calculation. Sixty statute
+  # miles per degree is deliberately broader than the WGS84 minimum, and the
+  # longitude test uses the most poleward edge of the latitude band. This is
+  # therefore a conservative prefilter, not a distance approximation.
+  # Unusual/invalid inputs bypass it so their historical conditions remain
+  # byte-for-byte comparable with 0.3.5.
+  ordinary_query <- is.numeric(lat) && length(lat) == 1L && !is.na(lat) &&
+    is.finite(lat) && abs(lat) <= 90 &&
+    is.numeric(lng) && length(lng) == 1L && !is.na(lng) &&
+    is.finite(lng) && abs(lng) <= 180 &&
+    is.numeric(radius) && length(radius) == 1L && !is.na(radius) &&
+    is.finite(radius) && radius >= 0
+  if (ordinary_query) {
+    lat_delta <- radius / 60
+    keep <- zip_data$lat >= lat - lat_delta & zip_data$lat <= lat + lat_delta
+    edge_lat <- abs(lat) + lat_delta
+    if (edge_lat < 89) {
+      lng_delta <- radius / (60 * cos(edge_lat * pi / 180))
+      if (lng_delta < 180) {
+        lng_difference <- abs(((zip_data$lng - lng + 180) %% 360) - 180)
+        keep <- keep & lng_difference <= lng_delta
+      }
+    }
+    zip_data <- zip_data[keep, , drop = FALSE]
+  }
+
+  # Calculate the same pairwise WGS84 geodesic distances as the historical
+  # row-by-row implementation, but in one vectorized raster call. Repeating
+  # the query point keeps pointDistance() in pairwise mode and preserves the
+  # exact legacy algorithm, values, row order, and NA handling.
+  if (nrow(zip_data)) {
+    query_points <- matrix(c(lng, lat), nrow = nrow(zip_data), ncol = 2, byrow = TRUE)
+    zip_points <- cbind(zip_data$lng, zip_data$lat)
+    zip_data$distance <- raster::pointDistance(
+      query_points, zip_points, lonlat = TRUE
+    )
+  } else {
+    zip_data$distance <- numeric(0)
   }
 
   # Convert meters to miles for distance measurement

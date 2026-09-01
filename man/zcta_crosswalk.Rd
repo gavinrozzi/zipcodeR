@@ -5,7 +5,7 @@
 \alias{zcta_crosswalk}
 \title{ZCTA to Census Tract (2010) Crosswalk}
 \format{
-A data frame with 148897 rows and 4 variables:
+A data frame with 148897 rows and 3 variables:
 \describe{
 \item{ZCTA5}{2010 ZIP Code Tabulation Area}
 \item{TRACT}{2010 Census Tract Code}
@@ -20,5 +20,10 @@ zcta_crosswalk
 }
 \description{
 A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.
+}
+\details{
+This is the exact dataset distributed by zipcodeR 0.3.5. It is intentionally
+frozen so legacy calls remain reproducible; newer versioned relationships
+are available only through an explicit data bundle and the \verb{_ng} API.
 }
 \keyword{datasets}

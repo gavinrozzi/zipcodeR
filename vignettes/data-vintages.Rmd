@@ -1,0 +1,105 @@
+---
+title: "Legacy and next-generation data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Legacy and next-generation data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(zipcodeR)
+```
+
+## Which interface should I use?
+
+ZIP and spatial data change over time, but silently replacing package data can
+change already-published analyses. zipcodeR therefore separates the historical
+contract from corrected, versioned behavior.
+
+For a new analysis, use the `_ng` functions with an explicitly selected modern
+bundle. This is the forward-looking interface documented for new community
+code. Calling an `_ng` function communicates that the analysis opted into the
+bundle's newer data and semantics; it does **not** opt into automatic future
+updates. Keep the version and SHA pinned for the life of the project.
+
+Use the unsuffixed functions when maintaining, rerunning, or comparing existing
+zipcodeR code. They are the historical compatibility interface.
+
+All names that existed in 0.3.5 keep the same data, algorithm, ordering,
+rounding, warnings, errors, and unusual edge cases. This is intentional even
+where a behavior would be designed differently today.
+
+```{r}
+zip_distance("08731", "08901")
+get_cd("08731")
+reverse_zipcode(c("08731", "08999", "08731"))
+zip_data_version()
+```
+
+The returned metadata identifies the legacy snapshot. No option or network
+state can switch these functions to newer data.
+
+## Start a new analysis by pinning a modern bundle
+
+A data release contains one RDS bundle and a JSON manifest. The manifest lists
+the bundle SHA256, every raw source URL and SHA256, licenses, vintages, build
+commit and R version, dependency-lock checksum, schemas, row counts, and
+canonical output hashes.
+
+After a version has been published and registered, download it explicitly:
+
+```{r, eval = FALSE}
+bundle <- download_zip_data_bundle("2026.08")
+```
+
+For offline or archival work, keep the RDS file with the project and verify the
+manifest checksum while reading it:
+
+```{r, eval = FALSE}
+bundle <- read_zip_data_bundle(
+  "data/zipcodeR-data-2026.08.rds",
+  sha256 = "SHA256_FROM_THE_RELEASE_MANIFEST"
+)
+```
+
+Aliases such as `latest` are rejected. A lookup never downloads a missing
+bundle or falls back to a different version.
+
+## Use the `_ng` interface
+
+Every data-dependent next-generation function takes the bundle first:
+
+```{r, eval = FALSE}
+reverse_zipcode_ng(bundle, c("08731", "08999", "08731"))
+geocode_zip_ng(bundle, c("08731", "08999", "08731"))
+search_radius_ng(bundle, 39.9, -74.3, radius = 10)
+zip_distance_ng(bundle, "08731", "08901")
+get_tracts_ng(bundle, "08731")
+get_cd_ng(bundle, "08731")
+```
+
+These functions preserve input order and duplicates, make missing records
+explicit, validate inputs consistently, keep geographic identifiers as
+characters, and use the bundle's declared authoritative mappings and vintage.
+USPS-only ZIPs without an authoritative district relationship remain unmapped
+with a quality reason.
+
+## Recording provenance in research outputs
+
+Store the complete version record, not merely the human-readable version:
+
+```{r, eval = FALSE}
+version_record <- zip_data_version(bundle)
+saveRDS(version_record, "results/zipcodeR-data-version.rds")
+
+version_record$data_version
+version_record$bundle_sha256
+zip_data_provenance(bundle, dataset = "zip_to_cd", key = "08731")
+```
+
+For a reproducibility supplement, retain the release manifest, the bundle, and
+the analysis code together. The verified `bundle_sha256` attribute is added by
+`read_zip_data_bundle()` and `download_zip_data_bundle()` and is propagated to
+`_ng` lookup results.

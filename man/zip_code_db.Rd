@@ -8,7 +8,7 @@
 A data frame with 41877 rows and 24 variables:
 \describe{
 \item{zipcode}{5 digit U.S. ZIP code}
-\item{zipcode_type}{2010 State FIPS Code}
+\item{zipcode_type}{ZIP category such as Standard, PO Box, or Unique}
 \item{major_city}{Major city serving the ZIP code}
 \item{post_office_city}{City of post office serving the ZIP code}
 \item{common_city_list}{List of common cities represented by the ZIP code}
@@ -41,5 +41,11 @@ zip_code_db
 }
 \description{
 A dataset containing detailed information for U.S. ZIP codes
+}
+\details{
+This is the exact 41,877-row database distributed by zipcodeR 0.3.5,
+including its historical values and limitations. It is intentionally frozen
+for research reproducibility. Use an explicit data bundle with \verb{_ng}
+functions for corrected behavior and a pinned source manifest.
 }
 \keyword{datasets}

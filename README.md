@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# zipcodeR <a href='https://gavinrozzi.github.io/zipcodeR/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# zipcodeR <a href='https://zipcoder.39n.io/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -25,7 +25,7 @@ using R.
 
 The latest update to `{zipcodeR}` includes new functions for [searching
 ZIP codes at various geographic levels &
-geocoding.](https://gavinrozzi.github.io/zipcodeR/articles/geographic.html)
+geocoding.](https://zipcoder.39n.io/articles/geographic.html)
 
 ## Installation
 
@@ -42,6 +42,81 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("gavinrozzi/zipcodeR")
 ```
+
+## Reproducibility and data vintages
+
+For new analyses, the recommended interface is the `_ng` API with a
+named, checksum-verified modern data bundle. The suffix is a deliberate
+signal that the caller has chosen the newer data and corrected behavior.
+A project still pins one exact bundle version; `_ng` never means
+“automatically use whatever is newest.”
+
+Version 0.4.0 also keeps every existing function and all three bundled
+datasets identical to 0.3.5. Existing calls therefore keep their
+historical results, including known edge-case behavior:
+
+``` r
+zip_distance("08731", "08901")
+#>   zipcode_a zipcode_b distance
+#> 1     08731     08901     40.7
+get_cd("08731")
+#> $state_fips
+#> [1] "NJ"
+#>
+#> $district
+#> [1] "03"
+zip_data_version()
+#> $data_version
+#> [1] "legacy-0.3.5"
+#>
+#> $package_version
+#> [1] "0.3.5"
+#>
+#> $zip_code_db_rows
+#> [1] 41877
+#>
+#> $zcta_crosswalk_rows
+#> [1] 148897
+#>
+#> $zip_to_cd_rows
+#> [1] 45914
+#>
+#> $sources
+#> $sources$zip_code_db
+#> [1] "uszipcode-project 0.2.6-db-file (2021-06-08)"
+#>
+#> $sources$zcta_crosswalk
+#> [1] "U.S. Census 2010 ZCTA-to-tract relationship file"
+#>
+#> $sources$zip_to_cd
+#> [1] "pre-2020 HUD-USPS congressional-district crosswalk"
+#>
+#>
+#> $compatibility_contract
+#> [1] "Exact zipcodeR 0.3.5 defaults"
+```
+
+Start a new project by downloading the exact registered bundle version,
+or reading a checksum-pinned file for an offline workflow, then pass the
+bundle explicitly to `_ng` functions:
+
+``` r
+bundle <- download_zip_data_bundle("2026.08")
+# Offline alternative:
+# bundle <- read_zip_data_bundle(
+#   "zipcodeR-data-2026.08.rds",
+#   sha256 = "SHA256_FROM_THE_RELEASE_MANIFEST"
+# )
+
+zip_distance_ng(bundle, "08731", "08901")
+get_cd_ng(bundle, "08731")
+zip_data_version(bundle)
+```
+
+No lookup downloads data, selects a `latest` version, or changes a
+global option. Record `zip_data_version(bundle)` and its `bundle_sha256`
+field with research outputs. See the “Legacy and next-generation data”
+vignette.
 
 ## Citing `{zipcodeR}` in Publications
 
@@ -67,190 +142,37 @@ abstract = {The United States Postal Service (USPS) assigns unique identifiers f
 }
 ```
 
-## Examples
+## Recommended workflow for new analyses
 
 ``` r
-# Load zipcodeR into R
 library(zipcodeR)
-#> Warning: package 'zipcodeR' was built under R version 4.3.2
+bundle <- download_zip_data_bundle("2026.08")
+
+search_state_ng(bundle, "NJ")
+zip_distance_ng(bundle, "08901", "08731")
+geocode_zip_ng(bundle, "08901")
+reverse_zipcode_ng(bundle, "08901")
+search_county_ng(bundle, "Ocean", "NJ")
+search_city_ng(bundle, "Jersey City", "NJ")
+search_tz_ng(bundle, "Eastern")
+get_tracts_ng(bundle, "08731")
+
+# Save this beside the analysis outputs.
+saveRDS(zip_data_version(bundle), "zipcodeR-data-version.rds")
 ```
 
-### Find all ZIP codes for a state
-
-``` r
-search_state('NJ')
-#> # A tibble: 732 × 24
-#>    zipcode zipcode_type major_city     post_office_city  common_city_list county
-#>    <chr>   <chr>        <chr>          <chr>                       <blob> <chr> 
-#>  1 07001   Standard     Avenel         Avenel, NJ              <raw 18 B> Middl…
-#>  2 07002   Standard     Bayonne        Bayonne, NJ             <raw 19 B> Hudso…
-#>  3 07003   Standard     Bloomfield     Bloomfield, NJ          <raw 22 B> Essex…
-#>  4 07004   Standard     Fairfield      Fairfield, NJ           <raw 21 B> Essex…
-#>  5 07005   Standard     Boonton        Boonton, NJ             <raw 36 B> Morri…
-#>  6 07006   Standard     Caldwell       Caldwell, NJ            <raw 39 B> Essex…
-#>  7 07007   PO Box       Caldwell       <NA>                    <raw 30 B> Essex…
-#>  8 07008   Standard     Carteret       Carteret, NJ            <raw 20 B> Middl…
-#>  9 07009   Standard     Cedar Grove    Cedar Grove, NJ         <raw 23 B> Essex…
-#> 10 07010   Standard     Cliffside Park Cliffside Park, …       <raw 32 B> Berge…
-#> # ℹ 722 more rows
-#> # ℹ 18 more variables: state <chr>, lat <dbl>, lng <dbl>, timezone <chr>,
-#> #   radius_in_miles <dbl>, area_code_list <blob>, population <int>,
-#> #   population_density <dbl>, land_area_in_sqmi <dbl>,
-#> #   water_area_in_sqmi <dbl>, housing_units <int>,
-#> #   occupied_housing_units <int>, median_home_value <int>,
-#> #   median_household_income <int>, bounds_west <dbl>, bounds_east <dbl>, …
-```
-
-### Calculate the distance between two ZIP codes in miles
-
-``` r
-zip_distance('08901','08731')
-#>   zipcode_a zipcode_b distance
-#> 1     08901     08731     40.7
-```
-
-### Calculate the distance between vectors of ZIP codes
-
-``` r
-zip_codes <- tribble(~zip_a,  ~zip_b,
-"08731",  "08901",
-"08734",  "08005")
-
-zip_distance(zip_codes$zip_a,zip_codes$zip_b)
-#>   zipcode_a zipcode_b distance
-#> 1     08731     08901    40.70
-#> 2     08734     08005     8.06
-```
-
-### Geocode a ZIP code to get its centroid
-
-``` r
-geocode_zip('08901')
-#> # A tibble: 1 × 3
-#>   zipcode   lat   lng
-#>   <chr>   <dbl> <dbl>
-#> 1 08901    40.5 -74.4
-```
-
-### Get data about a ZIP code
-
-``` r
-reverse_zipcode('08901')
-#> # A tibble: 1 × 24
-#>   zipcode zipcode_type major_city post_office_city common_city_list county state
-#>   <chr>   <chr>        <chr>      <chr>                      <blob> <chr>  <chr>
-#> 1 08901   Standard     New Bruns… New Brunswick, …       <raw 25 B> Middl… NJ   
-#> # ℹ 17 more variables: lat <dbl>, lng <dbl>, timezone <chr>,
-#> #   radius_in_miles <dbl>, area_code_list <blob>, population <int>,
-#> #   population_density <dbl>, land_area_in_sqmi <dbl>,
-#> #   water_area_in_sqmi <dbl>, housing_units <int>,
-#> #   occupied_housing_units <int>, median_home_value <int>,
-#> #   median_household_income <int>, bounds_west <dbl>, bounds_east <dbl>,
-#> #   bounds_north <dbl>, bounds_south <dbl>
-```
-
-### Find all ZIP codes for a county
-
-``` r
-search_county('Ocean','NJ')
-#> # A tibble: 32 × 24
-#>    zipcode zipcode_type major_city     post_office_city  common_city_list county
-#>    <chr>   <chr>        <chr>          <chr>                       <blob> <chr> 
-#>  1 08005   Standard     Barnegat       Barnegat, NJ            <raw 20 B> Ocean…
-#>  2 08006   PO Box       Barnegat Light Barnegat Light, …       <raw 33 B> Ocean…
-#>  3 08008   Standard     Beach Haven    Beach Haven, NJ         <raw 61 B> Ocean…
-#>  4 08050   Standard     Manahawkin     Manahawkin, NJ          <raw 47 B> Ocean…
-#>  5 08087   Standard     Tuckerton      Tuckerton, NJ           <raw 51 B> Ocean…
-#>  6 08092   Standard     West Creek     West Creek, NJ          <raw 22 B> Ocean…
-#>  7 08527   Standard     Jackson        Jackson, NJ             <raw 19 B> Ocean…
-#>  8 08533   Standard     New Egypt      New Egypt, NJ           <raw 21 B> Ocean…
-#>  9 08701   Standard     Lakewood       Lakewood, NJ            <raw 20 B> Ocean…
-#> 10 08721   Standard     Bayville       Bayville, NJ            <raw 20 B> Ocean…
-#> # ℹ 22 more rows
-#> # ℹ 18 more variables: state <chr>, lat <dbl>, lng <dbl>, timezone <chr>,
-#> #   radius_in_miles <dbl>, area_code_list <blob>, population <int>,
-#> #   population_density <dbl>, land_area_in_sqmi <dbl>,
-#> #   water_area_in_sqmi <dbl>, housing_units <int>,
-#> #   occupied_housing_units <int>, median_home_value <int>,
-#> #   median_household_income <int>, bounds_west <dbl>, bounds_east <dbl>, …
-```
-
-### Find all ZIP codes for a city
-
-``` r
-search_city('Jersey City','NJ')
-#> # A tibble: 13 × 24
-#>    zipcode zipcode_type major_city  post_office_city common_city_list county    
-#>    <chr>   <chr>        <chr>       <chr>                      <blob> <chr>     
-#>  1 07097   Unique       Jersey City <NA>                   <raw 23 B> Hudson Co…
-#>  2 07302   Standard     Jersey City Jersey City, NJ        <raw 23 B> Hudson Co…
-#>  3 07303   PO Box       Jersey City <NA>                   <raw 23 B> Hudson Co…
-#>  4 07304   Standard     Jersey City Jersey City, NJ        <raw 23 B> Hudson Co…
-#>  5 07305   Standard     Jersey City Jersey City, NJ        <raw 23 B> Hudson Co…
-#>  6 07306   Standard     Jersey City Jersey City, NJ        <raw 23 B> Hudson Co…
-#>  7 07307   Standard     Jersey City Jersey City, NJ        <raw 23 B> Hudson Co…
-#>  8 07308   PO Box       Jersey City <NA>                   <raw 23 B> Hudson Co…
-#>  9 07309   Standard     Jersey City <NA>                   <raw 23 B> Hudson Co…
-#> 10 07310   Standard     Jersey City Jersey City, NJ        <raw 23 B> Hudson Co…
-#> 11 07311   Standard     Jersey City Jersey City, NJ        <raw 23 B> Hudson Co…
-#> 12 07395   Unique       Jersey City <NA>                   <raw 23 B> Hudson Co…
-#> 13 07399   Unique       Jersey City <NA>                   <raw 23 B> Hudson Co…
-#> # ℹ 18 more variables: state <chr>, lat <dbl>, lng <dbl>, timezone <chr>,
-#> #   radius_in_miles <dbl>, area_code_list <blob>, population <int>,
-#> #   population_density <dbl>, land_area_in_sqmi <dbl>,
-#> #   water_area_in_sqmi <dbl>, housing_units <int>,
-#> #   occupied_housing_units <int>, median_home_value <int>,
-#> #   median_household_income <int>, bounds_west <dbl>, bounds_east <dbl>,
-#> #   bounds_north <dbl>, bounds_south <dbl>
-```
-
-### Find all ZIP codes for a timezone
-
-``` r
-search_tz('Eastern')
-#> # A tibble: 14,025 × 24
-#>    zipcode zipcode_type major_city    post_office_city  common_city_list county 
-#>    <chr>   <chr>        <chr>         <chr>                       <blob> <chr>  
-#>  1 06001   Standard     Avon          Avon, CT                <raw 16 B> Hartfo…
-#>  2 06002   Standard     Bloomfield    Bloomfield, CT          <raw 22 B> Hartfo…
-#>  3 06010   Standard     Bristol       Bristol, CT             <raw 19 B> Hartfo…
-#>  4 06013   Standard     Burlington    Burlington, CT          <raw 36 B> Hartfo…
-#>  5 06016   Standard     Broad Brook   Broad Brook, CT         <raw 46 B> Hartfo…
-#>  6 06018   Standard     Canaan        Canaan, CT              <raw 18 B> Litchf…
-#>  7 06019   Standard     Canton        Canton, CT              <raw 34 B> Hartfo…
-#>  8 06020   Standard     Canton Center Canton Center, CT       <raw 25 B> Hartfo…
-#>  9 06021   Standard     Colebrook     Colebrook, CT           <raw 21 B> Litchf…
-#> 10 06022   Standard     Collinsville  Collinsville, CT        <raw 24 B> Hartfo…
-#> # ℹ 14,015 more rows
-#> # ℹ 18 more variables: state <chr>, lat <dbl>, lng <dbl>, timezone <chr>,
-#> #   radius_in_miles <dbl>, area_code_list <blob>, population <int>,
-#> #   population_density <dbl>, land_area_in_sqmi <dbl>,
-#> #   water_area_in_sqmi <dbl>, housing_units <int>,
-#> #   occupied_housing_units <int>, median_home_value <int>,
-#> #   median_household_income <int>, bounds_west <dbl>, bounds_east <dbl>, …
-```
-
-### Get all Census tracts for a given ZIP code
-
-``` r
-get_tracts('08731')
-#> # A tibble: 6 × 3
-#>   ZCTA5 TRACT        GEOID
-#>   <chr> <chr>        <dbl>
-#> 1 08731 732001 34029732001
-#> 2 08731 732002 34029732002
-#> 3 08731 732101 34029732101
-#> 4 08731 732103 34029732103
-#> 5 08731 732104 34029732104
-#> 6 08731 733000 34029733000
-```
+For existing scripts, keep using the unsuffixed functions. They
+intentionally continue to use the historical 0.3.5 data and behavior, so
+upgrading zipcodeR does not rewrite a prior result. New code should use
+`_ng` only after choosing and recording the modern bundle version it
+intends to analyze.
 
 ## Documentation
 
 Documentation for the current release [is available
-here.](https://gavinrozzi.github.io/zipcodeR/) See the [reference
-section](https://gavinrozzi.github.io/zipcodeR/reference/) for full
-details on how to use each of the functions provided by zipcodeR.
+here.](https://zipcoder.39n.io/) See the [reference
+section](https://zipcoder.39n.io/reference/) for full details on how to
+use each of the functions provided by zipcodeR.
 
 ## Data Sources
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/download_data.r
 \name{download_zip_data}
 \alias{download_zip_data}
-\title{Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.}
+\title{Legacy in-place data downloader}
 \usage{
 download_zip_data(force = FALSE)
 }
@@ -13,7 +13,13 @@ download_zip_data(force = FALSE)
 Data files needed for package functionality, stored in data directory of package install
 }
 \description{
-Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.
+This function is retained without behavioral changes for reproducibility
+with zipcodeR 0.3.5. It attempts to modify files inside an installed package
+and resolves an upstream "latest" release, so it is unsuitable for a pinned
+research workflow. New work should use \code{\link[=download_zip_data_bundle]{download_zip_data_bundle()}} or
+\code{\link[=read_zip_data_bundle]{read_zip_data_bundle()}} and pass the resulting object explicitly to the
+\verb{_ng} API. No runtime warning is emitted because warnings are part of the
+frozen legacy contract.
 }
 \examples{
 \dontrun{

@@ -5,3 +5,57 @@ authors:
 
 template:
   package: preferably
+
+reference:
+  - title: "Recommended API for new analyses"
+    desc: >
+      Select an immutable modern data bundle, then use the next-generation
+      functions. The bundle is always the first argument and is never selected
+      or downloaded implicitly.
+    contents:
+      - download_zip_data_bundle
+      - read_zip_data_bundle
+      - zip_data_version
+      - zip_data_provenance
+      - search_state_ng
+      - search_county_ng
+      - search_city_ng
+      - search_tz_ng
+      - search_fips_ng
+      - search_cd_ng
+      - search_radius_ng
+      - reverse_zipcode_ng
+      - geocode_zip_ng
+      - get_tracts_ng
+      - get_cd_ng
+      - is_zcta_ng
+      - normalize_zip_ng
+      - zip_distance_ng
+  - title: "Historical compatibility API"
+    desc: >
+      Existing names retain the exact 0.3.5 data and behavior for old scripts
+      and research reproduction.
+    contents:
+      - search_state
+      - search_county
+      - search_city
+      - search_tz
+      - search_fips
+      - search_cd
+      - search_radius
+      - reverse_zipcode
+      - geocode_zip
+      - get_tracts
+      - get_cd
+      - is_zcta
+      - normalize_zip
+      - zip_distance
+      - download_zip_data
+  - title: "Data objects"
+    contents:
+      - zip_code_db
+      - zcta_crosswalk
+      - zip_to_cd
+  - title: "Optional comprehensive data"
+    contents:
+      - download_comprehensive_data

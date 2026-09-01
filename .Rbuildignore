@@ -16,4 +16,13 @@ paper.pdf$
 ^\.github$
 ^codecov\.yml$
 ^README\.Rmd$
+^README\.html$
 ^CRAN-SUBMISSION$
+^data-raw$
+^AUDIT\.md$
+^CLAUDE\.md$
+^issue_comments$
+^bench$
+^ROADMAP\.md$
+^ISSUE-RESOLUTION\.md$
+^vignettes/.*\.html$

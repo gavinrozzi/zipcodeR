@@ -1,4 +1,12 @@
-#' Download updated data files needed for library functionality to the package's data directory. To be implemented for future updates.
+#' Legacy in-place data downloader
+#'
+#' This function is retained without behavioral changes for reproducibility
+#' with zipcodeR 0.3.5. It attempts to modify files inside an installed package
+#' and resolves an upstream "latest" release, so it is unsuitable for a pinned
+#' research workflow. New work should use [download_zip_data_bundle()] or
+#' [read_zip_data_bundle()] and pass the resulting object explicitly to the
+#' `_ng` API. No runtime warning is emitted because warnings are part of the
+#' frozen legacy contract.
 #'
 #' @param force Boolean, if set to TRUE will force overwrite existing data files with new version
 #' @return Data files needed for package functionality, stored in data directory of package install
@@ -10,7 +18,7 @@
 #' @importFrom DBI dbGetQuery
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr http_error
-#' @importFrom dplyr `%>%`
+#' @importFrom dplyr %>%
 #' @importFrom dplyr filter
 #' @importFrom curl has_internet
 #' @export

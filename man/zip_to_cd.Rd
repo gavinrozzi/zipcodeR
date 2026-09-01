@@ -20,4 +20,10 @@ zip_to_cd
 \description{
 A dataset containing mappings between ZIP codes and congressional districts
 }
+\details{
+This is the exact pre-2020 HUD-USPS-derived mapping shipped in zipcodeR
+0.3.5. It is frozen for legacy reproducibility and should not be interpreted
+as a current redistricting vintage. Current authoritative ZCTA relationships
+are available in explicit data bundles.
+}
 \keyword{datasets}

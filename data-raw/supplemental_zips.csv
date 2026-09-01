@@ -1,0 +1,2 @@
+zipcode,zipcode_type,major_city,state,county,lat,lng,source,note
+91230,PO Box,Glendale,CA,Los Angeles County,,,"Unverified issue report retained only as a quarantine lead","USPS-only ZIP with no Census ZCTA. No proxy centroid is assigned; publish only after authoritative ZIP validation and record-level provenance."

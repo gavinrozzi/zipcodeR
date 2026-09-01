@@ -1,0 +1,3522 @@
+{
+  "lockfile_version": 1,
+  "os": "macOS Tahoe 26.6.2",
+  "r_version": "R version 4.6.1 (2026-06-24)",
+  "platform": "aarch64-apple-darwin25.4.0",
+  "packages": [
+    {
+      "ref": "DBI@1.3.0",
+      "package": "DBI",
+      "version": "1.3.0",
+      "type": "standard",
+      "direct": true,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "arrow",
+          "type": "suggests",
+          "package": "arrow",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "blob",
+          "type": "suggests",
+          "package": "blob",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "callr",
+          "type": "suggests",
+          "package": "callr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "DBItest",
+          "type": "suggests",
+          "package": "DBItest",
+          "op": ">=",
+          "version": "1.8.2"
+        },
+        {
+          "ref": "dbplyr",
+          "type": "suggests",
+          "package": "dbplyr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "downlit",
+          "type": "suggests",
+          "package": "downlit",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "dplyr",
+          "type": "suggests",
+          "package": "dplyr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "suggests",
+          "package": "glue",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "hms",
+          "type": "suggests",
+          "package": "hms",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "magrittr",
+          "type": "suggests",
+          "package": "magrittr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "depends",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "nanoarrow",
+          "type": "suggests",
+          "package": "nanoarrow",
+          "op": ">=",
+          "version": "0.3.0.1"
+        },
+        {
+          "ref": "otel",
+          "type": "suggests",
+          "package": "otel",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "otelsdk",
+          "type": "suggests",
+          "package": "otelsdk",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.0.0"
+        },
+        {
+          "ref": "RMariaDB",
+          "type": "suggests",
+          "package": "RMariaDB",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rprojroot",
+          "type": "suggests",
+          "package": "rprojroot",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "RSQLite",
+          "type": "suggests",
+          "package": "RSQLite",
+          "op": ">=",
+          "version": "1.1-2"
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        },
+        {
+          "ref": "vctrs",
+          "type": "suggests",
+          "package": "vctrs",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "xml2",
+          "type": "suggests",
+          "package": "xml2",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "DBI@1.3.0",
+        "RemoteRef": "DBI@1.3.0",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.3.0"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/DBI_1.3.0.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/DBI/DBI_1.3.0.tar.gz"],
+      "target": "src/contrib/DBI_1.3.0.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": true,
+      "license": "LGPL (>= 2.1)",
+      "sha256": "13def8e90cbe41205a0dfcf585a6a7ea79ce10d45969789e82613c7ce3d5fb18",
+      "filesize": 744704,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "bit",
+      "package": "bit",
+      "version": "4.6.0",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "bit64",
+          "type": "suggests",
+          "package": "bit64",
+          "op": ">=",
+          "version": "4.0.0"
+        },
+        {
+          "ref": "ff",
+          "type": "suggests",
+          "package": "ff",
+          "op": ">=",
+          "version": "4.0.0"
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "markdown",
+          "type": "suggests",
+          "package": "markdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "microbenchmark",
+          "type": "suggests",
+          "package": "microbenchmark",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.4.0"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "roxygen2",
+          "type": "suggests",
+          "package": "roxygen2",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "bit",
+        "RemoteRef": "bit",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "4.6.0"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/bit_4.6.0.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/bit/bit_4.6.0.tar.gz"],
+      "target": "src/contrib/bit_4.6.0.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "GPL-2 | GPL-3",
+      "sha256": "48fe21c5d04c7b724d695eeb60074395c0c631a7fb234e2075de92471445de08",
+      "filesize": 304585,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "bit64",
+      "package": "bit64",
+      "version": "4.8.4",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["bit"],
+      "deps": [
+        {
+          "ref": "bit",
+          "type": "imports",
+          "package": "bit",
+          "op": ">=",
+          "version": "4.0.0"
+        },
+        {
+          "ref": "graphics",
+          "type": "imports",
+          "package": "graphics",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "imports",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "patrick",
+          "type": "suggests",
+          "package": "patrick",
+          "op": ">=",
+          "version": "0.3.0"
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.5.0"
+        },
+        {
+          "ref": "stats",
+          "type": "imports",
+          "package": "stats",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.3.0"
+        },
+        {
+          "ref": "utils",
+          "type": "imports",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "bit64",
+        "RemoteRef": "bit64",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "4.8.4"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/bit64_4.8.4.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/bit64/bit64_4.8.4.tar.gz"],
+      "target": "src/contrib/bit64_4.8.4.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "GPL-2 | GPL-3",
+      "sha256": "1feb4384058b1510861e296f317ee9f43aca75b753065d2268317620f8c208bc",
+      "filesize": 179334,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "blob",
+      "package": "blob",
+      "version": "1.3.0",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["rlang", "vctrs"],
+      "deps": [
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "crayon",
+          "type": "suggests",
+          "package": "crayon",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "imports",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pillar",
+          "type": "suggests",
+          "package": "pillar",
+          "op": ">=",
+          "version": "1.2.1"
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        },
+        {
+          "ref": "vctrs",
+          "type": "imports",
+          "package": "vctrs",
+          "op": ">=",
+          "version": "0.2.1"
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "blob",
+        "RemoteRef": "blob",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.3.0"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/blob_1.3.0.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/blob/blob_1.3.0.tar.gz"],
+      "target": "src/contrib/blob_1.3.0.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "d4d2aeb8d17683bbfc256a7541e282af9663a752988a21a6ba72a4ab268c7331",
+      "filesize": 11157,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "cachem",
+      "package": "cachem",
+      "version": "1.1.0",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["fastmap", "rlang"],
+      "deps": [
+        {
+          "ref": "fastmap",
+          "type": "imports",
+          "package": "fastmap",
+          "op": ">=",
+          "version": "1.2.0"
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "cachem",
+        "RemoteRef": "cachem",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.1.0"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/cachem_1.1.0.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/cachem/cachem_1.1.0.tar.gz"],
+      "target": "src/contrib/cachem_1.1.0.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "550839fc2ae5d865db475ba2c1714144f07fa0c052c72135b0e4a70287492e21",
+      "filesize": 27192,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "cli",
+      "package": "cli",
+      "version": "3.6.6",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "callr",
+          "type": "suggests",
+          "package": "callr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "crayon",
+          "type": "suggests",
+          "package": "crayon",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "digest",
+          "type": "suggests",
+          "package": "digest",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "suggests",
+          "package": "glue",
+          "op": ">=",
+          "version": "1.6.0"
+        },
+        {
+          "ref": "grDevices",
+          "type": "suggests",
+          "package": "grDevices",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "htmltools",
+          "type": "suggests",
+          "package": "htmltools",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "htmlwidgets",
+          "type": "suggests",
+          "package": "htmlwidgets",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "suggests",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "processx",
+          "type": "suggests",
+          "package": "processx",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "ps",
+          "type": "suggests",
+          "package": "ps",
+          "op": ">=",
+          "version": "1.3.4.9000"
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.4"
+        },
+        {
+          "ref": "rlang",
+          "type": "suggests",
+          "package": "rlang",
+          "op": ">=",
+          "version": "1.0.2.9003"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rprojroot",
+          "type": "suggests",
+          "package": "rprojroot",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rstudioapi",
+          "type": "suggests",
+          "package": "rstudioapi",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.2.0"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "utils",
+          "type": "imports",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "whoami",
+          "type": "suggests",
+          "package": "whoami",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "cli",
+        "RemoteRef": "cli",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "3.6.6"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/cli_3.6.6.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/cli/cli_3.6.6.tar.gz"],
+      "target": "src/contrib/cli_3.6.6.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "b2b58d6dd82f5798b335e39c00591686a01fd3e94399ef898e146173e36f18f9",
+      "filesize": 644134,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "cpp11",
+      "package": "cpp11",
+      "version": "0.5.5",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "bench",
+          "type": "suggests",
+          "package": "bench",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "brio",
+          "type": "suggests",
+          "package": "brio",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "callr",
+          "type": "suggests",
+          "package": "callr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cli",
+          "type": "suggests",
+          "package": "cli",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "decor",
+          "type": "suggests",
+          "package": "decor",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "desc",
+          "type": "suggests",
+          "package": "desc",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "ggplot2",
+          "type": "suggests",
+          "package": "ggplot2",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "suggests",
+          "package": "glue",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lobstr",
+          "type": "suggests",
+          "package": "lobstr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "mockery",
+          "type": "suggests",
+          "package": "mockery",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "progress",
+          "type": "suggests",
+          "package": "progress",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "4.0.0"
+        },
+        {
+          "ref": "Rcpp",
+          "type": "suggests",
+          "package": "Rcpp",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "scales",
+          "type": "suggests",
+          "package": "scales",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.2.0"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "utils",
+          "type": "suggests",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "vctrs",
+          "type": "suggests",
+          "package": "vctrs",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "cpp11",
+        "RemoteRef": "cpp11",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "0.5.5"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/cpp11_0.5.5.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/cpp11/cpp11_0.5.5.tar.gz"],
+      "target": "src/contrib/cpp11_0.5.5.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "72486beb0605c1229bf3d422cd536224af8dc09bd389a3116f62f4c7705c62f4",
+      "filesize": 304823,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "fastmap",
+      "package": "fastmap",
+      "version": "1.2.0",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "2.1.1"
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "fastmap",
+        "RemoteRef": "fastmap",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.2.0"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/fastmap_1.2.0.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/fastmap/fastmap_1.2.0.tar.gz"],
+      "target": "src/contrib/fastmap_1.2.0.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "b1da04a2915d1d057f3c2525e295ef15016a64e6667eac83a14641bbd83b9246",
+      "filesize": 46710,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "glue",
+      "package": "glue",
+      "version": "1.8.1",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "crayon",
+          "type": "suggests",
+          "package": "crayon",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "DBI",
+          "type": "suggests",
+          "package": "DBI",
+          "op": ">=",
+          "version": "1.2.0"
+        },
+        {
+          "ref": "dplyr",
+          "type": "suggests",
+          "package": "dplyr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "imports",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "4.1"
+        },
+        {
+          "ref": "rlang",
+          "type": "suggests",
+          "package": "rlang",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "RSQLite",
+          "type": "suggests",
+          "package": "RSQLite",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.2.0"
+        },
+        {
+          "ref": "vctrs",
+          "type": "suggests",
+          "package": "vctrs",
+          "op": ">=",
+          "version": "0.3.0"
+        },
+        {
+          "ref": "waldo",
+          "type": "suggests",
+          "package": "waldo",
+          "op": ">=",
+          "version": "0.5.3"
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "glue",
+        "RemoteRef": "glue",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.8.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/glue_1.8.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/glue/glue_1.8.1.tar.gz"],
+      "target": "src/contrib/glue_1.8.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "1c55905d3efc3d5c199ceb0bd12218e97f0d4c64df6038ff41ecef415478a122",
+      "filesize": 129786,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "lifecycle",
+      "package": "lifecycle",
+      "version": "1.0.5",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["cli", "rlang"],
+      "deps": [
+        {
+          "ref": "cli",
+          "type": "imports",
+          "package": "cli",
+          "op": ">=",
+          "version": "3.4.0"
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lintr",
+          "type": "suggests",
+          "package": "lintr",
+          "op": ">=",
+          "version": "3.1.0"
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.6"
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": ">=",
+          "version": "1.1.0"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.1"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "tidyverse",
+          "type": "suggests",
+          "package": "tidyverse",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "tools",
+          "type": "suggests",
+          "package": "tools",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "vctrs",
+          "type": "suggests",
+          "package": "vctrs",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "xml2",
+          "type": "suggests",
+          "package": "xml2",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "lifecycle",
+        "RemoteRef": "lifecycle",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.0.5"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/lifecycle_1.0.5.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/lifecycle/lifecycle_1.0.5.tar.gz"],
+      "target": "src/contrib/lifecycle_1.0.5.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "61841e3e6edba056a88355a3f1d6698ab8d5d9cb3c05f2af0ec5a44ab516f8ee",
+      "filesize": 107137,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "memoise",
+      "package": "memoise",
+      "version": "2.0.1",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["cachem", "rlang"],
+      "deps": [
+        {
+          "ref": "aws.s3",
+          "type": "suggests",
+          "package": "aws.s3",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cachem",
+          "type": "imports",
+          "package": "cachem",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "digest",
+          "type": "suggests",
+          "package": "digest",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "googleAuthR",
+          "type": "suggests",
+          "package": "googleAuthR",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "googleCloudStorageR",
+          "type": "suggests",
+          "package": "googleCloudStorageR",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "httr",
+          "type": "suggests",
+          "package": "httr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": ">=",
+          "version": "0.4.10"
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "memoise",
+        "RemoteRef": "memoise",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "2.0.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/memoise_2.0.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/memoise/memoise_2.0.1.tar.gz"],
+      "target": "src/contrib/memoise_2.0.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "f85034ee98c8ca07fb3cd826142c1cd1e1e5747075a94c75a45783bbc4fe2deb",
+      "filesize": 17852,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "pkgconfig",
+      "package": "pkgconfig",
+      "version": "2.0.3",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "disposables",
+          "type": "suggests",
+          "package": "disposables",
+          "op": ">=",
+          "version": "1.0.3"
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "utils",
+          "type": "imports",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "pkgconfig",
+        "RemoteRef": "pkgconfig",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "2.0.3"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/pkgconfig_2.0.3.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/pkgconfig/pkgconfig_2.0.3.tar.gz"],
+      "target": "src/contrib/pkgconfig_2.0.3.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "330fef440ffeb842a7dcfffc8303743f1feae83e8d6131078b5a44ff11bc3850",
+      "filesize": 6080,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "rlang",
+      "package": "rlang",
+      "version": "1.3.0",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "cli",
+          "type": "suggests",
+          "package": "cli",
+          "op": ">=",
+          "version": "3.1.0"
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "crayon",
+          "type": "suggests",
+          "package": "crayon",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "desc",
+          "type": "suggests",
+          "package": "desc",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "fs",
+          "type": "suggests",
+          "package": "fs",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "suggests",
+          "package": "glue",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "magrittr",
+          "type": "suggests",
+          "package": "magrittr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "suggests",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pillar",
+          "type": "suggests",
+          "package": "pillar",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pkgload",
+          "type": "suggests",
+          "package": "pkgload",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "4.0.0"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "stats",
+          "type": "suggests",
+          "package": "stats",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.3.2"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "usethis",
+          "type": "suggests",
+          "package": "usethis",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "utils",
+          "type": "imports",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "vctrs",
+          "type": "suggests",
+          "package": "vctrs",
+          "op": ">=",
+          "version": "0.2.3"
+        },
+        {
+          "ref": "winch",
+          "type": "enhances",
+          "package": "winch",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "rlang",
+        "RemoteRef": "rlang",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.3.0"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/rlang_1.3.0.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/rlang/rlang_1.3.0.tar.gz"],
+      "target": "src/contrib/rlang_1.3.0.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "80aa537d49e72265f443a15e8936128af583caa5e572086518b503cbf064279c",
+      "filesize": 784080,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "RSQLite@3.53.3",
+      "package": "RSQLite",
+      "version": "3.53.3",
+      "type": "standard",
+      "direct": true,
+      "binary": false,
+      "dependencies": ["bit64", "blob", "cpp11", "DBI", "memoise", "pkgconfig", "rlang"],
+      "deps": [
+        {
+          "ref": "bit64",
+          "type": "imports",
+          "package": "bit64",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "blob",
+          "type": "imports",
+          "package": "blob",
+          "op": ">=",
+          "version": "1.2.0"
+        },
+        {
+          "ref": "callr",
+          "type": "suggests",
+          "package": "callr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cli",
+          "type": "suggests",
+          "package": "cli",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cpp11",
+          "type": "linkingto",
+          "package": "cpp11",
+          "op": ">=",
+          "version": "0.4.0"
+        },
+        {
+          "ref": "DBI",
+          "type": "imports",
+          "package": "DBI",
+          "op": ">=",
+          "version": "1.2.0"
+        },
+        {
+          "ref": "DBItest",
+          "type": "suggests",
+          "package": "DBItest",
+          "op": ">=",
+          "version": "1.8.0"
+        },
+        {
+          "ref": "decor",
+          "type": "suggests",
+          "package": "decor",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "gert",
+          "type": "suggests",
+          "package": "gert",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "gh",
+          "type": "suggests",
+          "package": "gh",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "hms",
+          "type": "suggests",
+          "package": "hms",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "httpuv",
+          "type": "suggests",
+          "package": "httpuv",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "magrittr",
+          "type": "suggests",
+          "package": "magrittr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "memoise",
+          "type": "imports",
+          "package": "memoise",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "imports",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pkgconfig",
+          "type": "imports",
+          "package": "pkgconfig",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.1.0"
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rvest",
+          "type": "suggests",
+          "package": "rvest",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "xml2",
+          "type": "suggests",
+          "package": "xml2",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "RSQLite@3.53.3",
+        "RemoteRef": "RSQLite@3.53.3",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "3.53.3"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/RSQLite_3.53.3.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/RSQLite/RSQLite_3.53.3.tar.gz"],
+      "target": "src/contrib/RSQLite_3.53.3.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": true,
+      "license": "LGPL (>= 2.1)",
+      "sha256": "82946aac5e2869da5fdaf57d0e4afeee3d4deac21d9eaeffb5f743273a93736c",
+      "filesize": 4413180,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "vctrs",
+      "package": "vctrs",
+      "version": "0.7.3",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["cli", "glue", "lifecycle", "rlang"],
+      "deps": [
+        {
+          "ref": "bit64",
+          "type": "suggests",
+          "package": "bit64",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cli",
+          "type": "imports",
+          "package": "cli",
+          "op": ">=",
+          "version": "3.4.0"
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "crayon",
+          "type": "suggests",
+          "package": "crayon",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "dplyr",
+          "type": "suggests",
+          "package": "dplyr",
+          "op": ">=",
+          "version": "0.8.5"
+        },
+        {
+          "ref": "generics",
+          "type": "suggests",
+          "package": "generics",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "imports",
+          "package": "glue",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lifecycle",
+          "type": "imports",
+          "package": "lifecycle",
+          "op": ">=",
+          "version": "1.0.3"
+        },
+        {
+          "ref": "pillar",
+          "type": "suggests",
+          "package": "pillar",
+          "op": ">=",
+          "version": "1.4.4"
+        },
+        {
+          "ref": "pkgdown",
+          "type": "suggests",
+          "package": "pkgdown",
+          "op": ">=",
+          "version": "2.0.1"
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "4.0.0"
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": ">=",
+          "version": "1.1.7"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": ">=",
+          "version": "3.1.3"
+        },
+        {
+          "ref": "waldo",
+          "type": "suggests",
+          "package": "waldo",
+          "op": ">=",
+          "version": "0.2.0"
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "xml2",
+          "type": "suggests",
+          "package": "xml2",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "zeallot",
+          "type": "suggests",
+          "package": "zeallot",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "vctrs",
+        "RemoteRef": "vctrs",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "0.7.3"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/vctrs_0.7.3.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/vctrs/vctrs_0.7.3.tar.gz"],
+      "target": "src/contrib/vctrs_0.7.3.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "b45078413e06ac624dddb7221a3a43908b405c8abec09822cb86638d30b0435b",
+      "filesize": 1083213,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "askpass",
+      "package": "askpass",
+      "version": "1.2.1",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["sys"],
+      "deps": [
+        {
+          "ref": "sys",
+          "type": "imports",
+          "package": "sys",
+          "op": ">=",
+          "version": "2.1"
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "askpass",
+        "RemoteRef": "askpass",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.2.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/askpass_1.2.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/askpass/askpass_1.2.1.tar.gz"],
+      "target": "src/contrib/askpass_1.2.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "6c2106a74c44a748f2cea795d9686e27a0058a90debcfd8558b62b06aec0c7dd",
+      "filesize": 6058,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "openssl@2.4.2",
+      "package": "openssl",
+      "version": "2.4.2",
+      "type": "standard",
+      "direct": true,
+      "binary": false,
+      "dependencies": ["askpass"],
+      "deps": [
+        {
+          "ref": "askpass",
+          "type": "imports",
+          "package": "askpass",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "curl",
+          "type": "suggests",
+          "package": "curl",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "digest",
+          "type": "suggests",
+          "package": "digest",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "jose",
+          "type": "suggests",
+          "package": "jose",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "jsonlite",
+          "type": "suggests",
+          "package": "jsonlite",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "sodium",
+          "type": "suggests",
+          "package": "sodium",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "2.1.0"
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "openssl@2.4.2",
+        "RemoteRef": "openssl@2.4.2",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "2.4.2"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/openssl_2.4.2.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/openssl/openssl_2.4.2.tar.gz"],
+      "target": "src/contrib/openssl_2.4.2.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": true,
+      "license": "MIT + file LICENSE",
+      "sha256": "1fc030ad0a008472eac7f086666a7623bdbe6d27c5fdb07b5510f56545d2f4e7",
+      "filesize": 1177207,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": "OpenSSL >= 1.0.2"
+    },
+    {
+      "ref": "sys",
+      "package": "sys",
+      "version": "3.4.3",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "spelling",
+          "type": "suggests",
+          "package": "spelling",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "unix",
+          "type": "suggests",
+          "package": "unix",
+          "op": ">=",
+          "version": "1.4"
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "sys",
+        "RemoteRef": "sys",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "3.4.3"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/sys_3.4.3.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/sys/sys_3.4.3.tar.gz"],
+      "target": "src/contrib/sys_3.4.3.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "051e7332e3074db826efef9059067721864f9d70adc55bbcae3a72e5ae83913a",
+      "filesize": 19936,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "dplyr@1.2.1",
+      "package": "dplyr",
+      "version": "1.2.1",
+      "type": "standard",
+      "direct": true,
+      "binary": false,
+      "dependencies": ["cli", "generics", "glue", "lifecycle", "magrittr", "pillar", "R6", "rlang", "tibble", "tidyselect", "vctrs"],
+      "deps": [
+        {
+          "ref": "broom",
+          "type": "suggests",
+          "package": "broom",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cli",
+          "type": "imports",
+          "package": "cli",
+          "op": ">=",
+          "version": "3.6.2"
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "DBI",
+          "type": "suggests",
+          "package": "DBI",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "dbplyr",
+          "type": "suggests",
+          "package": "dbplyr",
+          "op": ">=",
+          "version": "2.2.1"
+        },
+        {
+          "ref": "generics",
+          "type": "imports",
+          "package": "generics",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "ggplot2",
+          "type": "suggests",
+          "package": "ggplot2",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "imports",
+          "package": "glue",
+          "op": ">=",
+          "version": "1.3.2"
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "Lahman",
+          "type": "suggests",
+          "package": "Lahman",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lifecycle",
+          "type": "imports",
+          "package": "lifecycle",
+          "op": ">=",
+          "version": "1.0.5"
+        },
+        {
+          "ref": "lobstr",
+          "type": "suggests",
+          "package": "lobstr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "magrittr",
+          "type": "imports",
+          "package": "magrittr",
+          "op": ">=",
+          "version": "1.5"
+        },
+        {
+          "ref": "methods",
+          "type": "imports",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "nycflights13",
+          "type": "suggests",
+          "package": "nycflights13",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pillar",
+          "type": "imports",
+          "package": "pillar",
+          "op": ">=",
+          "version": "1.9.0"
+        },
+        {
+          "ref": "purrr",
+          "type": "suggests",
+          "package": "purrr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "4.1.0"
+        },
+        {
+          "ref": "R6",
+          "type": "imports",
+          "package": "R6",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": ">=",
+          "version": "1.1.7"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "RSQLite",
+          "type": "suggests",
+          "package": "RSQLite",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "stringi",
+          "type": "suggests",
+          "package": "stringi",
+          "op": ">=",
+          "version": "1.7.6"
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.1.5"
+        },
+        {
+          "ref": "tibble",
+          "type": "imports",
+          "package": "tibble",
+          "op": ">=",
+          "version": "3.2.0"
+        },
+        {
+          "ref": "tidyr",
+          "type": "suggests",
+          "package": "tidyr",
+          "op": ">=",
+          "version": "1.3.0"
+        },
+        {
+          "ref": "tidyselect",
+          "type": "imports",
+          "package": "tidyselect",
+          "op": ">=",
+          "version": "1.2.0"
+        },
+        {
+          "ref": "utils",
+          "type": "imports",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "vctrs",
+          "type": "imports",
+          "package": "vctrs",
+          "op": ">=",
+          "version": "0.7.1"
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "dplyr@1.2.1",
+        "RemoteRef": "dplyr@1.2.1",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.2.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/dplyr_1.2.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/dplyr/dplyr_1.2.1.tar.gz"],
+      "target": "src/contrib/dplyr_1.2.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": true,
+      "license": "MIT + file LICENSE",
+      "sha256": "18d66fe2f24cda8b619c177326d39dd015229ab99695fa67d3fa31e4569390e0",
+      "filesize": 923509,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "generics",
+      "package": "generics",
+      "version": "0.1.4",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "imports",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pkgload",
+          "type": "suggests",
+          "package": "pkgload",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.6"
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "generics",
+        "RemoteRef": "generics",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "0.1.4"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/generics_0.1.4.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/generics/generics_0.1.4.tar.gz"],
+      "target": "src/contrib/generics_0.1.4.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "bbe95a097792d38fc3b7e677738af1b95b66ea5e5017e33b8beac6a6088d0801",
+      "filesize": 47224,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "magrittr",
+      "package": "magrittr",
+      "version": "2.0.5",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.4.0"
+        },
+        {
+          "ref": "rlang",
+          "type": "suggests",
+          "package": "rlang",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "magrittr",
+        "RemoteRef": "magrittr",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "2.0.5"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/magrittr_2.0.5.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/magrittr/magrittr_2.0.5.tar.gz"],
+      "target": "src/contrib/magrittr_2.0.5.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "3f5b5b1d4e6d12807a95c50b6c88cb1d8af2c5eb5213f08bfe58f278eca2ed23",
+      "filesize": 281813,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "pillar",
+      "package": "pillar",
+      "version": "1.11.1",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["cli", "glue", "lifecycle", "rlang", "utf8", "vctrs"],
+      "deps": [
+        {
+          "ref": "bit64",
+          "type": "suggests",
+          "package": "bit64",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cli",
+          "type": "imports",
+          "package": "cli",
+          "op": ">=",
+          "version": "2.3.0"
+        },
+        {
+          "ref": "DBI",
+          "type": "suggests",
+          "package": "DBI",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "debugme",
+          "type": "suggests",
+          "package": "debugme",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "DiagrammeR",
+          "type": "suggests",
+          "package": "DiagrammeR",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "dplyr",
+          "type": "suggests",
+          "package": "dplyr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "formattable",
+          "type": "suggests",
+          "package": "formattable",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "ggplot2",
+          "type": "suggests",
+          "package": "ggplot2",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "imports",
+          "package": "glue",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lifecycle",
+          "type": "imports",
+          "package": "lifecycle",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lubridate",
+          "type": "suggests",
+          "package": "lubridate",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "nanotime",
+          "type": "suggests",
+          "package": "nanotime",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "nycflights13",
+          "type": "suggests",
+          "package": "nycflights13",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "palmerpenguins",
+          "type": "suggests",
+          "package": "palmerpenguins",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": ">=",
+          "version": "1.0.2"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "scales",
+          "type": "suggests",
+          "package": "scales",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "stringi",
+          "type": "suggests",
+          "package": "stringi",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "survival",
+          "type": "suggests",
+          "package": "survival",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.1.1"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "units",
+          "type": "suggests",
+          "package": "units",
+          "op": ">=",
+          "version": "0.7.2"
+        },
+        {
+          "ref": "utf8",
+          "type": "imports",
+          "package": "utf8",
+          "op": ">=",
+          "version": "1.1.0"
+        },
+        {
+          "ref": "utils",
+          "type": "imports",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "vctrs",
+          "type": "imports",
+          "package": "vctrs",
+          "op": ">=",
+          "version": "0.5.0"
+        },
+        {
+          "ref": "vdiffr",
+          "type": "suggests",
+          "package": "vdiffr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "pillar",
+        "RemoteRef": "pillar",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.11.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/pillar_1.11.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/pillar/pillar_1.11.1.tar.gz"],
+      "target": "src/contrib/pillar_1.11.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "056ce154238c9b5b8d5dcbcb52e1bc51d33870ce08c8a9ca9496478bd59f4653",
+      "filesize": 409508,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "R6",
+      "package": "R6",
+      "version": "2.6.1",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "lobstr",
+          "type": "suggests",
+          "package": "lobstr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.6"
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "R6",
+        "RemoteRef": "R6",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "2.6.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/R6_2.6.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/R6/R6_2.6.1.tar.gz"],
+      "target": "src/contrib/R6_2.6.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "59c6eba8b1b912eb7e104f65053235604be853425ee67c152ac4e86a1f2073b4",
+      "filesize": 64507,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "tibble",
+      "package": "tibble",
+      "version": "3.3.1",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["cli", "lifecycle", "magrittr", "pillar", "pkgconfig", "rlang", "vctrs"],
+      "deps": [
+        {
+          "ref": "bench",
+          "type": "suggests",
+          "package": "bench",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "bit64",
+          "type": "suggests",
+          "package": "bit64",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "blob",
+          "type": "suggests",
+          "package": "blob",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "brio",
+          "type": "suggests",
+          "package": "brio",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "callr",
+          "type": "suggests",
+          "package": "callr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "cli",
+          "type": "imports",
+          "package": "cli",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "DiagrammeR",
+          "type": "suggests",
+          "package": "DiagrammeR",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "dplyr",
+          "type": "suggests",
+          "package": "dplyr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "evaluate",
+          "type": "suggests",
+          "package": "evaluate",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "formattable",
+          "type": "suggests",
+          "package": "formattable",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "ggplot2",
+          "type": "suggests",
+          "package": "ggplot2",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "here",
+          "type": "suggests",
+          "package": "here",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "hms",
+          "type": "suggests",
+          "package": "hms",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "htmltools",
+          "type": "suggests",
+          "package": "htmltools",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lifecycle",
+          "type": "imports",
+          "package": "lifecycle",
+          "op": ">=",
+          "version": "1.0.0"
+        },
+        {
+          "ref": "lubridate",
+          "type": "suggests",
+          "package": "lubridate",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "magrittr",
+          "type": "imports",
+          "package": "magrittr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "imports",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "nycflights13",
+          "type": "suggests",
+          "package": "nycflights13",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pillar",
+          "type": "imports",
+          "package": "pillar",
+          "op": ">=",
+          "version": "1.8.1"
+        },
+        {
+          "ref": "pkgconfig",
+          "type": "imports",
+          "package": "pkgconfig",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "pkgload",
+          "type": "suggests",
+          "package": "pkgload",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "purrr",
+          "type": "suggests",
+          "package": "purrr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.4.0"
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": ">=",
+          "version": "1.0.2"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "stringi",
+          "type": "suggests",
+          "package": "stringi",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.2"
+        },
+        {
+          "ref": "tidyr",
+          "type": "suggests",
+          "package": "tidyr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "utils",
+          "type": "imports",
+          "package": "utils",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "vctrs",
+          "type": "imports",
+          "package": "vctrs",
+          "op": ">=",
+          "version": "0.5.0"
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "tibble",
+        "RemoteRef": "tibble",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "3.3.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/tibble_3.3.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/tibble/tibble_3.3.1.tar.gz"],
+      "target": "src/contrib/tibble_3.3.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "fb309f8a1939021b237c7e85ff7ad6e8ff5acd57a6230d220a452094b492b28f",
+      "filesize": 557135,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "tidyselect",
+      "package": "tidyselect",
+      "version": "1.2.1",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": ["cli", "glue", "lifecycle", "rlang", "vctrs", "withr"],
+      "deps": [
+        {
+          "ref": "cli",
+          "type": "imports",
+          "package": "cli",
+          "op": ">=",
+          "version": "3.3.0"
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "crayon",
+          "type": "suggests",
+          "package": "crayon",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "dplyr",
+          "type": "suggests",
+          "package": "dplyr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "glue",
+          "type": "imports",
+          "package": "glue",
+          "op": ">=",
+          "version": "1.3.0"
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "lifecycle",
+          "type": "imports",
+          "package": "lifecycle",
+          "op": ">=",
+          "version": "1.0.3"
+        },
+        {
+          "ref": "magrittr",
+          "type": "suggests",
+          "package": "magrittr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.4"
+        },
+        {
+          "ref": "rlang",
+          "type": "imports",
+          "package": "rlang",
+          "op": ">=",
+          "version": "1.0.4"
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "stringr",
+          "type": "suggests",
+          "package": "stringr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.1.1"
+        },
+        {
+          "ref": "tibble",
+          "type": "suggests",
+          "package": "tibble",
+          "op": ">=",
+          "version": "2.1.3"
+        },
+        {
+          "ref": "vctrs",
+          "type": "imports",
+          "package": "vctrs",
+          "op": ">=",
+          "version": "0.5.2"
+        },
+        {
+          "ref": "withr",
+          "type": "imports",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "tidyselect",
+        "RemoteRef": "tidyselect",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.2.1"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/tidyselect_1.2.1.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/tidyselect/tidyselect_1.2.1.tar.gz"],
+      "target": "src/contrib/tidyselect_1.2.1.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "169e97ba0bbfbcdf4a80534322751f87a04370310c40e27f04aac6525d45903c",
+      "filesize": 103591,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "utf8",
+      "package": "utf8",
+      "version": "1.2.6",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "cli",
+          "type": "suggests",
+          "package": "cli",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "covr",
+          "type": "suggests",
+          "package": "covr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "2.10"
+        },
+        {
+          "ref": "rlang",
+          "type": "suggests",
+          "package": "rlang",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        },
+        {
+          "ref": "withr",
+          "type": "suggests",
+          "package": "withr",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "utf8",
+        "RemoteRef": "utf8",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.2.6"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/utf8_1.2.6.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/utf8/utf8_1.2.6.tar.gz"],
+      "target": "src/contrib/utf8_1.2.6.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "Apache License (== 2.0) | file LICENSE",
+      "sha256": "4589f8b72291329e70b7f3a8c20f2feb4e7764eebad2e6976bc9a3eee7686ce9",
+      "filesize": 243856,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "withr",
+      "package": "withr",
+      "version": "3.0.3",
+      "type": "standard",
+      "direct": false,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "callr",
+          "type": "suggests",
+          "package": "callr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "DBI",
+          "type": "suggests",
+          "package": "DBI",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "graphics",
+          "type": "imports",
+          "package": "graphics",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "grDevices",
+          "type": "imports",
+          "package": "grDevices",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "suggests",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R",
+          "type": "depends",
+          "package": "R",
+          "op": ">=",
+          "version": "3.6.0"
+        },
+        {
+          "ref": "rlang",
+          "type": "suggests",
+          "package": "rlang",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": ">=",
+          "version": "2.12"
+        },
+        {
+          "ref": "RSQLite",
+          "type": "suggests",
+          "package": "RSQLite",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": ">=",
+          "version": "3.0.0"
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": false,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "withr",
+        "RemoteRef": "withr",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "3.0.3"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/withr_3.0.3.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/withr/withr_3.0.3.tar.gz"],
+      "target": "src/contrib/withr_3.0.3.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": false,
+      "license": "MIT + file LICENSE",
+      "sha256": "d86c6454164fc85678bfc85e2a6cce42f7461d45fa9a87de71f376e7956c991e",
+      "filesize": 103968,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    },
+    {
+      "ref": "jsonlite@2.0.0",
+      "package": "jsonlite",
+      "version": "2.0.0",
+      "type": "standard",
+      "direct": true,
+      "binary": false,
+      "dependencies": [],
+      "deps": [
+        {
+          "ref": "httr",
+          "type": "suggests",
+          "package": "httr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "knitr",
+          "type": "suggests",
+          "package": "knitr",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "methods",
+          "type": "depends",
+          "package": "methods",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "R.rsp",
+          "type": "suggests",
+          "package": "R.rsp",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "rmarkdown",
+          "type": "suggests",
+          "package": "rmarkdown",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "sf",
+          "type": "suggests",
+          "package": "sf",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "testthat",
+          "type": "suggests",
+          "package": "testthat",
+          "op": "",
+          "version": ""
+        },
+        {
+          "ref": "vctrs",
+          "type": "suggests",
+          "package": "vctrs",
+          "op": "",
+          "version": ""
+        }
+      ],
+      "vignettes": false,
+      "needscompilation": true,
+      "metadata": {
+        "RemoteType": "standard",
+        "RemotePkgRef": "jsonlite@2.0.0",
+        "RemoteRef": "jsonlite@2.0.0",
+        "RemoteRepos": "https://cran.rstudio.com",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "2.0.0"
+      },
+      "sources": ["https://cran.rstudio.com/src/contrib/jsonlite_2.0.0.tar.gz", "https://cran.rstudio.com/src/contrib/Archive/jsonlite/jsonlite_2.0.0.tar.gz"],
+      "target": "src/contrib/jsonlite_2.0.0.tar.gz",
+      "platform": "source",
+      "rversion": "*",
+      "directpkg": true,
+      "license": "MIT + file LICENSE",
+      "sha256": "75eb910c82b350ec33f094779da0f87bff154c232e4ae39c9896a9b89f3ac82d",
+      "filesize": 1055849,
+      "dep_types": ["Depends", "Imports", "LinkingTo"],
+      "params": [],
+      "install_args": [],
+      "repotype": "cran",
+      "sysreqs": ""
+    }
+  ]
+}

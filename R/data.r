@@ -2,7 +2,11 @@
 #'
 #' A dataset containing the relationships between ZIP code tabulation areas (ZCTA) and Census Tracts. This contains selected variables from the official crosswalk file.
 #'
-#' @format A data frame with 148897 rows and 4 variables:
+#' This is the exact dataset distributed by zipcodeR 0.3.5. It is intentionally
+#' frozen so legacy calls remain reproducible; newer versioned relationships
+#' are available only through an explicit data bundle and the `_ng` API.
+#'
+#' @format A data frame with 148897 rows and 3 variables:
 #' \describe{
 #'   \item{ZCTA5}{2010 ZIP Code Tabulation Area}
 #'   \item{TRACT}{2010 Census Tract Code}
@@ -14,10 +18,15 @@
 #'
 #' A dataset containing detailed information for U.S. ZIP codes
 #'
+#' This is the exact 41,877-row database distributed by zipcodeR 0.3.5,
+#' including its historical values and limitations. It is intentionally frozen
+#' for research reproducibility. Use an explicit data bundle with `_ng`
+#' functions for corrected behavior and a pinned source manifest.
+#'
 #' @format A data frame with 41877 rows and 24 variables:
 #' \describe{
 #'   \item{zipcode}{5 digit U.S. ZIP code}
-#'   \item{zipcode_type}{2010 State FIPS Code}
+#'   \item{zipcode_type}{ZIP category such as Standard, PO Box, or Unique}
 #'   \item{major_city}{Major city serving the ZIP code}
 #'   \item{post_office_city}{City of post office serving the ZIP code}
 #'   \item{common_city_list}{List of common cities represented by the ZIP code}
@@ -46,6 +55,11 @@
 #' ZIP Code to Congressional District Relationship File
 #'
 #' A dataset containing mappings between ZIP codes and congressional districts
+#'
+#' This is the exact pre-2020 HUD-USPS-derived mapping shipped in zipcodeR
+#' 0.3.5. It is frozen for legacy reproducibility and should not be interpreted
+#' as a current redistricting vintage. Current authoritative ZCTA relationships
+#' are available in explicit data bundles.
 #'
 #' @format A data frame with 45914 rows and 2 variables:
 #' \describe{

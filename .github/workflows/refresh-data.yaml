@@ -1,0 +1,84 @@
+name: data-assets
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Inspect upstream sources or rebuild an already-pinned release
+        required: true
+        type: choice
+        options: [refresh, rebuild]
+      data_version:
+        description: Explicit immutable data version (for example 2026.08)
+        required: true
+        type: string
+      build_timestamp:
+        description: Explicit ISO-8601 build timestamp
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  data-assets:
+    runs-on: ubuntu-latest
+    env:
+      CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
+      PIPELINE_DATA_VERSION: ${{ inputs.data_version }}
+      PIPELINE_PROPOSED_VERSION: ${{ inputs.data_version }}
+      PIPELINE_BUILD_TIMESTAMP: ${{ inputs.build_timestamp }}
+      PIPELINE_BASELINE_REF: master
+      PIPELINE_MODE: ${{ inputs.mode }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.6.1'
+          use-public-rspm: true
+
+      - name: Restore the pinned pipeline library
+        run: |
+          echo "762ec8acc2d2ccbe5a217859c846c2de83254e3948112b437dde7a0ad5b15999  data-raw/vendor/pak_0.11.1.tar.gz" | sha256sum --check
+          R CMD INSTALL data-raw/vendor/pak_0.11.1.tar.gz
+          Rscript -e 'pak::lockfile_install("data-raw/pkg.lock")'
+
+      - name: Inspect upstream source bytes
+        if: inputs.mode == 'refresh'
+        run: Rscript data-raw/refresh_sources.R
+
+      - name: Upload source-refresh proposal for human review
+        if: inputs.mode == 'refresh'
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-refresh-${{ inputs.data_version }}
+          path: data-raw/refresh-candidate/${{ inputs.data_version }}/
+          if-no-files-found: error
+
+      - name: Deterministic rebuild, pass one
+        if: inputs.mode == 'rebuild'
+        run: |
+          Rscript data-raw/run_pipeline.R
+          sha256sum \
+            data-raw/release/zipcodeR-data-${{ inputs.data_version }}.rds \
+            data-raw/release/manifest-${{ inputs.data_version }}.json \
+            data-raw/release/zipcodeR-reproducibility-${{ inputs.data_version }}.tar.gz \
+            > /tmp/first.sha256
+
+      - name: Deterministic rebuild, pass two
+        if: inputs.mode == 'rebuild'
+        run: |
+          Rscript data-raw/run_pipeline.R
+          sha256sum --check /tmp/first.sha256
+
+      - name: Upload unpublished release candidates
+        if: inputs.mode == 'rebuild'
+        uses: actions/upload-artifact@v4
+        with:
+          name: zipcodeR-data-${{ inputs.data_version }}-unpublished
+          path: data-raw/release/
+          if-no-files-found: error
