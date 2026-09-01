@@ -44,6 +44,15 @@ pipeline_commit <- tolower(Sys.getenv("PIPELINE_COMMIT"))
 if (!grepl("^[0-9a-f]{40}$", pipeline_commit)) {
   stop("PIPELINE_COMMIT must be the explicit 40-character pipeline git commit.")
 }
+pipeline_platform <- R.version$platform
+pinned_platform <- "x86_64-pc-linux-gnu"
+if (!identical(pipeline_platform, pinned_platform)) {
+  stop(
+    "Publishable data assets must be built on the pinned platform.",
+    "\n  required: ", pinned_platform,
+    "\n  current:  ", pipeline_platform
+  )
+}
 checkout_commit <- git_output(c("rev-parse", "HEAD"))
 if (!is.na(checkout_commit) && !identical(tolower(checkout_commit), pipeline_commit)) {
   stop(
@@ -259,6 +268,7 @@ metadata <- list(
   pipeline_commit = pipeline_commit,
   working_tree_dirty = working_tree_dirty,
   r_version = R.version.string,
+  r_platform = pipeline_platform,
   dependency_lock_sha256 = hash_file(file.path("data-raw", "pkg.lock")),
   pak_bootstrap_sha256 = hash_file(file.path("data-raw", "vendor", "pak_0.11.1.tar.gz")),
   legacy_baseline = list(
@@ -308,6 +318,7 @@ manifest <- list(
   pipeline_commit = pipeline_commit,
   working_tree_dirty = working_tree_dirty,
   r_version = metadata$r_version,
+  r_platform = metadata$r_platform,
   dependency_lock_sha256 = metadata$dependency_lock_sha256,
   pak_bootstrap_sha256 = metadata$pak_bootstrap_sha256,
   legacy_baseline = metadata$legacy_baseline,

@@ -24,6 +24,11 @@ on:
         description: SHA256 of source_archive (rebuild only)
         required: false
         type: string
+      upload_artifacts:
+        description: Upload candidates after validation (disable only for local Act runs)
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -62,7 +67,7 @@ jobs:
         run: Rscript data-raw/refresh_sources.R
 
       - name: Upload source-refresh proposal for human review
-        if: inputs.mode == 'refresh'
+        if: inputs.mode == 'refresh' && inputs.upload_artifacts
         uses: actions/upload-artifact@v4
         with:
           name: source-refresh-${{ inputs.data_version }}
@@ -111,7 +116,7 @@ jobs:
             "$standalone/data-raw/release/zipcodeR-reproducibility-${{ inputs.data_version }}.tar.gz"
 
       - name: Upload unpublished release candidates
-        if: inputs.mode == 'rebuild'
+        if: inputs.mode == 'rebuild' && inputs.upload_artifacts
         uses: actions/upload-artifact@v4
         with:
           name: zipcodeR-data-${{ inputs.data_version }}-unpublished

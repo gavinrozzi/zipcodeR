@@ -1,5 +1,9 @@
 FROM rocker/r-ver:4.6.1@sha256:a5df0ae591422cc1733e97da03a9f4eff4cf172e40895225959aa93bb7ff7517
 
+# Published hashes are defined on the same architecture as GitHub's Ubuntu
+# runner. Building without `--platform linux/amd64` must fail visibly.
+RUN test "$(uname -m)" = "x86_64"
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libcurl4-openssl-dev libssl-dev \
     && rm -rf /var/lib/apt/lists/*

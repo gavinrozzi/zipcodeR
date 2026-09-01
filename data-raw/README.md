@@ -72,8 +72,8 @@ Build and run the pinned environment with every release identity supplied
 explicitly (the source archive may instead be a read-only mounted local file):
 
 ```sh
-docker build -f data-raw/Dockerfile -t zipcoder-data .
-docker run --rm \
+docker build --platform linux/amd64 -f data-raw/Dockerfile -t zipcoder-data .
+docker run --rm --platform linux/amd64 \
   -e PIPELINE_DATA_VERSION=2026.09 \
   -e PIPELINE_BUILD_TIMESTAMP=2026-09-01T00:00:00Z \
   -e PIPELINE_COMMIT=FULL_40_CHARACTER_PIPELINE_COMMIT \
@@ -82,6 +82,11 @@ docker run --rm \
   -e PIPELINE_SOURCE_ARCHIVE_SHA256=ARCHIVE_SHA256 \
   zipcoder-data
 ```
+
+The pipeline rejects other R platforms because numeric serialization and gzip
+headers can differ across architectures even when extracted source content is
+the same. Published bundle and archive hashes are therefore defined on
+`x86_64-pc-linux-gnu`, matching the Ubuntu workflow runner.
 
 ## ZIP and ZCTA policy
 
