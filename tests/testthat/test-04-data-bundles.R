@@ -89,6 +89,10 @@ test_that("provenance can be selected by dataset and key", {
 })
 
 test_that("verified cache works offline and corrupt cache is replaced atomically", {
+  skip_if(
+    utils::packageVersion("testthat") < "3.2.0",
+    "namespace binding mocks require testthat 3.2.0"
+  )
   bundle <- make_test_bundle()
   source <- tempfile(fileext = ".rds")
   saveRDS(bundle, source, version = 3)
@@ -112,6 +116,10 @@ test_that("verified cache works offline and corrupt cache is replaced atomically
 })
 
 test_that("offline, corrupt, and interrupted downloads cannot become cache hits", {
+  skip_if(
+    utils::packageVersion("testthat") < "3.2.0",
+    "namespace binding mocks require testthat 3.2.0"
+  )
   bundle <- make_test_bundle()
   source <- tempfile(fileext = ".rds")
   saveRDS(bundle, source, version = 3)
@@ -197,7 +205,14 @@ test_that("published registries pin the independently verified assets", {
     comprehensive_meta$sha256,
     "d85ed4e25884bc27bdd339d57dd9e2d1763531d4c050acb7a05a3d5aca90668d"
   )
+})
 
+test_that("verified comprehensive cache avoids a network request", {
+  skip_if(
+    utils::packageVersion("testthat") < "3.2.0",
+    "namespace binding mocks require testthat 3.2.0"
+  )
+  comprehensive_meta <- zipcodeR:::comprehensive_data_registry()
   cache <- tempfile("comprehensive-cache-")
   dir.create(cache)
   cached_file <- file.path(cache, comprehensive_meta$asset)

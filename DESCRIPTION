@@ -40,7 +40,7 @@ Suggests:
     rmarkdown,
     markdown,
     readr,
-    testthat (>= 3.2.0),
+    testthat (>= 3.1.5),
     covr,
     tibble
 VignetteBuilder: knitr, rmarkdown
