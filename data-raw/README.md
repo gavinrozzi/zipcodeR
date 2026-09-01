@@ -68,6 +68,21 @@ dependencies, including transitive dependencies, are locked with source
 archive hashes in `pkg.lock`. The exact `pak` bootstrap source is vendored in
 `vendor/` and checksum-verified before installation.
 
+Build and run the pinned environment with every release identity supplied
+explicitly (the source archive may instead be a read-only mounted local file):
+
+```sh
+docker build -f data-raw/Dockerfile -t zipcoder-data .
+docker run --rm \
+  -e PIPELINE_DATA_VERSION=2026.09 \
+  -e PIPELINE_BUILD_TIMESTAMP=2026-09-01T00:00:00Z \
+  -e PIPELINE_COMMIT=FULL_40_CHARACTER_PIPELINE_COMMIT \
+  -e PIPELINE_WORKING_TREE_DIRTY=false \
+  -e PIPELINE_SOURCE_ARCHIVE=HTTPS_ARCHIVE_URL \
+  -e PIPELINE_SOURCE_ARCHIVE_SHA256=ARCHIVE_SHA256 \
+  zipcoder-data
+```
+
 ## ZIP and ZCTA policy
 
 ZIP codes are USPS delivery constructs; ZCTAs are Census statistical areas.

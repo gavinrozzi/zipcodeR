@@ -1,0 +1,10 @@
+.git
+.Rproj.user
+.Rhistory
+.DS_Store
+README.html
+README.knit.md
+data-raw/cache
+data-raw/release
+data-raw/refresh-candidate
+vignettes/*.html

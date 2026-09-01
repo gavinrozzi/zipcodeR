@@ -18,8 +18,6 @@ RUN apt-get update \
 WORKDIR /work/zipcodeR
 COPY . .
 
-ENV PIPELINE_DATA_VERSION=2026.08
-ENV PIPELINE_BUILD_TIMESTAMP=2026-08-24T00:00:00Z
 ENV PIPELINE_MODE=rebuild
 
 CMD ["sh", "-c", "Rscript data-raw/restore_rebuild_inputs.R && Rscript data-raw/run_pipeline.R"]
