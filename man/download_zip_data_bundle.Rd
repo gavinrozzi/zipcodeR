@@ -16,6 +16,9 @@ A validated \code{zipcodeR_data_bundle}.
 }
 \description{
 Downloads one explicitly requested data release, verifies its checksum, and
-caches it in the user's data directory. The function never resolves aliases
-such as \code{"latest"}, and no lookup function downloads data implicitly.
+caches it in the user's data directory on R 4.0 or newer. On older supported
+R versions, CRAN policy does not permit a package-managed persistent cache,
+so the verified file is retained only for the current R session. The
+function never resolves aliases such as \code{"latest"}, and no lookup function
+downloads data implicitly.
 }

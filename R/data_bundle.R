@@ -41,8 +41,11 @@ read_zip_data_bundle <- function(path, sha256 = NULL) {
 #' Download a versioned zipcodeR data bundle
 #'
 #' Downloads one explicitly requested data release, verifies its checksum, and
-#' caches it in the user's data directory. The function never resolves aliases
-#' such as `"latest"`, and no lookup function downloads data implicitly.
+#' caches it in the user's data directory on R 4.0 or newer. On older supported
+#' R versions, CRAN policy does not permit a package-managed persistent cache,
+#' so the verified file is retained only for the current R session. The
+#' function never resolves aliases such as `"latest"`, and no lookup function
+#' downloads data implicitly.
 #'
 #' @param version Exact registered data version, for example `"2026.09"`.
 #' @param force Re-download and replace a verified cached copy.
@@ -452,16 +455,11 @@ legacy_zip_code_db_columns <- function() {
 }
 
 #' @noRd
-zipcodeR_user_data_dir <- function() {
-  if (getRversion() >= "4.0.0") {
+zipcodeR_user_data_dir <- function(r_version = getRversion()) {
+  if (r_version >= "4.0.0") {
     return(tools::R_user_dir("zipcodeR", "data"))
   }
-  if (.Platform$OS.type == "windows") {
-    root <- Sys.getenv("LOCALAPPDATA", unset = path.expand("~/AppData/Local"))
-    return(file.path(root, "zipcodeR", "data"))
-  }
-  root <- Sys.getenv("XDG_DATA_HOME", unset = path.expand("~/.local/share"))
-  file.path(root, "zipcodeR")
+  file.path(tempdir(), "zipcodeR-data")
 }
 
 # Base R 3.5 does not provide the null-coalescing helper used internally.

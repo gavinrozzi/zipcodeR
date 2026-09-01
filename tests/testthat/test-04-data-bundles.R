@@ -214,3 +214,9 @@ test_that("published registries pin the independently verified assets", {
   )
   expect_identical(result, cached_file)
 })
+
+test_that("old R uses only the session temporary directory for new caches", {
+  old_r_cache <- zipcodeR:::zipcodeR_user_data_dir(numeric_version("3.5.3"))
+  expect_identical(old_r_cache, file.path(tempdir(), "zipcodeR-data"))
+  expect_false(grepl(path.expand("~"), old_r_cache, fixed = TRUE))
+})

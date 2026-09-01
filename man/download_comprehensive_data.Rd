@@ -24,10 +24,13 @@ clean-machine smoke test.
 }
 \details{
 This function downloads that database, verifies its SHA256 checksum,
-and caches it under \code{tools::R_user_dir("zipcodeR", "data")}; later
-calls return the cached path immediately. It never downloads without being
-called explicitly. For offline use, copy the file to that directory
-yourself (the expected file name is the asset name from the data release).
+and, on R 4.0 or newer, caches it under
+\code{tools::R_user_dir("zipcodeR", "data")}; later calls return the cached
+path immediately. On older supported R versions the verified file is kept
+only in the session temporary directory. It never downloads without being
+called explicitly. For offline use on R 4.0 or newer, copy the file to that
+user data directory yourself (the expected file name is the asset name from
+the data release).
 }
 \examples{
 \dontrun{
