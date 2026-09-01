@@ -106,7 +106,7 @@
 </tr><tr><td>#19 missing ZIP distances</td>
 <td>Modern bundles refresh authoritative ZCTA coordinates; USPS-only ZIPs without defensible coordinates remain unavailable with provenance instead of proxy points.</td>
 <td>Pipeline coordinate gate, record quality sidecar, missing-coordinate <code>_ng</code> tests, and explicit bundle version metadata.</td>
-<td>Keep open until public bundle smoke test, then close with limitation noted.</td>
+<td>Close when 0.4.0 ships, with the limitation noted.</td>
 </tr><tr><td>#20 vector distance order</td>
 <td>The reporter’s swap was fixed in 0.3.4; 0.4.0 freezes the 0.3.5 result. <code>_ng</code> additionally specifies input-order, duplicate, recycling, and missing-coordinate behavior.</td>
 <td>Exact differential cases plus <code>_ng</code> pairing/recycling tests.</td>
@@ -124,8 +124,8 @@
 </tr><tr><td>#25 missing <code>97003</code>
 </td>
 <td>The modern pipeline corroborates <code>97003</code> as a Census ZCTA and publishes its authoritative internal point only in the versioned bundle.</td>
-<td>Candidate bundle contains <code>97003</code>, Census coordinate quality <code>authoritative</code>, and ACS quality <code>authoritative_current_vintage</code>.</td>
-<td>Keep open until public bundle smoke test, then close.</td>
+<td>Public bundle contains <code>97003</code>, Census coordinate quality <code>authoritative</code>, and ACS quality <code>authoritative_current_vintage</code>.</td>
+<td>Close when 0.4.0 ships.</td>
 </tr><tr><td>#26 <code>91230</code>
 </td>
 <td>The stated San Diego ZIP is <code>92130</code>, which is present. <code>91230</code> is absent from pinned Census ZCTA/ACS sources and remains quarantined rather than receiving a Glendale proxy centroid.</td>
@@ -143,8 +143,8 @@
 <td>Close after release.</td>
 </tr><tr><td>#29 outdated districts</td>
 <td>The modern bundle uses the pinned Census 119th-Congress ZCTA relationship and refuses city-wide inference for USPS-only ZIPs. Legacy mappings remain unchanged.</td>
-<td>Source SHA in manifest, mapping-policy validation, authoritative and unmapped <code>_ng</code> tests; <code>08731</code> maps to NJ-02 and NJ-04 in the candidate.</td>
-<td>Keep open until public bundle smoke test, then close.</td>
+<td>Source SHA in manifest, mapping-policy validation, authoritative and unmapped <code>_ng</code> tests; <code>08731</code> maps to NJ-02 and NJ-04 in the public bundle.</td>
+<td>Close when 0.4.0 ships.</td>
 </tr><tr><td>#32 jurisdiction accuracy</td>
 <td>ZIP city is a mailing name and ZCTA is not a municipal boundary; ZIP-only input cannot yield authoritative address jurisdiction.</td>
 <td>Data docs and FAQ direct users to full-address geocoding against boundary files and label county as predominant.</td>
@@ -161,7 +161,7 @@
 <li>a clean commit builds the modern bundle, manifest, and reproducibility archive twice with identical hashes;</li>
 <li>the bundle, manifest, reproducibility archive, and comprehensive database are public at immutable URLs and pass clean-machine checksum/schema calls;</li>
 <li>the verified bundle checksum is enabled in the package registry and CI is rerun on that registry commit.</li>
-</ol><p>Until gates 3–5 pass, issues #19, #25, and #29 are implemented but not delivered, and PR #34 is not merge-ready.</p>
+</ol><p>Gates 3 and 4 passed for release <code>data-2026.08</code>: two clean builds matched bundle SHA <code>9059026c...</code>, manifest SHA <code>5628977c...</code>, and archive SHA <code>8b22ab07...</code>; all four public assets, including the comprehensive database, passed download and integrity checks. Gate 5 also passed: the explicit <code>2026.08</code> registry was enabled only after those checks, and the full required platform, coverage, and documentation matrix is green on the registry-enabled PR head.</p>
 </div>
 </div>
 

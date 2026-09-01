@@ -79,7 +79,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/data-2026.08/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
@@ -115,7 +115,7 @@
 <li>Static sources, the raw ACS response, and the derived ACS table are archived and checksummed. GeoNames is pinned rather than floating. The data version and build timestamp are explicit inputs; the full package dependency graph is locked.</li>
 <li>ZIP candidates absent from an authoritative ZCTA source are quarantined. Proxy city points are not published as ZIP centroids. District assignments use the Census relationship file only; USPS-only ZIPs without an authoritative relationship remain unmapped with a reason.</li>
 <li>Upstream inspection and deterministic rebuilds are separate workflow modes. The workflow uploads unpublished candidates for review and never chooses a version or publishes automatically.</li>
-<li>Bundle download registries remain disabled until their assets are public and have passed clean-machine URL and checksum smoke tests. Likewise, <code><a href="../reference/download_comprehensive_data.html">download_comprehensive_data()</a></code> fails before network access while its currently referenced release is still a draft.</li>
+<li>The immutable <code>data-2026.08</code> bundle, manifest, deterministic reproducibility archive, and comprehensive SQLite asset are public. Their release URLs and checksums, representative <code>_ng</code> calls, manifest schema, and SQLite integrity were independently smoke-tested before enabling the registries.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="tests-documentation-and-infrastructure-0-4-0">Tests, documentation, and infrastructure<a class="anchor" aria-label="anchor" href="#tests-documentation-and-infrastructure-0-4-0"></a></h3>

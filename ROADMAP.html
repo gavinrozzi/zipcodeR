@@ -101,16 +101,15 @@
 </tr><tr><td>Add explicit <code>_ng</code> functions for corrected behavior and modern data</td>
 <td>implemented</td>
 </tr><tr><td>Add checksum-verified, explicitly versioned bundle I/O</td>
-<td>implemented; registry remains disabled pending publication</td>
+<td>implemented; verified <code>2026.08</code> registry enabled</td>
 </tr><tr><td>Build modern data as an external bundle with provenance and quality sidecars</td>
 <td>implemented locally</td>
 </tr><tr><td>Pin and archive raw inputs, dependencies, container, and build manifest</td>
-<td>implemented locally; two clean rebuilds required for every release</td>
+<td>implemented; two clean <code>2026.08</code> rebuilds matched all artifact hashes</td>
 </tr><tr><td>Normal Windows, macOS, and Ubuntu release/devel/oldrel checks</td>
-<td>passing on pushed commit <code>81d77cc</code>
-</td>
+<td>passing on the registry-enabled PR head</td>
 </tr><tr><td>Public <code>data-2026.08</code> bundle and comprehensive assets, clean-machine smoke test</td>
-<td>blocking; not yet public</td>
+<td>complete</td>
 </tr></tbody></table><p>The core package continues to ship the 2021-06-08 legacy data. Refreshed ZCTA, tract, and 119th-Congress relationships are available only through an explicit versioned bundle and <code>_ng</code> calls. USPS-only records without authoritative coordinates or district relationships remain unavailable or unmapped with a recorded reason; city-wide district inference and proxy centroids are forbidden.</p>
 <p>Documentation presents <code>_ng</code> plus an explicitly pinned modern bundle as the recommended path for new community code. The unsuffixed API is the historical compatibility path. “Recommended” never means an implicit latest version or an automatic data refresh: each analysis selects and records immutable bundle bytes.</p>
 <p><code><a href="reference/download_zip_data.html">download_zip_data()</a></code> retains its historical runtime behavior in 0.4.0. Documentation may discourage it, but warnings, no-ops, and removal are not compatible changes.</p>
