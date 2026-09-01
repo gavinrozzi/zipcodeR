@@ -15,6 +15,19 @@ if (!identical(Sys.getenv("PIPELINE_DATA_VERSION"), proposed_version)) {
 }
 
 source(file.path("data-raw", "sources.R"))
+if (proposed_version %in% PUBLISHED_DATA_VERSIONS) {
+  stop(
+    "PIPELINE_PROPOSED_VERSION has already been published and cannot be reused: ",
+    proposed_version
+  )
+}
+build_timestamp <- Sys.getenv("PIPELINE_BUILD_TIMESTAMP")
+archive_time <- as.POSIXct(
+  build_timestamp, format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"
+)
+if (!nzchar(build_timestamp) || is.na(archive_time)) {
+  stop("PIPELINE_BUILD_TIMESTAMP must be an explicit ISO-8601 UTC timestamp.")
+}
 out_dir <- file.path("data-raw", "refresh-candidate", proposed_version)
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
@@ -44,19 +57,19 @@ download_candidate <- function(id, source) {
 proposal <- Map(download_candidate, names(PIPELINE_SOURCES), PIPELINE_SOURCES)
 
 key <- Sys.getenv("CENSUS_API_KEY")
-if (!nzchar(key)) {
-  stop("CENSUS_API_KEY is required to inspect a proposed ACS response.")
-}
 acs_url <- paste0(
   ACS_ENDPOINT, "?get=", paste(ACS_VARIABLES, collapse = ","),
-  "&for=zip%20code%20tabulation%20area:*&key=",
-  utils::URLencode(key, reserved = TRUE)
+  "&for=zip%20code%20tabulation%20area:*",
+  if (nzchar(key)) paste0("&key=", utils::URLencode(key, reserved = TRUE)) else ""
 )
 acs_path <- file.path(out_dir, sprintf("acs5_%d_zcta.json", ACS_VINTAGE))
 tryCatch(
   utils::download.file(acs_url, acs_path, mode = "wb", quiet = TRUE),
   error = function(e) {
-    message_text <- gsub(key, "<CENSUS_API_KEY>", conditionMessage(e), fixed = TRUE)
+    message_text <- conditionMessage(e)
+    if (nzchar(key)) {
+      message_text <- gsub(key, "<CENSUS_API_KEY>", message_text, fixed = TRUE)
+    }
     stop("ACS refresh download failed: ", message_text, call. = FALSE)
   }
 )
@@ -75,11 +88,68 @@ jsonlite::write_json(
   list(
     format = 1,
     proposed_data_version = proposed_version,
-    created_at = Sys.getenv("PIPELINE_BUILD_TIMESTAMP"),
+    created_at = build_timestamp,
     sources = proposal
   ),
-  file.path(out_dir, "proposed-sources.json"),
+  proposal_path <- file.path(out_dir, "proposed-sources.json"),
   auto_unbox = TRUE,
   pretty = TRUE
 )
-message("source-refresh proposal written to ", out_dir)
+
+# Package the exact candidate bytes for human review and a later offline
+# rebuild. The archive is deterministic for a fixed timestamp and contains no
+# executable pipeline code.
+stage <- tempfile("zipcodeR-source-candidate-")
+dir.create(stage)
+on.exit(unlink(stage, recursive = TRUE), add = TRUE)
+cache_stage <- file.path(stage, "data-raw", "cache")
+data_stage <- file.path(stage, "data")
+dir.create(cache_stage, recursive = TRUE)
+dir.create(data_stage, recursive = TRUE)
+
+candidate_files <- c(
+  vapply(PIPELINE_SOURCES, function(x) basename(x$url), character(1)),
+  basename(acs_path)
+)
+for (name in candidate_files) {
+  source_path <- file.path(out_dir, name)
+  if (!file.copy(source_path, file.path(cache_stage, name), overwrite = TRUE)) {
+    stop("Failed to stage refreshed source: ", name)
+  }
+}
+for (name in names(LEGACY_BASELINE_FILES)) {
+  source_path <- file.path("data", name)
+  if (!file.copy(source_path, file.path(data_stage, name), overwrite = TRUE)) {
+    stop("Failed to stage immutable legacy baseline: ", name)
+  }
+}
+manifest_stage <- file.path(stage, "data-raw", basename(proposal_path))
+if (!file.copy(proposal_path, manifest_stage, overwrite = TRUE)) {
+  stop("Failed to stage the proposed source manifest.")
+}
+
+members <- c(
+  file.path("data-raw", "cache", candidate_files),
+  file.path("data", names(LEGACY_BASELINE_FILES)),
+  file.path("data-raw", basename(proposal_path))
+)
+staged_paths <- file.path(stage, members)
+invisible(lapply(staged_paths, Sys.setFileTime, time = archive_time))
+invisible(lapply(staged_paths, Sys.chmod, mode = "0644"))
+archive_path <- file.path(
+  normalizePath(out_dir),
+  sprintf("zipcodeR-sources-%s.tar.gz", proposed_version)
+)
+old_working_directory <- setwd(stage)
+on.exit(setwd(old_working_directory), add = TRUE)
+utils::tar(archive_path, files = members, compression = "gzip", tar = "internal")
+setwd(old_working_directory)
+archive_sha <- sha256_file(archive_path)
+writeLines(
+  paste(archive_sha, basename(archive_path)),
+  file.path(out_dir, sprintf("zipcodeR-sources-%s.sha256", proposed_version))
+)
+message(
+  "source-refresh proposal and deterministic source archive written to ",
+  out_dir, " (sha256 ", archive_sha, ")"
+)

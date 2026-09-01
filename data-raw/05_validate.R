@@ -10,30 +10,24 @@ candidate <- readRDS(file.path(cache_dir, "zip_code_db_candidate.rds"))
 zcta_candidate <- readRDS(file.path(cache_dir, "zcta_crosswalk_candidate.rds"))
 cd_candidate <- readRDS(file.path(cache_dir, "zip_to_cd_candidate.rds"))
 
-# Baseline = the LAST COMMITTED data files, taken from git - never the
-# working tree, which 06_finalize.R overwrites (a working-tree baseline
-# would compare a rerun candidate against itself and pass every regression
-# check trivially). Override the ref with PIPELINE_BASELINE_REF to compare
-# against another release (e.g. master).
-baseline_ref <- Sys.getenv("PIPELINE_BASELINE_REF", "HEAD")
+# Baseline = byte-pinned zipcodeR 0.3.5 data files. These files accompany the
+# reproducibility archive, so validation does not depend on a mutable branch or
+# even on the presence of a git repository.
 load_baseline <- function(name) {
-  tf <- tempfile(fileext = ".rda")
-  status <- suppressWarnings(system2(
-    "git", c("show", shQuote(paste0(baseline_ref, ":data/", name))),
-    stdout = tf, stderr = FALSE
-  ))
-  if (!identical(status, 0L)) {
+  path <- file.path("data", name)
+  expected <- LEGACY_BASELINE_FILES[[name]]$sha256
+  got <- if (file.exists(path)) sha256_file(path) else "<missing>"
+  if (!identical(got, expected)) {
     stop(
-      "Cannot read baseline data/", name, " from git ref '", baseline_ref,
-      "'. The validation gate needs the last committed data as its baseline."
+      "Legacy validation baseline failed checksum verification: ", path,
+      "\n  expected: ", expected, "\n  got:      ", got
     )
   }
   e <- new.env()
-  load(tf, envir = e)
-  unlink(tf)
+  load(path, envir = e)
   e[[ls(e)[1]]]
 }
-message("validation baseline: git ref '", baseline_ref, "'")
+message("validation baseline: immutable zipcodeR 0.3.5 inputs")
 shipped_env <- new.env()
 shipped_env$zip_code_db <- load_baseline("zip_code_db.rda")
 shipped_env$zcta_crosswalk <- load_baseline("zcta_crosswalk.rda")

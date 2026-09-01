@@ -48,6 +48,39 @@ PIPELINE_SOURCES <- list(
   )
 )
 
+# Immutable legacy inputs used both as carry-forward data and as the
+# compatibility-validation baseline. Rebuilds load these tracked files
+# directly and verify their bytes; they never resolve a mutable git branch.
+LEGACY_BASELINE_COMMIT <- "48ed689f4ee1694b1ec5fdffef02bed117938398"
+LEGACY_BASELINE_FILES <- list(
+  "zip_code_db.rda" = list(
+    sha256 = "6ed347deb7cc958b0c9cb7d67f78d23ad33af867c4288838ec3eda1c40747e0d",
+    license = "MIT (MacHu-GWU/uszipcode-project)"
+  ),
+  "zcta_crosswalk.rda" = list(
+    sha256 = "cdf2befc7b34f327c608362935e719a10ac79249fb189b43a584e6d8b6b2b51c",
+    license = "U.S. public domain (U.S. Census Bureau)"
+  ),
+  "zip_to_cd.rda" = list(
+    sha256 = "4cf542a3b8692eee3110cdfb9f7dec0492fa6036a3f12d9019a209dd08f6f6ac",
+    license = "U.S. public domain (HUD-USPS-derived relationship data)"
+  )
+)
+
+# Internal package data used by the builder is pinned separately because it is
+# not part of the public legacy-data contract, but a standalone rebuild still
+# needs the exact vendored FIPS table stored in this file.
+LEGACY_INTERNAL_FILES <- list(
+  "R/sysdata.rda" = list(
+    sha256 = "7b194f8dfb75f4739859991e6b2b2b15fcbc241c82d141e21c8165fd4cc8c84e",
+    license = "U.S. public domain (U.S. Census Bureau)"
+  )
+)
+
+# Refresh mode must not reuse an already-published identity. Add a version
+# only after its public assets have been independently checksum-verified.
+PUBLISHED_DATA_VERSIONS <- c("2026.08")
+
 # The ACS request is archived and checksummed just like a static source. The
 # endpoint and vintage document how a maintainer creates a deliberately new
 # archive; deterministic rebuilds consume the archived bytes.

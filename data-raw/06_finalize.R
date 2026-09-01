@@ -40,8 +40,23 @@ git_output <- function(args) {
   paste(out, collapse = "\n")
 }
 
-pipeline_commit <- git_output(c("rev-parse", "HEAD"))
-working_tree_dirty <- nzchar(git_output(c("status", "--porcelain")))
+pipeline_commit <- tolower(Sys.getenv("PIPELINE_COMMIT"))
+if (!grepl("^[0-9a-f]{40}$", pipeline_commit)) {
+  stop("PIPELINE_COMMIT must be the explicit 40-character pipeline git commit.")
+}
+git_status <- git_output(c("status", "--porcelain"))
+if (!is.na(git_status)) {
+  working_tree_dirty <- nzchar(git_status)
+} else {
+  dirty_input <- tolower(Sys.getenv("PIPELINE_WORKING_TREE_DIRTY"))
+  if (!dirty_input %in% c("true", "false")) {
+    stop(
+      "Outside a git checkout, PIPELINE_WORKING_TREE_DIRTY must be explicitly ",
+      "set to true or false."
+    )
+  }
+  working_tree_dirty <- identical(dirty_input, "true")
+}
 
 source_files <- c(
   zcta_tract_rel = file.path(cache_dir, basename(PIPELINE_SOURCES$zcta_tract_rel$url)),
@@ -55,6 +70,37 @@ source_files <- c(
 )
 if (!all(file.exists(source_files))) {
   stop("Cannot finalize: one or more archived source files are missing.")
+}
+
+baseline_files <- file.path("data", names(LEGACY_BASELINE_FILES))
+names(baseline_files) <- names(LEGACY_BASELINE_FILES)
+if (!all(file.exists(baseline_files))) {
+  stop("Cannot finalize: one or more immutable legacy baseline files are missing.")
+}
+for (name in names(baseline_files)) {
+  expected <- LEGACY_BASELINE_FILES[[name]]$sha256
+  got <- hash_file(baseline_files[[name]])
+  if (!identical(got, expected)) {
+    stop(
+      "Legacy baseline checksum mismatch for ", name,
+      "\n  expected: ", expected, "\n  got:      ", got
+    )
+  }
+}
+
+internal_files <- names(LEGACY_INTERNAL_FILES)
+if (!all(file.exists(internal_files))) {
+  stop("Cannot finalize: one or more immutable internal inputs are missing.")
+}
+for (path in internal_files) {
+  expected <- LEGACY_INTERNAL_FILES[[path]]$sha256
+  got <- hash_file(path)
+  if (!identical(got, expected)) {
+    stop(
+      "Immutable internal checksum mismatch for ", path,
+      "\n  expected: ", expected, "\n  got:      ", got
+    )
+  }
 }
 
 source_manifest <- lapply(names(source_files), function(id) {
@@ -91,6 +137,22 @@ source_manifest <- lapply(names(source_files), function(id) {
     vintage = if (grepl("^acs_2023", id)) as.character(ACS_VINTAGE) else NULL
   )
 })
+baseline_manifest <- lapply(names(baseline_files), function(name) {
+  info <- LEGACY_BASELINE_FILES[[name]]
+  list(
+    id = paste0("legacy_", tools::file_path_sans_ext(name)),
+    file = file.path("data", name),
+    kind = "frozen_legacy_baseline",
+    url = paste0(
+      "https://github.com/gavinrozzi/zipcodeR/blob/",
+      LEGACY_BASELINE_COMMIT, "/data/", name
+    ),
+    sha256 = info$sha256,
+    license = info$license,
+    vintage = "zipcodeR 0.3.5"
+  )
+})
+source_manifest <- c(source_manifest, baseline_manifest)
 
 unmapped_cd <- setdiff(zip_code_db$zipcode, zip_to_cd$ZIP)
 cd_quality <- data.frame(
@@ -191,6 +253,11 @@ metadata <- list(
   r_version = R.version.string,
   dependency_lock_sha256 = hash_file(file.path("data-raw", "pkg.lock")),
   pak_bootstrap_sha256 = hash_file(file.path("data-raw", "vendor", "pak_0.11.1.tar.gz")),
+  legacy_baseline = list(
+    commit = LEGACY_BASELINE_COMMIT,
+    files = lapply(LEGACY_BASELINE_FILES, function(x) x$sha256),
+    internal_files = lapply(LEGACY_INTERNAL_FILES, function(x) x$sha256)
+  ),
   output_hashes = output_hashes,
   rows = list(
     zip_code_db = nrow(zip_code_db),
@@ -235,6 +302,7 @@ manifest <- list(
   r_version = metadata$r_version,
   dependency_lock_sha256 = metadata$dependency_lock_sha256,
   pak_bootstrap_sha256 = metadata$pak_bootstrap_sha256,
+  legacy_baseline = metadata$legacy_baseline,
   output_hashes = output_hashes,
   schemas = list(
     zip_code_db = lapply(names(zip_code_db), function(name) {
@@ -264,6 +332,8 @@ repro_files <- c(
   file.path("data-raw", "LICENSES.md"),
   file.path("data-raw", "vendor", "pak_0.11.1.tar.gz"),
   source_files,
+  baseline_files,
+  internal_files,
   manifest_path,
   "DESCRIPTION"
 )

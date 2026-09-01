@@ -8,8 +8,11 @@ GitHub release.
 ## Two deliberately separate modes
 
 `refresh_sources.R` inspects mutable upstream URLs for a proposed *new* data
-version. It downloads candidate source bytes and writes
-`proposed-sources.json`; it does not change pins, build data, or publish.
+version. Before running it, update prospective URLs and vintages in
+`sources.R` while leaving their old checksums (or an all-zero placeholder).
+It downloads candidate source bytes and writes `proposed-sources.json` plus a
+deterministic `zipcodeR-sources-VERSION.tar.gz`; it does not change pins,
+build data, or publish. A Census API key is optional and increases API limits.
 
 ```sh
 PIPELINE_MODE=refresh \
@@ -20,28 +23,39 @@ Rscript data-raw/refresh_sources.R
 ```
 
 After human review, a maintainer updates `sources.R` with exact URLs,
-vintages, and SHA256 values. `run_pipeline.R` then performs a deterministic
-rebuild of that explicitly pinned version:
+vintages, and SHA256 values. Restore the reviewed archive, then
+`run_pipeline.R` performs a network-free deterministic rebuild:
 
 ```sh
 PIPELINE_MODE=rebuild \
 PIPELINE_DATA_VERSION=2026.08 \
 PIPELINE_BUILD_TIMESTAMP=2026-08-24T00:00:00Z \
-PIPELINE_BASELINE_REF=master \
+PIPELINE_COMMIT=609d16358127a7096d11b1b9a64a1f1fab858921 \
+PIPELINE_SOURCE_ARCHIVE=/path/to/zipcodeR-sources-2026.08.tar.gz \
+PIPELINE_SOURCE_ARCHIVE_SHA256=SHA256 \
+Rscript data-raw/restore_rebuild_inputs.R
+
+PIPELINE_MODE=rebuild \
+PIPELINE_DATA_VERSION=2026.08 \
+PIPELINE_BUILD_TIMESTAMP=2026-08-24T00:00:00Z \
+PIPELINE_COMMIT=609d16358127a7096d11b1b9a64a1f1fab858921 \
 Rscript data-raw/run_pipeline.R
 ```
 
 There is no `latest` alias and no release identity derived from the current
-date. A missing source is downloaded only from its pinned URL and must match
-its recorded checksum. The raw ACS JSON response and its deterministically
-derived CSV are both checksummed and archived.
+date. The pipeline commit is also an explicit input; outside a git checkout,
+set `PIPELINE_WORKING_TREE_DIRTY=false` after verifying the archive. Rebuild
+mode never downloads from an upstream data publisher. The raw
+ACS JSON response and its deterministically derived CSV are both checksummed
+and archived. Published version identities cannot be reused.
 
 ## Pipeline stages
 
 | File | Purpose |
 |---|---|
 | `sources.R` | Explicit data identity, source URLs, vintages, SHA256 values, and licenses. |
-| `01_acquire.R` | Acquire and verify exact static sources and the archived raw ACS response. |
+| `restore_rebuild_inputs.R` | Verify a source/reproducibility archive and restore only allowlisted raw inputs. |
+| `01_acquire.R` | Verify exact static sources and the archived raw ACS response without network access. |
 | `02_build_zip_code_db.R` | Refresh Census-backed attributes; add only independently corroborated ZCTAs; quarantine other candidates. |
 | `03_build_zcta_crosswalk.R` | Build the 2020 ZCTA-to-tract relationship with character GEOIDs. |
 | `04_build_zip_to_cd.R` | Build authoritative CD119-to-ZCTA relationships only. |
@@ -81,7 +95,8 @@ assume that an entry in a third-party ZIP database is a Census ZCTA.
   dependency-lock checksum, schemas, row counts, and canonical output hashes;
 - `zipcodeR-reproducibility-VERSION.tar.gz`, containing the complete pipeline,
   lock/container definitions, license notices, manifest, validation report,
-  and exact raw source archives.
+  exact raw source archives, byte-pinned 0.3.5 baseline datasets, and the
+  checksum-pinned internal FIPS table used during construction.
 
 `data-raw/` is intentionally excluded from the CRAN package tarball to keep the
 runtime package small. The complete directory and raw inputs accompany every

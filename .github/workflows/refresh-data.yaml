@@ -16,6 +16,14 @@ on:
         description: Explicit ISO-8601 build timestamp
         required: true
         type: string
+      source_archive:
+        description: HTTPS URL or local path to a checksum-pinned source/reproducibility archive (rebuild only)
+        required: false
+        type: string
+      source_archive_sha256:
+        description: SHA256 of source_archive (rebuild only)
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -28,8 +36,10 @@ jobs:
       PIPELINE_DATA_VERSION: ${{ inputs.data_version }}
       PIPELINE_PROPOSED_VERSION: ${{ inputs.data_version }}
       PIPELINE_BUILD_TIMESTAMP: ${{ inputs.build_timestamp }}
-      PIPELINE_BASELINE_REF: master
+      PIPELINE_COMMIT: ${{ github.sha }}
       PIPELINE_MODE: ${{ inputs.mode }}
+      PIPELINE_SOURCE_ARCHIVE: ${{ inputs.source_archive }}
+      PIPELINE_SOURCE_ARCHIVE_SHA256: ${{ inputs.source_archive_sha256 }}
 
     steps:
       - uses: actions/checkout@v4
@@ -59,6 +69,10 @@ jobs:
           path: data-raw/refresh-candidate/${{ inputs.data_version }}/
           if-no-files-found: error
 
+      - name: Restore checksum-pinned rebuild inputs
+        if: inputs.mode == 'rebuild'
+        run: Rscript data-raw/restore_rebuild_inputs.R
+
       - name: Deterministic rebuild, pass one
         if: inputs.mode == 'rebuild'
         run: |
@@ -74,6 +88,27 @@ jobs:
         run: |
           Rscript data-raw/run_pipeline.R
           sha256sum --check /tmp/first.sha256
+
+      - name: Standalone rebuild from the reproducibility archive
+        if: inputs.mode == 'rebuild'
+        run: |
+          standalone="$(mktemp -d)"
+          tar -xzf \
+            "data-raw/release/zipcodeR-reproducibility-${{ inputs.data_version }}.tar.gz" \
+            -C "$standalone"
+          (
+            cd "$standalone"
+            PIPELINE_WORKING_TREE_DIRTY=false Rscript data-raw/run_pipeline.R
+          )
+          cmp \
+            "data-raw/release/zipcodeR-data-${{ inputs.data_version }}.rds" \
+            "$standalone/data-raw/release/zipcodeR-data-${{ inputs.data_version }}.rds"
+          cmp \
+            "data-raw/release/manifest-${{ inputs.data_version }}.json" \
+            "$standalone/data-raw/release/manifest-${{ inputs.data_version }}.json"
+          cmp \
+            "data-raw/release/zipcodeR-reproducibility-${{ inputs.data_version }}.tar.gz" \
+            "$standalone/data-raw/release/zipcodeR-reproducibility-${{ inputs.data_version }}.tar.gz"
 
       - name: Upload unpublished release candidates
         if: inputs.mode == 'rebuild'

@@ -2,6 +2,7 @@
 #
 #   PIPELINE_MODE=rebuild PIPELINE_DATA_VERSION=2026.08 \
 #     PIPELINE_BUILD_TIMESTAMP=2026-08-24T00:00:00Z \
+#     PIPELINE_COMMIT=40_CHARACTER_GIT_COMMIT \
 #     Rscript data-raw/run_pipeline.R
 #
 # See data-raw/README.md. CENSUS_API_KEY is needed only when the archived raw

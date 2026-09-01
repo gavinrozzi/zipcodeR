@@ -12,7 +12,8 @@ A data frame with 45914 rows and 2 variables:
 }
 }
 \source{
-\url{https://www.huduser.gov/portal/datasets/usps_crosswalk.html}
+Historical HUD-USPS-derived snapshot archived at
+\url{https://github.com/gavinrozzi/zipcodeR-data}
 }
 \usage{
 zip_to_cd

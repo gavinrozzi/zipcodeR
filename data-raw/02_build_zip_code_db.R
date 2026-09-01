@@ -26,26 +26,20 @@ source(file.path("data-raw", "sources.R"))
 cache_dir <- file.path("data-raw", "cache")
 
 # --- load inputs -----------------------------------------------------------
-# Read the base from git, never the working tree: 06_finalize.R overwrites
-# data/zip_code_db.rda at the end of every run, so a working-tree base would
-# make a rerun carry forward its own output instead of the last release.
-# PIPELINE_BASELINE_REF is the same ref the validation gate uses.
-base_ref <- Sys.getenv("PIPELINE_BASELINE_REF", "HEAD")
-base_tf <- tempfile(fileext = ".rda")
-base_status <- suppressWarnings(system2(
-  "git", c("show", shQuote(paste0(base_ref, ":data/zip_code_db.rda"))),
-  stdout = base_tf, stderr = FALSE
-))
-if (!identical(base_status, 0L)) {
+# The carry-forward base is a tracked, byte-pinned 0.3.5 input. It is included
+# in the reproducibility archive, so this stage works without git metadata.
+base_path <- file.path("data", "zip_code_db.rda")
+base_expected <- LEGACY_BASELINE_FILES[["zip_code_db.rda"]]$sha256
+base_got <- if (file.exists(base_path)) sha256_file(base_path) else "<missing>"
+if (!identical(base_got, base_expected)) {
   stop(
-    "Cannot read the carry-forward base data/zip_code_db.rda from git ref '",
-    base_ref, "'. The pipeline builds on the last committed database."
+    "Legacy carry-forward input failed checksum verification: ", base_path,
+    "\n  expected: ", base_expected, "\n  got:      ", base_got
   )
 }
-message("carry-forward base: git ref '", base_ref, "'")
+message("carry-forward base: immutable zipcodeR 0.3.5 input")
 base_env <- new.env()
-load(base_tf, envir = base_env)
-unlink(base_tf)
+load(base_path, envir = base_env)
 base <- base_env$zip_code_db
 stopifnot(ncol(base) == 24)
 
@@ -84,8 +78,17 @@ supplement <- utils::read.csv(
   colClasses = "character"
 )
 
+fips_path <- file.path("R", "sysdata.rda")
+fips_expected <- LEGACY_INTERNAL_FILES[[fips_path]]$sha256
+fips_got <- if (file.exists(fips_path)) sha256_file(fips_path) else "<missing>"
+if (!identical(fips_got, fips_expected)) {
+  stop(
+    "Immutable internal input failed checksum verification: ", fips_path,
+    "\n  expected: ", fips_expected, "\n  got:      ", fips_got
+  )
+}
 fips_env <- new.env()
-load(file.path("R", "sysdata.rda"), envir = fips_env)
+load(fips_path, envir = fips_env)
 fips_codes <- fips_env$fips_codes
 
 # --- helper: an empty row in the exact schema of `base` --------------------

@@ -1,6 +1,8 @@
-# Step 1: acquire all pipeline sources into data-raw/cache/, verifying
-# checksums for every static file. Idempotent: verified files are not
-# re-downloaded.
+# Step 1: verify all archived pipeline sources under data-raw/cache/.
+# Deterministic rebuild mode is deliberately network-free. Populate this
+# directory with restore_rebuild_inputs.R or extract a reproducibility archive;
+# refresh_sources.R is the only pipeline entry point allowed to contact
+# mutable upstream sources.
 
 source(file.path("data-raw", "sources.R"))
 
@@ -51,18 +53,14 @@ acquire <- function(src) {
     message("cached & verified: ", basename(dest))
     return(dest)
   }
-  message("downloading: ", src$url)
-  utils::download.file(src$url, dest, mode = "wb", quiet = TRUE)
-  got <- sha256_file(dest)
-  if (!identical(got, src$sha256)) {
-    stop(
-      "Checksum mismatch for ", basename(dest), "\n  expected: ", src$sha256,
-      "\n  got:      ", got,
-      "\nThe publisher may have updated the file in place. Inspect the new ",
-      "file, then update sources.R and the data release notes."
-    )
-  }
-  dest
+  got <- if (file.exists(dest)) sha256_file(dest) else "<missing>"
+  stop(
+    "Pinned rebuild input is missing or corrupt: ", basename(dest),
+    "\n  expected: ", src$sha256,
+    "\n  got:      ", got,
+    "\nRebuild mode never contacts mutable upstream URLs. Restore a ",
+    "checksum-verified source or reproducibility archive first."
+  )
 }
 
 paths <- lapply(PIPELINE_SOURCES, acquire)
@@ -78,34 +76,10 @@ utils::unzip(paths$geonames_us, exdir = cache_dir, overwrite = TRUE)
 acs_raw <- file.path(cache_dir, sprintf("acs5_%d_zcta.json", ACS_VINTAGE))
 acs_cache <- file.path(cache_dir, sprintf("acs5_%d_zcta.csv", ACS_VINTAGE))
 if (!file.exists(acs_raw)) {
-  key <- Sys.getenv("CENSUS_API_KEY")
-  if (!nzchar(key)) {
-    stop(
-      "CENSUS_API_KEY is not set. Register a free key at ",
-      "https://api.census.gov/data/key_signup.html and set it in ~/.Renviron ",
-      "or as a repository secret for the refresh workflow."
-    )
-  }
-  message("downloading: ACS ", ACS_VINTAGE, " 5-year estimates for all ZCTAs")
-  url <- paste0(
-    ACS_ENDPOINT, "?get=", paste(ACS_VARIABLES, collapse = ","),
-    "&for=zip%20code%20tabulation%20area:*&key=", key
-  )
-  # The Census API only accepts the key as a query parameter, and
-  # download.file() echoes the full URL in its error and warning text. Scrub
-  # the key so a failed local run does not print it to the console or a .Rout.
-  redact <- function(x) gsub(key, "<CENSUS_API_KEY>", x, fixed = TRUE)
-  withCallingHandlers(
-    tryCatch(
-      utils::download.file(url, acs_raw, mode = "wb", quiet = TRUE),
-      error = function(e) {
-        stop("ACS download failed: ", redact(conditionMessage(e)), call. = FALSE)
-      }
-    ),
-    warning = function(w) {
-      message("ACS download warning: ", redact(conditionMessage(w)))
-      invokeRestart("muffleWarning")
-    }
+  stop(
+    "Pinned raw ACS response is missing: ", acs_raw,
+    "\nRebuild mode never calls the Census API. Restore the archived response ",
+    "with data-raw/restore_rebuild_inputs.R first."
   )
 }
 acs_raw_hash <- sha256_file(acs_raw)

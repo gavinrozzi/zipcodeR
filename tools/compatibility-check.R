@@ -16,7 +16,10 @@ baseline_arg <- grep("^--baseline-ref=", cli_args, value = TRUE)
 baseline_ref <- if (length(baseline_arg)) {
   sub("^--baseline-ref=", "", baseline_arg[[1]])
 } else {
-  Sys.getenv("ZIPCODER_BASELINE_REF", "master")
+  Sys.getenv(
+    "ZIPCODER_BASELINE_REF",
+    "48ed689f4ee1694b1ec5fdffef02bed117938398"
+  )
 }
 if (!nzchar(baseline_ref)) stop("The baseline git ref must not be empty.")
 keep <- identical(Sys.getenv("KEEP_COMPAT_ARTIFACTS"), "true")

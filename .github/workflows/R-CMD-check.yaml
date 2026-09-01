@@ -49,7 +49,7 @@ jobs:
 
       - name: Exact zipcodeR 0.3.5 differential gate
         env:
-          ZIPCODER_BASELINE_REF: origin/master
+          ZIPCODER_BASELINE_REF: 48ed689f4ee1694b1ec5fdffef02bed117938398
         run: Rscript tools/compatibility-check.R
 
       - uses: r-lib/actions/check-r-package@v2

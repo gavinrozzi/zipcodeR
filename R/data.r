@@ -66,5 +66,6 @@
 #'   \item{ZIP}{5 digit U.S. ZIP code}
 #'   \item{CD}{Four digit congressional district code (State FIPS code + district number)}
 #' }
-#' @source \url{https://www.huduser.gov/portal/datasets/usps_crosswalk.html}
+#' @source Historical HUD-USPS-derived snapshot archived at
+#'   \url{https://github.com/gavinrozzi/zipcodeR-data}
 "zip_to_cd"
