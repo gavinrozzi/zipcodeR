@@ -79,7 +79,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/data-2026.09/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/gavinrozzi/zipcodeR/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
@@ -115,7 +115,8 @@
 <li>Static sources, the raw ACS response, and the derived ACS table are archived and checksummed. GeoNames is pinned rather than floating. The data version and build timestamp are explicit inputs; the full package dependency graph is locked.</li>
 <li>ZIP candidates absent from an authoritative ZCTA source are quarantined. Proxy city points are not published as ZIP centroids. District assignments use the Census relationship file only; USPS-only ZIPs without an authoritative relationship remain unmapped with a reason.</li>
 <li>Upstream inspection and deterministic rebuilds are separate workflow modes. The workflow uploads unpublished candidates for review and never chooses a version or publishes automatically.</li>
-<li>The immutable <code>data-2026.08</code> bundle, manifest, deterministic reproducibility archive, and comprehensive SQLite asset are public. Their release URLs and checksums, representative <code>_ng</code> calls, manifest schema, and SQLite integrity were independently smoke-tested before enabling the registries.</li>
+<li>Refresh candidates are accepted only after their requested timestamp is representable and every source-archive member can be listed, extracted, and checksum-matched to the staged input.</li>
+<li>The immutable <code>data-2026.09</code> bundle, manifest, and standalone reproducibility archive are public and are the recommended pinned inputs for new <code>_ng</code> analyses. They use the same reviewed source vintages as <code>data-2026.08</code>, but add the frozen legacy inputs, exact pipeline commit, and Linux amd64 platform to the verified build contract. The comprehensive SQLite asset remains explicitly pinned to <code>data-2026.08</code>; no implicit substitution occurs.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="tests-documentation-and-infrastructure-0-4-0">Tests, documentation, and infrastructure<a class="anchor" aria-label="anchor" href="#tests-documentation-and-infrastructure-0-4-0"></a></h3>

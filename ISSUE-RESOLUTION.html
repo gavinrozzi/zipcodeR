@@ -161,7 +161,7 @@
 <li>a clean commit builds the modern bundle, manifest, and reproducibility archive twice with identical hashes;</li>
 <li>the bundle, manifest, reproducibility archive, and comprehensive database are public at immutable URLs and pass clean-machine checksum/schema calls;</li>
 <li>the verified bundle checksum is enabled in the package registry and CI is rerun on that registry commit.</li>
-</ol><p>Gates 3 and 4 passed for release <code>data-2026.08</code>: two clean builds matched bundle SHA <code>9059026c...</code>, manifest SHA <code>5628977c...</code>, and archive SHA <code>8b22ab07...</code>; all four public assets, including the comprehensive database, passed download and integrity checks. Gate 5 also passed: the explicit <code>2026.08</code> registry was enabled only after those checks, and the full required platform, coverage, and documentation matrix is green on the registry-enabled PR head.</p>
+</ol><p>Gates 3 and 4 passed for release <code>data-2026.09</code>: two clean pinned Linux amd64 builds matched bundle SHA <code>0805a5be...</code>, manifest SHA <code>e3e630ef...</code>, and archive SHA <code>71d4ec19...</code>; all three public assets passed an independent download and integrity check. The comprehensive database remains explicitly pinned to the independently verified <code>data-2026.08</code> asset. Gate 5’s registry and local/Act checks pass; the hosted cross-platform matrix remains required before CRAN submission.</p>
 </div>
 </div>
 
