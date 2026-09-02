@@ -112,13 +112,21 @@ get_cd_ng(bundle, "08731")
   remote badge images. Those paths were made version-safe and the badges were
   converted to ordinary text links before the successful run. A subsequent
   oldrel pass exposed and removed the now-unused `tools` import.
+- Official win-builder R-devel/UCRT on Windows Server 2022 x64, R-devel
+  revision 90457 (2026-08-31): installation, examples, all 132 tests,
+  vignettes, and PDF/HTML manuals passed with `Status: OK` (zero package
+  errors, warnings, or notes). The submitted source tarball was 3,754,356
+  bytes with SHA256
+  `0353c39500f4a414667627a6727cdd5416062a330268665fb68950021585e173`,
+  built from commit `8d8c6ba50c7deef47f96372ba0b5c9af014c1eb4`.
 - `geospatialsuite` 0.2.0, the only current CRAN reverse dependency (Reverse
   Suggests), passed `R CMD check --no-manual`; its actual zipcodeR geocoding
   integration exactly matched the frozen legacy data.
 
 ## Remaining external release gates
 
-Local Act cannot execute a native Windows runner or prove GitHub-hosted secret,
-cache, artifact, and Codecov/OIDC behavior. Before CRAN submission, run the
-restored five-platform hosted matrix and an official win-builder check. Do not
-submit while either reports a package warning, error, or significant note.
+The official native Windows R-devel check is complete. Local Act still cannot
+prove GitHub-hosted secret, cache, artifact, and Codecov/OIDC behavior. The
+restored five-platform hosted matrix therefore remains an operational CI gate
+when GitHub Actions capacity is available; any package warning, error, or
+significant note there requires investigation before CRAN submission.

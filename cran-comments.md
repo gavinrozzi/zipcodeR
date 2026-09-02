@@ -6,9 +6,10 @@
 * Ubuntu 24.04 (amd64), R release, R 4.7.0-devel, and R 4.5.3 oldrel-1,
   using the repository's GitHub Actions workflow through Act
 * Debian 9 (amd64), R 3.5.3, using a coherent historical dependency snapshot
+* win-builder, Windows Server 2022 x64, R-devel r90457 UCRT
 
-The complete hosted Windows/macOS/Ubuntu matrix and win-builder are release
-gates and will be run before submission.
+The complete hosted Windows/macOS/Ubuntu matrix remains an operational CI gate
+and will be run when GitHub Actions capacity is available.
 
 ## R CMD check results
 
@@ -25,6 +26,10 @@ R 3.5.3 check passed with a coherent 2022-10-03 dependency snapshot, including
 raster 3.4-13. This verifies the declared minimum interpreter against an
 installable historical dependency set; it does not claim that all current CRAN
 dependency releases continue to support R 3.5.
+
+Official win-builder R-devel/UCRT completed with `Status: OK`: 0 errors,
+0 warnings, and 0 notes. Installation, examples, all 132 tests, vignettes, and
+the PDF and HTML manuals passed.
 
 ## Compatibility
 
