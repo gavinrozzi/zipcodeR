@@ -7,9 +7,11 @@
   using the repository's GitHub Actions workflow through Act
 * Debian 9 (amd64), R 3.5.3, using a coherent historical dependency snapshot
 * win-builder, Windows Server 2022 x64, R-devel r90457 UCRT
+* Hosted GitHub Actions matrix on the submitted commit: windows-latest
+  (R release), macos-latest (R release), and ubuntu-latest (R release,
+  R devel, and oldrel-1)
 
-The complete hosted Windows/macOS/Ubuntu matrix remains an operational CI gate
-and will be run when GitHub Actions capacity is available.
+All five hosted matrix jobs passed on the exact commit submitted here.
 
 ## R CMD check results
 
