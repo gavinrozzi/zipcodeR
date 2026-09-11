@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">zipcodeR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -83,7 +83,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.4.0" id="zipcoder-040">zipcodeR 0.4.0<a class="anchor" aria-label="anchor" href="#zipcoder-040"></a></h2>
+<h2 class="page-header" data-toc-text="0.4.1" id="zipcoder-041">zipcodeR 0.4.1<a class="anchor" aria-label="anchor" href="#zipcoder-041"></a></h2>
+<div class="section level3">
+<h3 id="test-only-fix-for-the-cran-check-error-0-4-1">Test-only fix for the CRAN check ERROR<a class="anchor" aria-label="anchor" href="#test-only-fix-for-the-cran-check-error-0-4-1"></a></h3>
+<ul><li>A unit test asserted that the R &lt; 4.0 session-temporary cache path did not contain the user’s home directory. On the CRAN Debian check hosts the R session temporary directory itself is located under the checker’s home directory, so the assertion failed there even though the package behaved correctly. The test now checks the actual contract: the old-R cache path is <code>file.path(tempdir(), "zipcodeR-data")</code> and differs from the persistent <code><a href="https://rdrr.io/r/tools/userdir.html" class="external-link">tools::R_user_dir()</a></code> location used on R 4.0 or newer.</li>
+<li>No package code, documentation, exported API, or bundled dataset changed. The 0.3.5 reproducibility contract and the <code>_ng</code> API are identical to 0.4.0.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.0" id="zipcoder-040">zipcodeR 0.4.0<small>2026-09-07</small><a class="anchor" aria-label="anchor" href="#zipcoder-040"></a></h2>
 <div class="section level3">
 <h3 id="reproducibility-contract-0-4-0">Reproducibility contract<a class="anchor" aria-label="anchor" href="#reproducibility-contract-0-4-0"></a></h3>
 <ul><li>Every pre-existing exported function retains the zipcodeR 0.3.5 signature, return value, class, attributes, row order, rounding, warnings, messages, errors, and edge-case behavior. This deliberately includes historical defects where changing them could alter published research.</li>
