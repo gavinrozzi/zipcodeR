@@ -1,3 +1,17 @@
+# zipcodeR 0.4.1
+
+## Test-only fix for the CRAN check ERROR
+
+- A unit test asserted that the R < 4.0 session-temporary cache path did not
+  contain the user's home directory. On the CRAN Debian check hosts the R
+  session temporary directory itself is located under the checker's home
+  directory, so the assertion failed there even though the package behaved
+  correctly. The test now checks the actual contract: the old-R cache path is
+  `file.path(tempdir(), "zipcodeR-data")` and differs from the persistent
+  `tools::R_user_dir()` location used on R 4.0 or newer.
+- No package code, documentation, exported API, or bundled dataset changed.
+  The 0.3.5 reproducibility contract and the `_ng` API are identical to 0.4.0.
+
 # zipcodeR 0.4.0
 
 ## Reproducibility contract

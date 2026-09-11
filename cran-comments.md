@@ -1,53 +1,63 @@
-# zipcodeR 0.4.0
+# zipcodeR 0.4.1
+
+## Resubmission
+
+This is a test-only resubmission that fixes the ERROR reported for 0.4.0 on
+the CRAN `r-devel-linux-x86_64-debian-gcc` and `r-patched-linux-x86_64`
+flavors:
+
+```
+Failure ('test-04-data-bundles.R:236:3'): old R uses only the session
+temporary directory for new caches
+Expected `grepl(path.expand("~"), old_r_cache, fixed = TRUE)` to be FALSE.
+```
+
+As the CRAN maintainer noted, one cannot assume that the session temporary
+directory is outside the user's home. On the Debian check hosts it is under
+the checker's home directory, so the test's "not under `~`" assertion was an
+environmental assumption rather than a package contract. The package itself
+behaved correctly on every flavor.
+
+The test now asserts the real contract: on R < 4.0 the cache path is
+`file.path(tempdir(), "zipcodeR-data")`, and it differs from the persistent
+`tools::R_user_dir()` location used on R >= 4.0. No assertion depends on where
+`tempdir()` or the home directory is located.
+
+No package code, documentation, exported API, or bundled dataset changed
+between 0.4.0 and 0.4.1. The 0.4.0 CITATION file already uses `bibentry()`;
+the `citEntry()` NOTE in the check results applies only to the 0.3.5 file.
 
 ## Test environments
 
-* local macOS Tahoe 26.6.2 (arm64), R 4.6.1
-* Ubuntu 24.04 (amd64), R release, R 4.7.0-devel, and R 4.5.3 oldrel-1,
-  using the repository's GitHub Actions workflow through Act
-* Debian 9 (amd64), R 3.5.3, using a coherent historical dependency snapshot
-* win-builder, Windows Server 2022 x64, R-devel r90457 UCRT
+* local macOS Tahoe 26.6.2 (arm64), R 4.6.1, with `TMPDIR` set to a directory
+  under `$HOME` to reproduce the Debian CRAN host layout. Before the fix this
+  reproduced the reported failure exactly; after the fix the full suite passes
+  (0 failures, 132 passing) under both the default and the under-`$HOME`
+  temporary directory.
 * Hosted GitHub Actions matrix on the submitted commit: windows-latest
   (R release), macos-latest (R release), and ubuntu-latest (R release,
-  R devel, and oldrel-1)
-
-All five hosted matrix jobs passed on the exact commit submitted here.
+  R devel, and oldrel-1). The Ubuntu jobs now place the session temporary
+  directory under `$HOME` so this class of assumption cannot regress.
 
 ## R CMD check results
 
-The normal vignette-building source package passed `R CMD check --as-cran`
-locally, including the indexed PDF and HTML manuals, with:
+`R CMD check --as-cran` on the source package, run locally with the
+temporary directory under `$HOME`, including the indexed PDF and HTML manuals:
 
 * 0 errors
 * 0 warnings
-* 0 notes
-
-The Ubuntu release, devel, and oldrel-1 workflows also passed their differential
-compatibility gates and `R CMD check --as-cran --no-manual` checks. A genuine
-R 3.5.3 check passed with a coherent 2022-10-03 dependency snapshot, including
-raster 3.4-13. This verifies the declared minimum interpreter against an
-installable historical dependency set; it does not claim that all current CRAN
-dependency releases continue to support R 3.5.
-
-Official win-builder R-devel/UCRT completed with `Status: OK`: 0 errors,
-0 warnings, and 0 notes. Installation, examples, all 132 tests, vignettes, and
-the PDF and HTML manuals passed.
+* 1 note: "Days since last update: 3", expected for this resubmission
 
 ## Compatibility
 
-zipcodeR is used in published research. An automated differential harness
-installs version 0.3.5 from its immutable Git commit and this candidate into
-isolated libraries. It requires exact identity of the three public datasets,
-legacy function values, classes, attributes, ordering, signatures, warnings,
-errors, messages, and the legacy downloader implementation. That gate passes.
-
-Corrected behavior and updated data are exposed only through new `_ng`
-functions and an explicitly selected, immutable, checksum-verified external
-data bundle. Existing functions retain the 0.3.5 contract.
+The differential harness that installs zipcodeR 0.3.5 from its immutable Git
+commit and this candidate into isolated libraries passed: all three public
+datasets, legacy function values, classes, attributes, ordering, signatures,
+warnings, errors, messages, and the legacy downloader implementation are
+identical.
 
 ## Downstream dependencies
 
-CRAN currently lists one reverse dependency, `geospatialsuite` 0.2.0 (Reverse
-Suggests). Its source package passed `R CMD check --no-manual` with the
-candidate installed. A targeted check of its zipcodeR geocoding integration
-also exactly matched the frozen legacy result.
+CRAN lists one reverse dependency, `geospatialsuite` 0.2.0 (Reverse Suggests).
+Nothing in the installed package changed between 0.4.0 and 0.4.1, so the
+0.4.0 reverse dependency check result stands.

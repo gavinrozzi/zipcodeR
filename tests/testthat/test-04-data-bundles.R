@@ -233,5 +233,11 @@ test_that("verified comprehensive cache avoids a network request", {
 test_that("old R uses only the session temporary directory for new caches", {
   old_r_cache <- zipcodeR:::zipcodeR_user_data_dir(numeric_version("3.5.3"))
   expect_identical(old_r_cache, file.path(tempdir(), "zipcodeR-data"))
-  expect_false(grepl(path.expand("~"), old_r_cache, fixed = TRUE))
+  # Do not assert anything about the home directory. On some CRAN hosts
+  # (Debian) the session tempdir itself is located under the checker's home,
+  # so a "not under ~" check is environment-dependent rather than a contract.
+  if (getRversion() >= "4.0.0") {
+    persistent <- zipcodeR:::zipcodeR_user_data_dir(numeric_version("4.0.0"))
+    expect_false(identical(old_r_cache, persistent))
+  }
 })
